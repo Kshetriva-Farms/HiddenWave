@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HiddenWave.in - Growth Marketing and Campaign Retainers. Explore our SEO audits and paid search ROAS case studies.">
+  <title>Growth Marketing & Campaigns | HiddenWave</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Service Sub-Page Specific Clean Adjustments */
+    .service-hero {
+      background-color: var(--bg-secondary);
+      background-image: radial-gradient(var(--border-light) 1.5px, transparent 1.5px);
+      background-size: 28px 28px;
+      padding: 140px 0 80px;
+      text-align: center;
+      position: relative;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .service-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.04), transparent 60%);
+      pointer-events: none;
+    }
+    .service-hero h1 {
+      font-size: 3.2rem;
+      margin-bottom: 16px;
+    }
+    .sub-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      margin-top: 50px;
+    }
+    .sub-service-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+    }
+    .sub-service-card h4 {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      color: var(--accent-mktg);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .case-studies {
+      background: var(--bg-primary);
+      padding: 90px 0;
+    }
+    .case-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-sm);
+    }
+    .case-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      border-bottom: 1.5px solid var(--border-light);
+      padding-bottom: 10px;
+    }
+    .case-metrics {
+      display: flex;
+      gap: 30px;
+      margin: 20px 0;
+      background: var(--bg-tertiary);
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+    }
+    .metric-item {
+      text-align: center;
+    }
+    .metric-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent-mktg);
+      font-family: var(--font-header);
+    }
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .specialist-callout {
+      background: var(--bg-secondary);
+      padding: 90px 0;
+    }
+    .specialist-box {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 60px;
+      align-items: center;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 50px;
+      box-shadow: var(--shadow-lg);
+    }
+    .spec-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-mktg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-secondary);
+      margin: 0 auto;
+    }
+    .spec-img svg {
+      width: 80px;
+      height: 80px;
+      stroke: var(--accent-mktg);
+      stroke-width: 1.5;
+    }
+    @media (max-width: 768px) {
+      .sub-grid, .specialist-box {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header id="header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <svg viewBox="0 0 100 100">
+          <path d="M15,65 Q30,35 45,55 T75,45 T85,30" stroke="url(#logo-grad)" stroke-width="2.5" fill="none" stroke-linecap="round" />
+        </svg>
+        HiddenWave
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="nav-menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#synergy">Our Synergy</a></li>
+          <li><a href="index.html#mixer">Plan Mixer</a></li>
+          <li><a href="index.html#team">The Team</a></li>
+          <li><a href="index.html#contact" class="nav-cta">Book Consultation</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Service Hero -->
+    <section class="service-hero">
+      <div class="container">
+        <div class="hero-tag">Core Specialization</div>
+        <h1>Growth Marketing & Campaigns</h1>
+        <p style="max-width: 600px; margin: 0 auto; color: var(--text-secondary);">Conversion-focused optimization, search visibility scaling, and high-impact paid marketing configured for ROI stability.</p>
+      </div>
+    </section>
+
+    <!-- Detailed Sub-Services -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Marketing Capabilities</h2>
+          <p>We build predictable lead generation pipelines and long-term brand positions using verified marketing frameworks.</p>
+        </div>
+
+        <div class="sub-grid">
+          <div class="sub-service-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Search Engine Optimization (SEO)
+            </h4>
+            <p>Keyword target auditing, on-page optimization, content calendars planning, and backlink structuring. We cooperate with our web developers to build search-optimized loading speeds.</p>
+          </div>
+
+          <div class="sub-service-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              Paid Advertising Channels (PPC)
+            </h4>
+            <p>Campaign deployment on Google Search, Meta channels, and LinkedIn Ads. We optimize bids, draft advertising copy variants, structure targeted parameters, and manage ad budgets.</p>
+          </div>
+
+          <div class="sub-service-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+              Conversion Rate Optimization (CRO)
+            </h4>
+            <p>Landing page copy optimization, site design split testing, customer friction reviews, and transaction flow adjustments to turn inbound traffic clicks into inquiries.</p>
+          </div>
+
+          <div class="sub-service-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Marketing Funnels & Retention
+            </h4>
+            <p>Email sequence setup, automated drip campaigns, retargeting list curation, and customer lifetime value computation to build brand retention.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Studies / Achievements -->
+    <section class="case-studies">
+      <div class="container">
+        <div class="section-header">
+          <h2>Marketing Showcase & Achievements</h2>
+          <p>Real-world studies of how our growth strategies accelerated target customer acquisitions.</p>
+        </div>
+
+        <div class="case-card">
+          <h3>PPC Efficiency Optimization (B2B Fintech Brand)</h3>
+          <p>A corporate billing software company was facing high cost-per-lead (CPL) and low quality lead metrics through their Google Search channels.</p>
+          <div class="case-metrics">
+            <div class="metric-item">
+              <div class="metric-value">-35%</div>
+              <div class="metric-label">Cost-Per-Lead (CPL)</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">+42%</div>
+              <div class="metric-label">Inbound Volume</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">4.2x</div>
+              <div class="metric-label">ROAS (Return on Ad Spend)</div>
+            </div>
+          </div>
+          <p style="font-size: 0.95rem; color: var(--text-secondary);">We audited negative search terms, structured landing pages matching specific search queries, and built unified pixel tracking metrics across platforms.</p>
+        </div>
+
+        <div class="case-card">
+          <h3>Organic Search Growth Blueprint (B2B SaaS Portal)</h3>
+          <p>A project management platform relied too heavily on short-term paid Facebook ads and required a long-term organic user acquisition engine.</p>
+          <div class="case-metrics">
+            <div class="metric-item">
+              <div class="metric-value">+180%</div>
+              <div class="metric-label">Organic Site Traffic</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">9 Months</div>
+              <div class="metric-label">Growth Period</div>
+            </div>
+          </div>
+          <p style="font-size: 0.95rem; color: var(--text-secondary);">By mapping content layouts to high-intent keywords, designing comparative templates, and fixing search indexing glitches, we scaled monthly organic signups safely.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lead Specialist Callout -->
+    <section class="specialist-callout">
+      <div class="container">
+        <div class="specialist-box">
+          <div class="spec-img">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+              <line x1="12" y1="11" x2="12" y2="13" />
+            </svg>
+          </div>
+          <div>
+            <h3 style="margin-bottom: 5px;">Rohit Sharma</h3>
+            <div class="founder-role" style="color: var(--accent-mktg); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 15px;">Lead Marketing Strategist</div>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px;">Rohit manages Google/Meta ad spend strategies, search engine presence, content optimization blueprints, and retention metrics. He targets high-intent keywords to build conversion volumes.</p>
+            <a href="index.html#contact" class="btn btn-primary" style="font-size: 0.9rem; padding: 10px 22px;">Discuss Marketing Scope</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" style="margin-bottom: 20px;">
+            HiddenWave
+          </a>
+          <p>Consolidated technology engineering, market acquisition campaigns, and corporate CA compliance solutions under a single execution model.</p>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Pillars</h4>
+          <ul>
+            <li><a href="web-operations.html">Web Operations</a></li>
+            <li><a href="growth-marketing.html">Growth Marketing</a></li>
+            <li><a href="ca-compliance.html">CA Compliance</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Execution</h4>
+          <ul>
+            <li><a href="index.html#team">The Partners</a></li>
+            <li><a href="index.html#synergy">Combined Synergy</a></li>
+            <li><a href="index.html#mixer">Plan Calculator</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@hiddenwave.in">hello@hiddenwave.in</a></li>
+            <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+            <li><a href="index.html#contact">Inquiry Desk</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2026 HiddenWave.in. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

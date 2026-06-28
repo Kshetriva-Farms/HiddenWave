@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HiddenWave.in - Corporate Finance and Chartered Accountant Compliance. Explore GST optimization and startup restructuring case studies.">
+  <title>CA Compliance & Corporate Finance | HiddenWave</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Service Sub-Page Specific Clean Adjustments */
+    .service-hero {
+      background-color: var(--bg-secondary);
+      background-image: radial-gradient(var(--border-light) 1.5px, transparent 1.5px);
+      background-size: 28px 28px;
+      padding: 140px 0 80px;
+      text-align: center;
+      position: relative;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .service-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(5, 150, 105, 0.04), transparent 60%);
+      pointer-events: none;
+    }
+    .service-hero h1 {
+      font-size: 3.2rem;
+      margin-bottom: 16px;
+    }
+    .sub-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      margin-top: 50px;
+    }
+    .sub-service-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+    }
+    .sub-service-card h4 {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      color: var(--accent-fin);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .case-studies {
+      background: var(--bg-primary);
+      padding: 90px 0;
+    }
+    .case-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-sm);
+    }
+    .case-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      border-bottom: 1.5px solid var(--border-light);
+      padding-bottom: 10px;
+    }
+    .case-metrics {
+      display: flex;
+      gap: 30px;
+      margin: 20px 0;
+      background: var(--bg-tertiary);
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+    }
+    .metric-item {
+      text-align: center;
+    }
+    .metric-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent-fin);
+      font-family: var(--font-header);
+    }
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .specialist-callout {
+      background: var(--bg-secondary);
+      padding: 90px 0;
+    }
+    .specialist-box {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 60px;
+      align-items: center;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 50px;
+      box-shadow: var(--shadow-lg);
+    }
+    .spec-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-fin);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-secondary);
+      margin: 0 auto;
+    }
+    .spec-img svg {
+      width: 80px;
+      height: 80px;
+      stroke: var(--accent-fin);
+      stroke-width: 1.5;
+    }
+    @media (max-width: 768px) {
+      .sub-grid, .specialist-box {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header id="header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <svg viewBox="0 0 100 100">
+          <path d="M15,65 Q30,35 45,55 T75,45 T85,30" stroke="url(#logo-grad)" stroke-width="2.5" fill="none" stroke-linecap="round" />
+        </svg>
+        HiddenWave
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="nav-menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#synergy">Our Synergy</a></li>
+          <li><a href="index.html#mixer">Plan Mixer</a></li>
+          <li><a href="index.html#team">The Team</a></li>
+          <li><a href="index.html#contact" class="nav-cta">Book Consultation</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Service Hero -->
+    <section class="service-hero">
+      <div class="container">
+        <div class="hero-tag">Core Specialization</div>
+        <h1>CA Compliance & Finance</h1>
+        <p style="max-width: 600px; margin: 0 auto; color: var(--text-secondary);">Statutory ROC filing structuring, GST optimization checks, startup tax preparation, and certified fractional CFO advisory.</p>
+      </div>
+    </section>
+
+    <!-- Detailed Sub-Services -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Compliance Capabilities</h2>
+          <p>We secure corporate ledgers and structural filings so your business scales with clean records.</p>
+        </div>
+
+        <div class="sub-grid">
+          <div class="sub-service-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              Corporate Tax Filing & GST
+            </h4>
+            <p>Periodic computation of corporate income liabilities, state-by-state GST reconciliations, filing of GSTR-1 & 3B logs, and setup of localized tax deductions structures.</p>
+          </div>
+
+          <div class="sub-service-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Statutory Audits & Assurance
+            </h4>
+            <p>Evaluation of corporate accounting books, internal check systems audits, financial reporting standards adjustments, and signing audit checks compliant with local regulations.</p>
+          </div>
+
+          <div class="sub-service-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              Startup Advisory & Restructuring
+            </h4>
+            <p>Cap-table layout advisory, share distribution structuring, and structuring of equity classes to optimize future valuation tax positions during fundraising rounds.</p>
+          </div>
+
+          <div class="sub-service-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              Fractional CFO & Bookkeeping
+            </h4>
+            <p>Monitoring monthly ledger records, cash flow calculations, capital allocation checks, and board reporting structures designed to assist executive decisions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Studies / Achievements -->
+    <section class="case-studies">
+      <div class="container">
+        <div class="section-header">
+          <h2>Financial Showcase & Achievements</h2>
+          <p>Case summaries of how our chartered accountants optimized startup taxation and filings.</p>
+        </div>
+
+        <div class="case-card">
+          <h3>Capital Restructuring & Equity Advisory (Series-A B2B SaaS)</h3>
+          <p>An early-stage SaaS startup needed capitalization advice ahead of receiving institutional investment to clean up multi-layered equity distributions.</p>
+          <div class="case-metrics">
+            <div class="metric-item">
+              <div class="metric-value">₹15 Lakhs</div>
+              <div class="metric-label">Tax Liability Saved</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">Zero Notes</div>
+              <div class="metric-label">Compliance Exceptions</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">3 Weeks</div>
+              <div class="metric-label">ROC Setup Speed</div>
+            </div>
+          </div>
+          <p style="font-size: 0.95rem; color: var(--text-secondary);">We restructured founder shares and employee stock options (ESOPs), structuring the allocation layout to align with seed-stage tax exemption frameworks.</p>
+        </div>
+
+        <div class="case-card">
+          <h3>GST Reconciliations & Credit Recovery (B2B Logistics Platform)</h3>
+          <p>A corporate service platform was experiencing heavy input tax credit (ITC) leakage due to vendor mismatched billing entries and delayed state filing schedules.</p>
+          <div class="case-metrics">
+            <div class="metric-item">
+              <div class="metric-value">₹18 Lakhs</div>
+              <div class="metric-label">Annual Credit Recovered</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">100%</div>
+              <div class="metric-label">Filing Consistency</div>
+            </div>
+          </div>
+          <p style="font-size: 0.95rem; color: var(--text-secondary);">We deployed streamlined input reconciliation ledgers, audited past supplier invoices, and synced their corporate GST filing calendar to eliminate tax penalty exposures.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lead Specialist Callout -->
+    <section class="specialist-callout">
+      <div class="container">
+        <div class="specialist-box">
+          <div class="spec-img">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+              <path d="M12 2v2M12 14v8" />
+            </svg>
+          </div>
+          <div>
+            <h3 style="margin-bottom: 5px;">Neha Gupta, CA</h3>
+            <div class="founder-role" style="color: var(--accent-fin); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 15px;">Lead Financial & Tax Advisor</div>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px;">Neha is a Fellow Chartered Accountant managing corporate income audit compliance, GST records, ROC statutory requirements, and company setup structuring for our clients.</p>
+            <a href="index.html#contact" class="btn btn-primary" style="font-size: 0.9rem; padding: 10px 22px;">Discuss Financial Scope</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" style="margin-bottom: 20px;">
+            HiddenWave
+          </a>
+          <p>Consolidated technology engineering, market acquisition campaigns, and corporate CA compliance solutions under a single execution model.</p>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Pillars</h4>
+          <ul>
+            <li><a href="web-operations.html">Web Operations</a></li>
+            <li><a href="growth-marketing.html">Growth Marketing</a></li>
+            <li><a href="ca-compliance.html">CA Compliance</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Execution</h4>
+          <ul>
+            <li><a href="index.html#team">The Partners</a></li>
+            <li><a href="index.html#synergy">Combined Synergy</a></li>
+            <li><a href="index.html#mixer">Plan Calculator</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@hiddenwave.in">hello@hiddenwave.in</a></li>
+            <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+            <li><a href="index.html#contact">Inquiry Desk</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2026 HiddenWave.in. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

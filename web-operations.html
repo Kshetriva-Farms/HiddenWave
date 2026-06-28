@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HiddenWave.in - Custom Web Engineering and Development Operations. Explore our React/Next.js builds and speed optimization case studies.">
+  <title>Web Engineering & Operations | HiddenWave</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Service Sub-Page Specific Clean Adjustments */
+    .service-hero {
+      background-color: var(--bg-secondary);
+      background-image: radial-gradient(var(--border-light) 1.5px, transparent 1.5px);
+      background-size: 28px 28px;
+      padding: 140px 0 80px;
+      text-align: center;
+      position: relative;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .service-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.04), transparent 60%);
+      pointer-events: none;
+    }
+    .service-hero h1 {
+      font-size: 3.2rem;
+      margin-bottom: 16px;
+    }
+    .sub-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      margin-top: 50px;
+    }
+    .sub-service-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+    }
+    .sub-service-card h4 {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      color: var(--accent-tech);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .case-studies {
+      background: var(--bg-primary);
+      padding: 90px 0;
+    }
+    .case-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-sm);
+    }
+    .case-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      border-bottom: 1.5px solid var(--border-light);
+      padding-bottom: 10px;
+    }
+    .case-metrics {
+      display: flex;
+      gap: 30px;
+      margin: 20px 0;
+      background: var(--bg-tertiary);
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+    }
+    .metric-item {
+      text-align: center;
+    }
+    .metric-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent-tech);
+      font-family: var(--font-header);
+    }
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .specialist-callout {
+      background: var(--bg-secondary);
+      padding: 90px 0;
+    }
+    .specialist-box {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 60px;
+      align-items: center;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 50px;
+      box-shadow: var(--shadow-lg);
+    }
+    .spec-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-tech);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-secondary);
+      margin: 0 auto;
+    }
+    .spec-img svg {
+      width: 80px;
+      height: 80px;
+      stroke: var(--accent-tech);
+      stroke-width: 1.5;
+    }
+    @media (max-width: 768px) {
+      .sub-grid, .specialist-box {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header id="header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <svg viewBox="0 0 100 100">
+          <path d="M15,65 Q30,35 45,55 T75,45 T85,30" stroke="url(#logo-grad)" stroke-width="2.5" fill="none" stroke-linecap="round" />
+        </svg>
+        HiddenWave
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="nav-menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#synergy">Our Synergy</a></li>
+          <li><a href="index.html#mixer">Plan Mixer</a></li>
+          <li><a href="index.html#team">The Team</a></li>
+          <li><a href="index.html#contact" class="nav-cta">Book Consultation</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Service Hero -->
+    <section class="service-hero">
+      <div class="container">
+        <div class="hero-tag">Core Specialization</div>
+        <h1>Web Engineering & Operations</h1>
+        <p style="max-width: 600px; margin: 0 auto; color: var(--text-secondary);">High-performance web applications, API pipelines, and custom web management built to load instantly and convert visitors.</p>
+      </div>
+    </section>
+
+    <!-- Detailed Sub-Services -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Web Services Capabilities</h2>
+          <p>We provide full-lifecycle digital product development from structural blueprints to continuous server maintenance.</p>
+        </div>
+
+        <div class="sub-grid">
+          <div class="sub-service-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-10 10-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.5 1.5"/><path d="M14 14l3-3"/></svg>
+              Custom Front-End Engineering
+            </h4>
+            <p>We design custom layouts using advanced architectures (such as React and Next.js). This ensures semantic HTML, screen compatibility, high accessibility rating, and sub-second page transitions.</p>
+          </div>
+
+          <div class="sub-service-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+              E-Commerce & API Integrations
+            </h4>
+            <p>Secure product catalog pipelines, integrated shopping carts, payment gateways, CRM connections, and external inventory updates configured to synchronize in real time.</p>
+          </div>
+
+          <div class="sub-service-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Speed & Core Web Vitals Optimization
+            </h4>
+            <p>Code bundle splitting, lazy loading assets, local server configurations, database indexing, and asset caching layers to optimize desktop and mobile performance metrics.</p>
+          </div>
+
+          <div class="sub-service-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Uptime Maintenance & Operations
+            </h4>
+            <p>24/7 service monitoring, encrypted database backups, domain configuration, firewalls configuration, and regular code patches to defend against security issues.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Studies / Achievements -->
+    <section class="case-studies">
+      <div class="container">
+        <div class="section-header">
+          <h2>Engineering Showcase & Achievements</h2>
+          <p>Real-world studies of how our technical architectures solved complex business hurdles.</p>
+        </div>
+
+        <div class="case-card">
+          <h3>KshetrivaFarms.com Portal Engineering</h3>
+          <p>An integrated agricultural management platform and e-commerce portal requiring responsive dashboards and offline pesticide calculators for farmers across regional locations.</p>
+          <div class="case-metrics">
+            <div class="metric-item">
+              <div class="metric-value">-60%</div>
+              <div class="metric-label">Page Weight</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">98%</div>
+              <div class="metric-label">Lighthouse Speed</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">+35%</div>
+              <div class="metric-label">Farmer Engagement</div>
+            </div>
+          </div>
+          <p style="font-size: 0.95rem; color: var(--text-secondary);">We audited their legacy script loads, implemented image optimization pipelines, and established lightweight local caching frameworks. This allows farmers in low-bandwidth regional zones to load critical crop advisory profiles instantly and check calculators offline.</p>
+        </div>
+
+        <div class="case-card">
+          <h3>Fintech Analytics Dashboard React Development</h3>
+          <p>A B2B analytics company needed a client-side layout to display live transaction data updates with complex mathematical calculations without browser stutter.</p>
+          <div class="case-metrics">
+            <div class="metric-item">
+              <div class="metric-value">&lt;80ms</div>
+              <div class="metric-label">Render Latency</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value">50K+</div>
+              <div class="metric-label">Daily Active Users</div>
+            </div>
+          </div>
+          <p style="font-size: 0.95rem; color: var(--text-secondary);">We engineered optimized state systems and component virtualization grids to handle large datasets seamlessly on both standard mobile browsers and desktop monitors.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lead Specialist Callout -->
+    <section class="specialist-callout">
+      <div class="container">
+        <div class="specialist-box">
+          <div class="spec-img">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+              <polyline points="8 2 12 6 16 2" />
+            </svg>
+          </div>
+          <div>
+            <h3 style="margin-bottom: 5px;">Aravind Nair</h3>
+            <div class="founder-role" style="color: var(--accent-tech); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 15px;">Lead Technology Architect</div>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px;">Aravind oversees all web operations, custom database scripting, performance diagnostics, and system deployment tasks for HiddenWave. He ensures that all codebases comply with current speed and accessibility targets.</p>
+            <a href="index.html#contact" class="btn btn-primary" style="font-size: 0.9rem; padding: 10px 22px;">Discuss Technical Scope</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" style="margin-bottom: 20px;">
+            HiddenWave
+          </a>
+          <p>Consolidated technology engineering, market acquisition campaigns, and corporate CA compliance solutions under a single execution model.</p>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Pillars</h4>
+          <ul>
+            <li><a href="web-operations.html">Web Operations</a></li>
+            <li><a href="growth-marketing.html">Growth Marketing</a></li>
+            <li><a href="ca-compliance.html">CA Compliance</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Execution</h4>
+          <ul>
+            <li><a href="index.html#team">The Partners</a></li>
+            <li><a href="index.html#synergy">Combined Synergy</a></li>
+            <li><a href="index.html#mixer">Plan Calculator</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@hiddenwave.in">hello@hiddenwave.in</a></li>
+            <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+            <li><a href="index.html#contact">Inquiry Desk</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2026 HiddenWave.in. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
