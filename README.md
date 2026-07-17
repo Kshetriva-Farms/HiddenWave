@@ -22,12 +22,20 @@ HiddenWave unifies three foundational operational tracks: **Web Operations**, **
 
 All code files are located in the `HiddenWave` folder:
 
-- **`index.html`**: Main entrance portal. Hosts the hero banner, core capabilities summaries, an interactive SVG Venn diagram detailing partner responsibilities, the Plan Mixer price builder, and the consultation form.
-- **`styles.css`**: Design system tokens, variables, typography sets (`Outfit` and `Inter` from Google Fonts), responsive grids, keyframes animations, and element highlight rules.
-- **`script.js`**: UI animations observer, mobile responsive navigation menu trigger, interactive Venn sector hover/click descriptions, price discounts calculator, and contact submit AJAX simulations.
+- **`index.html`**: Main entrance portal. Hosts the hero banner, core capabilities summaries, an interactive SVG Venn diagram detailing partner responsibilities, the Plan Mixer price builder, the consultation form, and the Client Portal modal.
+- **`styles.css`**: Design system tokens, variables, typography sets (`Outfit` and `Inter` from Google Fonts), responsive grids, keyframes animations, element highlight rules, and customer auth modal layout.
+- **`script.js`**: UI animations observer, mobile responsive navigation menu trigger, interactive Venn sector hover/click descriptions, price discounts calculator, contact submit AJAX simulations, and Firebase Google Sign-In handlers with local sandbox backup.
 - **`web-operations.html`**: Dedicated showcase page detailing front-end builds, API channels, speed optimization metrics, Next.js e-commerce case studies, and Aravind Nair's bio card.
 - **`growth-marketing.html`**: Dedicated marketing subpage outlining keyword SEO audits, Google/Meta campaign management, ROAS case study achievements, and Rohit Sharma's bio card.
 - **`ca-compliance.html`**: Dedicated chartered accountant subpage highlighting corporate GST filings, statutory audits, startup equity advisory case studies, and Neha Gupta's CA bio card.
+
+---
+
+## 🔐 Client Portal & Authentication
+
+The web portal includes a Client Portal popup modal accessible via the Account button in the header across all pages:
+- **Google Sign-In**: Uses Firebase Authentication with Google Auth Provider to authenticate corporate accounts.
+- **Mock Sandbox Mode**: Automatically runs in offline sandbox mode if Firebase is unconfigured or offline, simulating successful Google Logins for a frictionless developer testing experience.
 
 ---
 
