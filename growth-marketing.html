@@ -158,6 +158,14 @@
           <li><a href="index.html#synergy">Our Synergy</a></li>
           <li><a href="index.html#mixer">Plan Mixer</a></li>
           <li><a href="index.html#team">The Team</a></li>
+          <li>
+            <button id="accountBtn" onclick="openAuthModal()" title="My Account" style="display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; color: var(--text-secondary); width: 38px; height: 38px; border-radius: 50%; transition: all 0.25s ease; border: 1.5px solid var(--border-light); margin-right: 5px;">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </button>
+          </li>
           <li><a href="index.html#contact" class="nav-cta">Book Consultation</a></li>
         </ul>
       </nav>
@@ -335,6 +343,55 @@
     </div>
   </footer>
 
+  <!-- Customer Authentication Modal Overlay -->
+  <div class="auth-modal" id="customerAuthModal">
+    <div class="auth-modal-content">
+      <button class="close-auth-modal" onclick="closeAuthModal()">&times;</button>
+      
+      <!-- Guest State View (Sign In) -->
+      <div id="authGuestView">
+        <h3 style="font-family: var(--font-header);">Client Portal</h3>
+        <p>Access your consolidated business services, campaign audits, and compliance schedules.</p>
+        
+        <button class="btn-google" onclick="handleGoogleSignIn()">
+          <svg viewBox="0 0 18 18" width="18" height="18">
+            <path fill="#4285F4" d="M17.64 9.2c0-.63-.06-1.25-.16-1.84H9v3.47h4.84a4.14 4.14 0 0 1-1.8 2.71v2.26h2.91c1.7-1.57 2.69-3.88 2.69-6.6z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.2l-2.91-2.26a5.58 5.58 0 0 1-8.52-3.08H.51v2.33A9 9 0 0 0 9 18z"/>
+            <path fill="#FBBC05" d="M3.53 10.46A5.4 5.4 0 0 1 3.53 7.54V5.21H.51a9 9 0 0 0 0 7.58l3.02-2.33z"/>
+            <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.59A9 9 0 0 0 .51 5.21l3.02 2.33A5.58 5.58 0 0 1 9 3.58z"/>
+          </svg>
+          <span>Continue with Google</span>
+        </button>
+      </div>
+
+      <!-- Logged In Profile View -->
+      <div id="authProfileView" style="display: none;">
+        <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--gradient-main); color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; margin-bottom: 15px; font-family: var(--font-header);" id="profileInitials">C</div>
+        <h3 id="profileName" style="margin-bottom: 5px; font-family: var(--font-header);">Client Name</h3>
+        <p id="profileEmail" style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-muted);">client@example.com</p>
+        
+        <div class="profile-details-grid">
+          <div class="profile-detail-item">
+            <strong>Verified ID</strong>
+            <span id="profileUid">-</span>
+          </div>
+          <div class="profile-detail-item" style="margin-top: 12px;">
+            <strong>Service Track</strong>
+            <span>Active Strategic Client</span>
+          </div>
+        </div>
+        
+        <button onclick="handleSignOut()" class="btn btn-secondary" style="width: 100%; border: 2px solid #ef4444; color: #ef4444; background: transparent; padding: 12px 0; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; transition: all 0.25s ease;">Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK compat libraries -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <!-- Core Javascript -->
   <script src="script.js"></script>
 </body>
 </html>

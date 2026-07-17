@@ -320,5 +320,150 @@ document.addEventListener('DOMContentLoaded', () => {
       successOverlay.classList.remove('show');
     });
   }
+  // --- Firebase Google Auth Implementation ---
+  
+  // Firebase configuration keys (matching Farms_Version_5)
+  const firebaseConfig = {
+      apiKey: "AIzaSyC4rquVj5Ug2ZdsDci7zHucEUXXVtaCPcI",
+      authDomain: "kshetriva-farms.firebaseapp.com",
+      projectId: "kshetriva-farms",
+      storageBucket: "kshetriva-farms.firebasestorage.app",
+      messagingSenderId: "332889493996",
+      appId: "1:332889493996:web:945cbd393438dc3aa9b0c9"
+  };
+
+  let auth = null;
+  let useFirebase = false;
+  let currentUser = null;
+
+  // Initialize Firebase if compat libraries are loaded
+  if (typeof firebase !== 'undefined') {
+    try {
+      firebase.initializeApp(firebaseConfig);
+      auth = firebase.auth();
+      useFirebase = true;
+      console.log("🌊 HiddenWave: Firebase Initialized successfully.");
+    } catch (e) {
+      console.error("🌊 HiddenWave: Firebase init exception, running in mock/local mode:", e);
+    }
+  } else {
+    console.log("🌊 HiddenWave: Compat SDKs not loaded or running offline, running in mock/local mode.");
+  }
+
+  // Auth state changed listener
+  if (useFirebase && auth) {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        currentUser = {
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName || 'Client User'
+        };
+        updateAuthUI();
+      } else {
+        currentUser = null;
+        updateAuthUI();
+      }
+    });
+  } else {
+    // Restore mock session from storage if offline
+    const session = sessionStorage.getItem('hiddenwave_customer_session');
+    if (session) {
+      try {
+        currentUser = JSON.parse(session);
+      } catch (e) {}
+    }
+    // Update navbar on page load
+    setTimeout(updateAuthUI, 200);
+  }
+
+  // UI state updater
+  function updateAuthUI() {
+    const accountBtn = document.getElementById('accountBtn');
+    const guestView = document.getElementById('authGuestView');
+    const profileView = document.getElementById('authProfileView');
+    
+    if (!accountBtn) return;
+
+    if (currentUser) {
+      const initial = (currentUser.name || 'C').trim().charAt(0).toUpperCase();
+      accountBtn.innerHTML = `<div class="user-avatar" style="background: var(--gradient-main); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; border: 2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.1);">${initial}</div>`;
+      accountBtn.title = `My Account (${currentUser.name})`;
+      
+      // Update modal profile details
+      if (profileView) {
+        document.getElementById('profileInitials').textContent = initial;
+        document.getElementById('profileName').textContent = currentUser.name;
+        document.getElementById('profileEmail').textContent = currentUser.email;
+        document.getElementById('profileUid').textContent = currentUser.uid.substring(0, 12) + "...";
+      }
+      if (guestView) guestView.style.display = 'none';
+      if (profileView) profileView.style.display = 'block';
+    } else {
+      accountBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      `;
+      accountBtn.title = "My Account";
+      
+      if (guestView) guestView.style.display = 'block';
+      if (profileView) profileView.style.display = 'none';
+    }
+  }
+
+  // Global functions exposed to window so inline HTML onclick calls work
+  window.openAuthModal = function() {
+    const modal = document.getElementById('customerAuthModal');
+    if (modal) modal.classList.add('open');
+  };
+
+  window.closeAuthModal = function() {
+    const modal = document.getElementById('customerAuthModal');
+    if (modal) modal.classList.remove('open');
+  };
+
+  window.handleGoogleSignIn = function() {
+    if (useFirebase && auth) {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          console.log("Google Login successful: ", result.user.email);
+          window.closeAuthModal();
+        })
+        .catch((err) => {
+          console.error("Google Login failed: ", err);
+          alert("Login failed: " + err.message);
+        });
+    } else {
+      console.log("Running simulated offline Google login.");
+      const mockUser = {
+        uid: "google_mock_" + Date.now(),
+        email: "google.tester@example.com",
+        name: "Google Tester"
+      };
+      currentUser = mockUser;
+      sessionStorage.setItem('hiddenwave_customer_session', JSON.stringify(mockUser));
+      updateAuthUI();
+      window.closeAuthModal();
+    }
+  };
+
+  window.handleSignOut = function() {
+    if (useFirebase && auth) {
+      auth.signOut()
+        .then(() => {
+          console.log("User signed out.");
+          window.closeAuthModal();
+        })
+        .catch(err => console.error("Signout error:", err));
+    } else {
+      currentUser = null;
+      sessionStorage.removeItem('hiddenwave_customer_session');
+      updateAuthUI();
+      window.closeAuthModal();
+    }
+  };
 
 });
