@@ -5,8 +5,8 @@
   <h3>"1% better every single day."</h3>
   <p><strong>A minimalist, high-focus daily, weekly, and monthly goal and task planner built as an installable Progressive Web App (PWA) with bulletproof 5-tier persistence, touch swipe gestures, voice dictation, customizable Pomodoro focus timer, due time push notifications, 90-day study heatmap, task notes/descriptions, and Master Task Explorer.</strong></p>
   <p>
-    <a href="USER_GUIDE.html"><strong>📖 Open User Guide & Manual (Printable PDF)</strong></a> •
-    <a href="https://hiddenwave.in/kaizen"><strong>🌐 Live Web App</strong></a>
+    <a href="https://kaizen-0.web.app/USER_GUIDE.html"><strong>📖 Open User Guide & Manual (Printable PDF)</strong></a> •
+    <a href="https://kaizen-0.web.app"><strong>🌐 Live Web App</strong></a>
   </p>
 </div>
 
