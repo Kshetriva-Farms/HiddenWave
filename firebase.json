@@ -1,0 +1,47 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/kaizen",
+        "destination": "/Projects/Task_Planner/index.html"
+      },
+      {
+        "source": "/planner",
+        "destination": "/Projects/Task_Planner/index.html"
+      },
+      {
+        "source": "/task-planner",
+        "destination": "/Projects/Task_Planner/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/sw.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|js|css)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604800"
+          }
+        ]
+      }
+    ]
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  }
+}

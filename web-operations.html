@@ -6,16 +6,37 @@
   <meta name="description" content="HiddenWave.in - Custom Web Engineering and Development Operations. Explore our React/Next.js builds and speed optimization case studies.">
   <title>Web Engineering & Operations | HiddenWave</title>
   <link rel="stylesheet" href="styles.css">
+  
+  <!-- Structured SEO Schema Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Web Engineering & Operations",
+    "provider": {
+      "@type": "ProfessionalService",
+      "name": "HiddenWave",
+      "url": "https://hiddenwave.in"
+    },
+    "description": "Bespoke web architectures built for speed, responsiveness, and conversion. Custom websites, API integrations, and maintenance support.",
+    "areaServed": "IN",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "INR"
+    }
+  }
+  </script>
   <style>
     /* Service Sub-Page Specific Clean Adjustments */
     .service-hero {
       background-color: var(--bg-secondary);
       background-image: radial-gradient(var(--border-light) 1.5px, transparent 1.5px);
       background-size: 28px 28px;
-      padding: 140px 0 80px;
+      padding: 150px 0 90px;
       text-align: center;
       position: relative;
       border-bottom: 1px solid var(--border-light);
+      overflow: hidden;
     }
     .service-hero::before {
       content: '';
@@ -24,39 +45,28 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.04), transparent 60%);
+      background: radial-gradient(circle at 50% 50%, rgba(0, 102, 255, 0.04), transparent 60%);
       pointer-events: none;
     }
     .service-hero h1 {
       font-size: 3.2rem;
       margin-bottom: 16px;
     }
-    .sub-grid {
+    
+    /* Layout & Showcase Grid */
+    .showcase-container {
+      padding: 60px 0 90px;
+      background-color: var(--bg-primary);
+    }
+    .showcase-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 2fr 1fr;
       gap: 40px;
-      margin-top: 50px;
+      align-items: start;
     }
-    .sub-service-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 30px;
-      box-shadow: var(--shadow-sm);
-    }
-    .sub-service-card h4 {
-      font-size: 1.25rem;
-      margin-bottom: 10px;
-      color: var(--accent-tech);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .case-studies {
-      background: var(--bg-primary);
-      padding: 90px 0;
-    }
-    .case-card {
+    
+    /* Left Column (Showcase Cards) */
+    .showcase-card {
       background: var(--bg-secondary);
       border: 1px solid var(--border-light);
       border-radius: var(--radius-md);
@@ -64,39 +74,464 @@
       margin-bottom: 30px;
       box-shadow: var(--shadow-sm);
     }
-    .case-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 15px;
+    .showcase-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 20px;
       border-bottom: 1.5px solid var(--border-light);
       padding-bottom: 10px;
-    }
-    .case-metrics {
+      color: var(--text-primary);
       display: flex;
-      gap: 30px;
-      margin: 20px 0;
+      align-items: center;
+      gap: 10px;
+    }
+    .showcase-card p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    
+    /* What We Build Checklist */
+    .checklist-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+    .checklist-item svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--accent-tech);
+      stroke-width: 3;
+      fill: none;
+      flex-shrink: 0;
+    }
+    
+    /* Key Features Tags Grid */
+    .features-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .feature-tag {
       background: var(--bg-tertiary);
-      padding: 20px;
-      border-radius: var(--radius-sm);
       border: 1px solid var(--border-light);
+      border-radius: 30px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: all 0.25s ease;
     }
-    .metric-item {
-      text-align: center;
-    }
-    .metric-value {
-      font-size: 1.8rem;
-      font-weight: 800;
+    .feature-tag:hover {
+      border-color: var(--accent-tech);
       color: var(--accent-tech);
-      font-family: var(--font-header);
+      background: rgba(0, 102, 255, 0.04);
     }
-    .metric-label {
-      font-size: 0.8rem;
+    
+    /* Tech Stack Tags */
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 15px;
+    }
+    .tech-tag {
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.05) 0%, rgba(0, 180, 216, 0.05) 100%);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 10px 20px;
+      font-family: var(--font-header);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      transition: all 0.25s ease;
+    }
+    .tech-tag:hover {
+      border-color: var(--accent-tech);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Right Column (Sidebar) */
+    .sticky-sidebar {
+      position: sticky;
+      top: 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    .sidebar-widget {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+    }
+    .sidebar-widget h4 {
+      font-size: 1.1rem;
+      margin-bottom: 18px;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 10px;
+    }
+    .widget-details-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .widget-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .widget-detail-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: rgba(0, 102, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-tech);
+      flex-shrink: 0;
+    }
+    .widget-detail-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+    .widget-detail-text p {
+      font-size: 0.72rem;
       color: var(--text-muted);
+      margin: 0;
       text-transform: uppercase;
       font-weight: 600;
+      letter-spacing: 0.5px;
     }
+    .widget-detail-text h5 {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      margin: 0;
+      font-weight: 600;
+    }
+
+    /* Dynamic cost range widget card */
+    .pricing-estimate-box {
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.02) 0%, rgba(124, 58, 237, 0.02) 100%);
+      border: 1.5px solid var(--border-light);
+      text-align: center;
+    }
+    .pricing-estimate-val {
+      font-family: var(--font-header);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 10px 0 4px;
+    }
+    .pricing-estimate-range {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    
+    /* Configurator section styles */
+    .calculator-section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 45px;
+      box-shadow: var(--shadow-lg);
+      margin-top: 50px;
+    }
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 40px;
+    }
+    .calc-group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 25px 0 15px;
+      border-bottom: 1.5px solid var(--border-light);
+      padding-bottom: 8px;
+    }
+    .calc-group-header:first-of-type {
+      margin-top: 0;
+    }
+    .calc-group-header h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .select-all-btn {
+      background: none;
+      border: none;
+      color: var(--accent-tech);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      transition: opacity 0.2s ease;
+    }
+    .select-all-btn:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+    .calc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .calc-item-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--bg-primary);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+    }
+    .calc-item-card:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--border-medium);
+    }
+    .calc-item-card.active {
+      background: var(--bg-secondary);
+      border-color: var(--accent-tech);
+      box-shadow: 0 4px 12px rgba(0, 102, 255, 0.05);
+    }
+    .calc-checkbox-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 2px solid var(--border-medium);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      background-color: transparent;
+      flex-shrink: 0;
+    }
+    .calc-item-card.active .calc-checkbox-box {
+      border-color: transparent;
+      background-color: var(--accent-tech);
+    }
+    .calc-checkbox-box svg {
+      width: 12px;
+      height: 12px;
+      stroke: #fff;
+      stroke-width: 4;
+      fill: none;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.2s ease;
+    }
+    .calc-item-card.active .calc-checkbox-box svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .calc-item-info {
+      flex-grow: 1;
+    }
+    .calc-item-info h5 {
+      font-size: 1rem;
+      margin-bottom: 2px;
+      color: var(--text-primary);
+    }
+    .calc-item-info p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .calc-item-price {
+      font-family: var(--font-header);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+    }
+    
+    /* Results Box */
+    .calc-result-box {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+    .calc-result-title {
+      font-size: 1.25rem;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 12px;
+      font-weight: 700;
+    }
+    .calc-result-price-range {
+      font-family: var(--font-header);
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 15px 0 5px;
+    }
+    .calc-result-period {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .calc-result-discount-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      background: rgba(5, 150, 105, 0.08);
+      border: 1px solid rgba(5, 150, 105, 0.15);
+      color: #059669;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 20px;
+      margin-bottom: 25px;
+      width: fit-content;
+    }
+    .calc-deliverables-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .calc-deliverables-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    .calc-deliverables-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    .calc-deliverables-list li svg {
+      width: 16px;
+      height: 16px;
+      stroke: #059669;
+      stroke-width: 3;
+      fill: none;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .calculator-cta-btn {
+      width: 100%;
+      padding: 14px 0;
+      background: var(--text-primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+      transition: all 0.25s ease;
+      text-align: center;
+      display: inline-block;
+    }
+    .calculator-cta-btn:hover {
+      background: var(--accent-tech);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 102, 255, 0.2);
+    }
+    
+    /* Related Projects Section */
+    .related-projects-section {
+      background: var(--bg-primary);
+      padding: 90px 0;
+      border-top: 1px solid var(--border-light);
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .related-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .related-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-card-hover);
+      border-color: var(--accent-tech);
+    }
+    .related-card-img {
+      height: 200px;
+      position: relative;
+    }
+    .related-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.8), transparent);
+    }
+    .related-card-content {
+      padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .related-card-content h4 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+    .related-card-content p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .related-card-link {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--accent-tech);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+    }
+    
+    /* Specialist Callout */
     .specialist-callout {
       background: var(--bg-secondary);
       padding: 90px 0;
+      border-top: 1px solid var(--border-light);
     }
     .specialist-box {
       display: grid;
@@ -126,11 +561,17 @@
       stroke: var(--accent-tech);
       stroke-width: 1.5;
     }
-    @media (max-width: 768px) {
-      .sub-grid, .specialist-box {
+    @media (max-width: 992px) {
+      .showcase-grid, .calculator-grid, .checklist-list, .related-grid, .specialist-box {
         grid-template-columns: 1fr;
         gap: 30px;
+      }
+      .sticky-sidebar {
+        position: static;
+      }
+      .specialist-box {
         padding: 30px 20px;
+        text-align: center;
       }
     }
   </style>
@@ -141,8 +582,54 @@
   <header id="header">
     <div class="container nav-container">
       <a href="index.html" class="logo">
-        <svg viewBox="0 0 100 100">
-          <path d="M15,65 Q30,35 45,55 T75,45 T85,30" stroke="url(#logo-grad)" stroke-width="2.5" fill="none" stroke-linecap="round" />
+        <svg viewBox="0 0 100 100" class="logo-svg" style="width: 32px; height: 32px; flex-shrink: 0; overflow: visible; margin-right: 10px;">
+          <defs>
+            <linearGradient id="logo-blue-sub" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#0052d4" />
+              <stop offset="100%" stop-color="#00b4d8" />
+            </linearGradient>
+            <linearGradient id="logo-teal-sub" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00b4d8" />
+              <stop offset="100%" stop-color="#00a896" />
+            </linearGradient>
+            <linearGradient id="logo-purple-sub" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#7928ca" />
+              <stop offset="100%" stop-color="#6f42c1" />
+            </linearGradient>
+            <clipPath id="circle-clip-sub">
+              <circle cx="50" cy="50" r="45" />
+            </clipPath>
+          </defs>
+          <g clip-path="url(#circle-clip-sub)">
+            <!-- Top Wave (Blue) -->
+            <path d="M -10,-10 L 110,-10 L 110,38 C 85,50 65,32 50,32 C 35,32 15,48 -10,42 Z" fill="url(#logo-blue-sub)" />
+            <!-- Middle Wave (Teal) -->
+            <path d="M -10,48 C 15,54 35,38 50,38 C 65,38 85,56 110,44 L 110,60 C 85,72 65,54 50,54 C 35,54 15,70 -10,64 Z" fill="url(#logo-teal-sub)" />
+            <!-- Bottom Wave (Purple) -->
+            <path d="M -10,70 C 15,76 35,60 50,60 C 65,60 85,78 110,66 L 110,110 L -10,110 Z" fill="url(#logo-purple-sub)" />
+            <!-- Globe Icon -->
+            <g transform="translate(30, 8) scale(0.65)" stroke="#ffffff" stroke-width="1.8" fill="none">
+              <circle cx="10" cy="10" r="8" />
+              <path d="M 2,10 H 18 M 10,2 V 18" />
+              <ellipse cx="10" cy="10" rx="3.5" ry="8" />
+            </g>
+            <!-- Growth Chart Icon -->
+            <g transform="translate(56, 40) scale(0.6)" fill="#ffffff">
+              <rect x="2" y="11" width="3" height="7" rx="0.5" />
+              <rect x="7" y="7" width="3" height="11" rx="0.5" />
+              <rect x="12" y="3" width="3" height="15" rx="0.5" />
+              <path d="M 1,14 Q 6,9 11,4" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" />
+              <path d="M 8,4 H 11 V 7" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" />
+            </g>
+            <!-- Checklist Document Icon -->
+            <g transform="translate(34, 68) scale(0.65)" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round">
+              <rect x="2" y="2" width="12" height="15" rx="1.5" />
+              <line x1="5" y1="6" x2="11" y2="6" />
+              <line x1="5" y1="10" x2="11" y2="10" />
+              <path d="M 5,14 L 7,16 L 11,12" stroke="#ffffff" stroke-width="1.5" fill="none" />
+            </g>
+          </g>
+          <circle cx="50" cy="50" r="45" fill="none" stroke="url(#logo-blue-sub)" stroke-width="1.5" opacity="0.4" />
         </svg>
         HiddenWave
       </a>
@@ -154,10 +641,17 @@
       <nav id="nav-menu">
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#services">Services</a></li>
+          <li class="nav-dropdown-wrapper">
+            <a href="#" class="nav-dropdown-toggle">Services <span style="font-size: 0.6rem; vertical-align: middle; margin-left: 2px;">▼</span></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="web-operations.html">Web Operations</a></li>
+              <li><a href="growth-marketing.html">Growth Marketing</a></li>
+              <li><a href="ca-compliance.html">CA Compliance</a></li>
+            </ul>
+          </li>
           <li><a href="index.html#synergy">Our Synergy</a></li>
-          <li><a href="index.html#mixer">Plan Mixer</a></li>
           <li><a href="index.html#team">The Team</a></li>
+          <li><a href="blog.html">Blog</a></li>
           <li>
             <button id="accountBtn" onclick="openAuthModal()" title="My Account" style="display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; color: var(--text-secondary); width: 38px; height: 38px; border-radius: 50%; transition: all 0.25s ease; border: 1.5px solid var(--border-light); margin-right: 5px;">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -176,98 +670,391 @@
     <!-- Service Hero -->
     <section class="service-hero">
       <div class="container">
-        <div class="hero-tag">Core Specialization</div>
-        <h1>Web Engineering & Operations</h1>
-        <p style="max-width: 600px; margin: 0 auto; color: var(--text-secondary);">High-performance web applications, API pipelines, and custom web management built to load instantly and convert visitors.</p>
+        <div class="hero-tag">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 4px; vertical-align: middle;">
+            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
+            <line x1="12" y1="22" x2="12" y2="15.5" />
+            <polyline points="22 8.5 12 15.5 2 8.5" />
+            <polyline points="2 15.5 12 8.5 22 15.5" />
+            <line x1="12" y1="2" x2="12" y2="8.5" />
+          </svg>
+          Website Design & Support
+        </div>
+        <h1>Website Design & Support</h1>
+        <p style="max-width: 700px; margin: 0 auto; color: var(--text-secondary); font-size: 1.15rem;">We design and code fast websites, e-commerce online stores, custom logins, and secure databases. Simple systems to help you sell more.</p>
       </div>
     </section>
 
-    <!-- Detailed Sub-Services -->
-    <section class="section">
+    <!-- Two-Column Showcase Section -->
+    <section class="showcase-container">
       <div class="container">
-        <div class="section-header">
-          <h2>Our Web Services Capabilities</h2>
-          <p>We provide full-lifecycle digital product development from structural blueprints to continuous server maintenance.</p>
+        <div class="showcase-grid">
+          
+          <!-- Left Column (Core Details) -->
+          <div class="showcase-left">
+            
+            <!-- About the Showcase -->
+            <div class="showcase-card">
+              <h3>
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                About This Service
+              </h3>
+              <p>We build custom, modern websites that load quickly and are easy for your customers to use. We don't use clunky pre-made templates, ensuring your site looks professional and stands out.</p>
+              <p>We can build everything from a simple page showing your contact details to a full online shop. For example, our <strong>Grocery Online Shop</strong> features custom customer ordering profiles, delivery schedules, secure payments (like GPay/UPI/Cards), and works smoothly even on slow phone connections.</p>
+              
+              <h4 style="margin-top: 30px; font-weight: 700; color: var(--text-primary);">What We Build:</h4>
+              <ul class="checklist-list">
+                <li class="checklist-item">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  Responsive Web Interfaces
+                </li>
+                <li class="checklist-item">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  Sub-second Page Load Speeds
+                </li>
+                <li class="checklist-item">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  SEO-Optimized Codebases
+                </li>
+                <li class="checklist-item">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  Secure Database Pipelines
+                </li>
+                <li class="checklist-item">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  Real-time Admin CMS Panels
+                </li>
+                <li class="checklist-item">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  E-Commerce Storefront Systems
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Key Product Features -->
+            <div class="showcase-card">
+              <h3>
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/></svg>
+                Key Build Features
+              </h3>
+              <p>Every web system we develop is tailored to support key operational requirements depending on the selected plan scope:</p>
+              <div class="features-tags">
+                <span class="feature-tag">Responsive Website</span>
+                <span class="feature-tag">Android / iOS App Wrapper</span>
+                <span class="feature-tag">Admin Panel & Controls</span>
+                <span class="feature-tag">Customer Portal</span>
+                <span class="feature-tag">Merchant / Seller Dashboard</span>
+                <span class="feature-tag">Payment Gateway Integration</span>
+                <span class="feature-tag">Real-time Order Tracking</span>
+                <span class="feature-tag">Push Notifications Sync</span>
+                <span class="feature-tag">Live Help Desk Chat</span>
+                <span class="feature-tag">Custom API Channels</span>
+              </div>
+            </div>
+            
+            <!-- Technology Stack -->
+            <div class="showcase-card">
+              <h3>
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="2" width="20" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="2"/><line x1="17" y1="22" x2="17" y2="2"/></svg>
+                Technology Stack
+              </h3>
+              <p>We deploy modern, developer-friendly technology channels that scale securely with your customer volume increases:</p>
+              <div class="tech-tags">
+                <span class="tech-tag">React.js / Next.js</span>
+                <span class="tech-tag">Node.js / Express</span>
+                <span class="tech-tag">MongoDB / PostgreSQL</span>
+                <span class="tech-tag">Amazon Web Services (AWS)</span>
+                <span class="tech-tag">Firebase Authentication</span>
+                <span class="tech-tag">Stripe / Razorpay APIs</span>
+              </div>
+            </div>
+
+            <!-- Case Study Showcase -->
+            <div class="showcase-card" id="case-farms">
+              <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <img src="images/kshetriva_logo.webp" alt="Kshetriva Farms Logo" style="height: 42px; width: auto; border-radius: var(--radius-sm);">
+                <h3 style="margin: 0; font-family: var(--font-header);">Case Study: KshetrivaFarms.com</h3>
+              </div>
+              <p>An integrated online agricultural marketplace and grocery delivery e-commerce system built to operate across urban and low-bandwidth regional farm sites.</p>
+              <p style="font-size: 0.95rem; color: var(--text-secondary); background: var(--bg-tertiary); padding: 18px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-tech); margin-bottom: 20px;">
+                <strong>Engineering Challenge:</strong> Supporting regional farmers with limited network connectivity who need to check advisory logs and update produce inventory offline. <br>
+                <strong>Solution:</strong> We optimized page loading sizes (saving 60% in download weight) and built a lightweight client caching layer for offline calculators. This scaled farmer engagement by 35%.
+              </p>
+              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 120px; background: var(--bg-primary); border: 1px solid var(--border-light); padding: 15px; border-radius: var(--radius-sm); text-align: center;">
+                  <h4 style="font-size: 1.8rem; font-weight: 800; color: var(--accent-tech); font-family: var(--font-header); margin-bottom: 2px;">98%</h4>
+                  <p style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin: 0; letter-spacing: 0.5px;">Lighthouse Speed</p>
+                </div>
+                <div style="flex: 1; min-width: 120px; background: var(--bg-primary); border: 1px solid var(--border-light); padding: 15px; border-radius: var(--radius-sm); text-align: center;">
+                  <h4 style="font-size: 1.8rem; font-weight: 800; color: var(--accent-tech); font-family: var(--font-header); margin-bottom: 2px;">-60%</h4>
+                  <p style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin: 0; letter-spacing: 0.5px;">Page Bundle Weight</p>
+                </div>
+                <div style="flex: 1; min-width: 120px; background: var(--bg-primary); border: 1px solid var(--border-light); padding: 15px; border-radius: var(--radius-sm); text-align: center;">
+                  <h4 style="font-size: 1.8rem; font-weight: 800; color: var(--accent-tech); font-family: var(--font-header); margin-bottom: 2px;">+35%</h4>
+                  <p style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin: 0; letter-spacing: 0.5px;">Farmer Acquisition</p>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          
+          <!-- Right Column (Sidebar Summary & Fast Estimate) -->
+          <div class="showcase-right">
+            <div class="sticky-sidebar">
+              
+              <!-- Track Details Widget -->
+              <div class="sidebar-widget">
+                <h4>Track Details</h4>
+                <ul class="widget-details-list">
+                  <li class="widget-detail-item">
+                    <div class="widget-detail-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="widget-detail-text">
+                      <p>Lead Developer</p>
+                      <h5>K.Vishnu Vardhan</h5>
+                    </div>
+                  </li>
+                  <li class="widget-detail-item">
+                    <div class="widget-detail-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+                    </div>
+                    <div class="widget-detail-text">
+                      <p>Project Class</p>
+                      <h5>Web Design & Dev</h5>
+                    </div>
+                  </li>
+                  <li class="widget-detail-item">
+                    <div class="widget-detail-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    </div>
+                    <div class="widget-detail-text">
+                      <p>Platforms</p>
+                      <h5>Phone & Computer Sites</h5>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              
+              <!-- Baseline Estimate Widget -->
+              <div class="sidebar-widget pricing-estimate-box">
+                <h4>Starting Price</h4>
+                <div class="pricing-estimate-val">₹10,000</div>
+                <div class="pricing-estimate-range">Starting Rate</div>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.4;">Rates apply dynamically depending on component selections. Build a customized plan below.</p>
+                <a href="#calculator" class="calculator-cta-btn" style="text-decoration: none;">Configure Package Cost &rarr;</a>
+              </div>
+              
+            </div>
+          </div>
+          
         </div>
 
-        <div class="sub-grid">
-          <div class="sub-service-card">
-            <h4>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-10 10-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.5 1.5"/><path d="M14 14l3-3"/></svg>
-              Custom Front-End Engineering
-            </h4>
-            <p>We design custom layouts using advanced architectures (such as React and Next.js). This ensures semantic HTML, screen compatibility, high accessibility rating, and sub-second page transitions.</p>
+        <!-- Custom Interactive Pricing Calculator -->
+        <div class="calculator-section" id="calculator">
+          <div style="margin-bottom: 35px; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto;">
+            <h3 style="font-size: 1.8rem; margin-bottom: 8px; font-weight: 800;">💰 Estimate Your Website Cost</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Select the services you need below. The calculator will automatically show your estimated price. Selecting multiple main services gives you a discount!</p>
           </div>
+          
+          <div class="calculator-grid">
+            <!-- Left Side controls -->
+            <div>
+              <!-- Group 1: Core Services -->
+              <div class="calc-group-header">
+                <h4>Choose Main Services</h4>
+                <button type="button" class="select-all-btn" id="calc-select-all-cores">Select All</button>
+              </div>
+              <div class="calc-list">
+                <!-- Landing Page -->
+                <div class="calc-item-card active" data-price="10000" data-type="core" data-id="landing">
+                  <div class="calc-checkbox-box">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="calc-item-info">
+                    <h5>Basic Website / Landing Page</h5>
+                    <p>Perfect for showing your business services, maps, and a contact form.</p>
+                  </div>
+                  <div class="calc-item-price">₹10,000</div>
+                </div>
+                <!-- E-Commerce Store -->
+                <div class="calc-item-card" data-price="25000" data-type="core" data-id="ecommerce">
+                  <div class="calc-checkbox-box">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="calc-item-info">
+                    <h5>Online Store (E-Commerce)</h5>
+                    <p>Perfect for selling products online (like a grocery store, clothing shop, etc.).</p>
+                  </div>
+                  <div class="calc-item-price">₹25,000</div>
+                </div>
+                <!-- Advanced Web App -->
+                <div class="calc-item-card" data-price="35000" data-type="core" data-id="webapp">
+                  <div class="calc-checkbox-box">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="calc-item-info">
+                    <h5>Advanced Custom Portal</h5>
+                    <p>Perfect if you need custom logins, user profiles, or dashboard tools for clients.</p>
+                  </div>
+                  <div class="calc-item-price">₹35,000</div>
+                </div>
+                <!-- Backend API -->
+                <div class="calc-item-card" data-price="30000" data-type="core" data-id="backend">
+                  <div class="calc-checkbox-box">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="calc-item-info">
+                    <h5>Database & Server Integration</h5>
+                    <p>Secure database setup to store customer information, logins, and private details.</p>
+                  </div>
+                  <div class="calc-item-price">₹30,000</div>
+                </div>
+              </div>
 
-          <div class="sub-service-card">
-            <h4>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-              E-Commerce & API Integrations
-            </h4>
-            <p>Secure product catalog pipelines, integrated shopping carts, payment gateways, CRM connections, and external inventory updates configured to synchronize in real time.</p>
-          </div>
-
-          <div class="sub-service-card">
-            <h4>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Speed & Core Web Vitals Optimization
-            </h4>
-            <p>Code bundle splitting, lazy loading assets, local server configurations, database indexing, and asset caching layers to optimize desktop and mobile performance metrics.</p>
-          </div>
-
-          <div class="sub-service-card">
-            <h4>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              Uptime Maintenance & Operations
-            </h4>
-            <p>24/7 service monitoring, encrypted database backups, domain configuration, firewalls configuration, and regular code patches to defend against security issues.</p>
+              <!-- Group 2: Add-ons -->
+              <div class="calc-group-header" style="margin-top: 35px;">
+                <h4>Add Extra Features</h4>
+                <button type="button" class="select-all-btn" id="calc-select-all-addons">Select All</button>
+              </div>
+              <div class="calc-list">
+                <!-- CMS Panel -->
+                <div class="calc-item-card" data-price="5000" data-type="addon" data-id="cms">
+                  <div class="calc-checkbox-box">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="calc-item-info">
+                    <h5>Admin Control Dashboard</h5>
+                    <p>An easy admin panel to add products, change details, and view your orders.</p>
+                  </div>
+                  <div class="calc-item-price">+₹5,000</div>
+                </div>
+                <!-- Payment Gateway -->
+                <div class="calc-item-card" data-price="5000" data-type="addon" data-id="payments">
+                  <div class="calc-checkbox-box">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="calc-item-info">
+                    <h5>Card/Online Payments System</h5>
+                    <p>Accept Credit Cards, UPI, Razorpay, or Stripe payments directly on your website.</p>
+                  </div>
+                  <div class="calc-item-price">+₹5,000</div>
+                </div>
+                <!-- Push Notifications -->
+                <div class="calc-item-card" data-price="5000" data-type="addon" data-id="notifications">
+                  <div class="calc-checkbox-box">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="calc-item-info">
+                    <h5>Email & SMS Notifications</h5>
+                    <p>Send auto-receipts, booking updates, or status emails to your customers instantly.</p>
+                  </div>
+                  <div class="calc-item-price">+₹5,000</div>
+                </div>
+                <!-- Live Chat -->
+                <div class="calc-item-card" data-price="5000" data-type="addon" data-id="chat">
+                  <div class="calc-checkbox-box">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="calc-item-info">
+                    <h5>Live Support Chat Box</h5>
+                    <p>A simple chat bubble on your site so visitors can talk to you instantly.</p>
+                  </div>
+                  <div class="calc-item-price">+₹5,000</div>
+                </div>
+                <!-- Analytics -->
+                <div class="calc-item-card" data-price="5000" data-type="addon" data-id="analytics">
+                  <div class="calc-checkbox-box">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="calc-item-info">
+                    <h5>Sales & Traffic Reports</h5>
+                    <p>Simple charts showing how many people visited your site and what they bought.</p>
+                  </div>
+                  <div class="calc-item-price">+₹5,000</div>
+                </div>
+                <!-- Multi-Language -->
+                <div class="calc-item-card" data-price="5000" data-type="addon" data-id="language">
+                  <div class="calc-checkbox-box">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="calc-item-info">
+                    <h5>Language Switcher</h5>
+                    <p>Let users switch your website between English, Hindi, Telugu, etc.</p>
+                  </div>
+                  <div class="calc-item-price">+₹5,000</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Side Output display -->
+            <div style="position: sticky; top: 100px; height: fit-content;">
+              <div class="calc-result-box">
+                <div>
+                  <div class="calc-result-title">Cost Estimate</div>
+                  <div style="font-size: 0.88rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;">Estimated Total</div>
+                  <div class="calc-result-price-range" id="wcalc-range">₹10,000 - ₹13,000</div>
+                  <div class="calc-result-period">Based on selected features</div>
+                  
+                  <div class="calc-result-discount-badge" id="wcalc-discount-badge" style="display: none;">
+                    Consolidated Discount: <span id="wcalc-discount-val">0%</span>
+                  </div>
+                  
+                  <div class="calc-deliverables-title">Included Deliverables</div>
+                  <ul class="calc-deliverables-list" id="wcalc-deliverables">
+                    <!-- Javascript populated -->
+                  </ul>
+                </div>
+                
+                <a href="index.html#contact" class="calculator-cta-btn" id="wcalc-submit">Schedule Consultation with Lead Developer</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Case Studies / Achievements -->
-    <section class="case-studies">
+    <!-- Related Portfolio Showcases -->
+    <section class="related-projects-section">
       <div class="container">
-        <div class="section-header">
-          <h2>Engineering Showcase & Achievements</h2>
-          <p>Real-world studies of how our technical architectures solved complex business hurdles.</p>
+        <div style="max-width: 600px; margin-bottom: 45px;">
+          <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 10px;">Related Showcase Portfolios</h2>
+          <p style="color: var(--text-muted); font-size: 1rem;">Explore other customized platform builds currently in planning or configuration.</p>
         </div>
-
-        <div class="case-card">
-          <h3>KshetrivaFarms.com Portal Engineering</h3>
-          <p>An integrated agricultural management platform and e-commerce portal requiring responsive dashboards and offline pesticide calculators for farmers across regional locations.</p>
-          <div class="case-metrics">
-            <div class="metric-item">
-              <div class="metric-value">-60%</div>
-              <div class="metric-label">Page Weight</div>
+        
+        <div class="related-grid">
+          <!-- Card 1: Jewellery -->
+          <div class="related-card">
+            <div class="related-card-img" style="background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);">
+              <!-- Premium overlay -->
+              <div style="position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.25);">Showcase Preview</div>
+              <div class="related-card-overlay"></div>
+              <div style="position: absolute; bottom: 20px; left: 24px; color: #fff;">
+                <span style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; opacity: 0.85;">E-commerce Track</span>
+                <h3 style="color: #fff; margin-top: 2px; font-size: 1.4rem;">Jewellery E-Commerce Website & App</h3>
+              </div>
             </div>
-            <div class="metric-item">
-              <div class="metric-value">98%</div>
-              <div class="metric-label">Lighthouse Speed</div>
-            </div>
-            <div class="metric-item">
-              <div class="metric-value">+35%</div>
-              <div class="metric-label">Farmer Engagement</div>
+            <div class="related-card-content">
+              <p>Complete custom jewellery platform highlighting high-resolution item showcases, integrated gold rate tickers, and secure vault storage configurations.</p>
+              <a href="#" class="related-card-link">View Configured Range (Starting ₹1,80,000) &rarr;</a>
             </div>
           </div>
-          <p style="font-size: 0.95rem; color: var(--text-secondary);">We audited their legacy script loads, implemented image optimization pipelines, and established lightweight local caching frameworks. This allows farmers in low-bandwidth regional zones to load critical crop advisory profiles instantly and check calculators offline.</p>
-        </div>
-
-        <div class="case-card">
-          <h3>Fintech Analytics Dashboard React Development</h3>
-          <p>A B2B analytics company needed a client-side layout to display live transaction data updates with complex mathematical calculations without browser stutter.</p>
-          <div class="case-metrics">
-            <div class="metric-item">
-              <div class="metric-value">&lt;80ms</div>
-              <div class="metric-label">Render Latency</div>
+          
+          <!-- Card 2: Clothing & Fashion -->
+          <div class="related-card">
+            <div class="related-card-img" style="background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);">
+              <div style="position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.25);">Showcase Preview</div>
+              <div class="related-card-overlay"></div>
+              <div style="position: absolute; bottom: 20px; left: 24px; color: #fff;">
+                <span style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; opacity: 0.85;">Digital Retail</span>
+                <h3 style="color: #fff; margin-top: 2px; font-size: 1.4rem;">Clothing & Fashion Website & App</h3>
+              </div>
             </div>
-            <div class="metric-item">
-              <div class="metric-value">50K+</div>
-              <div class="metric-label">Daily Active Users</div>
+            <div class="related-card-content">
+              <p>Tailored e-commerce systems highlighting visual size configurators, wishlist logs, local parcel delivery systems, and returns pipelines.</p>
+              <a href="#" class="related-card-link">View Configured Range (Starting ₹1,80,000) &rarr;</a>
             </div>
           </div>
-          <p style="font-size: 0.95rem; color: var(--text-secondary);">We engineered optimized state systems and component virtualization grids to handle large datasets seamlessly on both standard mobile browsers and desktop monitors.</p>
         </div>
       </div>
     </section>
@@ -277,16 +1064,12 @@
       <div class="container">
         <div class="specialist-box">
           <div class="spec-img">
-            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-              <polyline points="8 2 12 6 16 2" />
-            </svg>
+            <img src="images/vishnu_headshot.png" alt="K. Vishnu Vardhan" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
           </div>
           <div>
-            <h3 style="margin-bottom: 5px;">Aravind Nair</h3>
-            <div class="founder-role" style="color: var(--accent-tech); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 15px;">Lead Technology Architect</div>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px;">Aravind oversees all web operations, custom database scripting, performance diagnostics, and system deployment tasks for HiddenWave. He ensures that all codebases comply with current speed and accessibility targets.</p>
+            <h3 style="margin-bottom: 5px; font-weight: 700;">K.Vishnu Vardhan</h3>
+            <div style="color: var(--accent-tech); font-weight: 600; font-size: 0.95rem; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Developer & Web Lead</div>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.6;">Vishnu Vardhan manages all frontend engineering, database architectures, external API channels, and server deployments for HiddenWave. He ensures that all codebases align with sub-second page transition speeds and strict security protocols.</p>
             <a href="index.html#contact" class="btn btn-primary" style="font-size: 0.9rem; padding: 10px 22px;">Discuss Technical Scope</a>
           </div>
         </div>
@@ -300,18 +1083,51 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="logo" style="margin-bottom: 20px;">
+            <svg viewBox="0 0 100 100" class="logo-svg" style="width: 28px; height: 28px; flex-shrink: 0; overflow: visible; margin-right: 10px;">
+              <g clip-path="url(#circle-clip-sub)">
+                <!-- Top Wave (Blue) -->
+                <path d="M -10,-10 L 110,-10 L 110,38 C 85,50 65,32 50,32 C 35,32 15,48 -10,42 Z" fill="url(#logo-blue-sub)" />
+                <!-- Middle Wave (Teal) -->
+                <path d="M -10,48 C 15,54 35,38 50,38 C 65,38 85,56 110,44 L 110,60 C 85,72 65,54 50,54 C 35,54 15,70 -10,64 Z" fill="url(#logo-teal-sub)" />
+                <!-- Bottom Wave (Purple) -->
+                <path d="M -10,70 C 15,76 35,60 50,60 C 65,60 85,78 110,66 L 110,110 L -10,110 Z" fill="url(#logo-purple-sub)" />
+                <!-- Globe Icon -->
+                <g transform="translate(30, 8) scale(0.65)" stroke="#ffffff" stroke-width="1.8" fill="none">
+                  <circle cx="10" cy="10" r="8" />
+                  <path d="M 2,10 H 18 M 10,2 V 18" />
+                  <ellipse cx="10" cy="10" rx="3.5" ry="8" />
+                </g>
+                <!-- Growth Chart Icon -->
+                <g transform="translate(56, 40) scale(0.6)" fill="#ffffff">
+                  <rect x="2" y="11" width="3" height="7" rx="0.5" />
+                  <rect x="7" y="7" width="3" height="11" rx="0.5" />
+                  <rect x="12" y="3" width="3" height="15" rx="0.5" />
+                  <path d="M 1,14 Q 6,9 11,4" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" />
+                  <path d="M 8,4 H 11 V 7" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" />
+                </g>
+                <!-- Checklist Document Icon -->
+                <g transform="translate(34, 68) scale(0.65)" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round">
+                  <rect x="2" y="2" width="12" height="15" rx="1.5" />
+                  <line x1="5" y1="6" x2="11" y2="6" />
+                  <line x1="5" y1="10" x2="11" y2="10" />
+                  <path d="M 5,14 L 7,16 L 11,12" stroke="#ffffff" stroke-width="1.5" fill="none" />
+                </g>
+              </g>
+              <circle cx="50" cy="50" r="45" fill="none" stroke="url(#logo-blue-sub)" stroke-width="1.5" opacity="0.4" />
+            </svg>
             HiddenWave
           </a>
           <p>Consolidated technology engineering, market acquisition campaigns, and corporate CA compliance solutions under a single execution model.</p>
         </div>
         
         <div class="footer-col">
-          <h4>Pillars</h4>
-          <ul>
-            <li><a href="web-operations.html">Web Operations</a></li>
-            <li><a href="growth-marketing.html">Growth Marketing</a></li>
-            <li><a href="ca-compliance.html">CA Compliance</a></li>
-          </ul>
+          <h4>Services</h4>
+          <select onchange="if(this.value) window.location.href=this.value;" style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-light); background: var(--bg-secondary); color: var(--text-primary); cursor: pointer; font-size: 0.9rem; width: 100%; max-width: 200px; font-weight: 500; font-family: var(--font-body); transition: all 0.25s ease;">
+            <option value="" disabled selected>Explore Services</option>
+            <option value="web-operations.html">Web Operations</option>
+            <option value="growth-marketing.html">Growth Marketing</option>
+            <option value="ca-compliance.html">CA Compliance</option>
+          </select>
         </div>
         
         <div class="footer-col">
@@ -319,15 +1135,15 @@
           <ul>
             <li><a href="index.html#team">The Partners</a></li>
             <li><a href="index.html#synergy">Combined Synergy</a></li>
-            <li><a href="index.html#mixer">Plan Calculator</a></li>
+            <li><a href="blog.html">Business Blog</a></li>
           </ul>
         </div>
         
         <div class="footer-col">
           <h4>Contact</h4>
           <ul>
-            <li><a href="mailto:hello@hiddenwave.in">hello@hiddenwave.in</a></li>
-            <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+            <li><a href="mailto:hiddenwave.info@gmail.com">hiddenwave.info@gmail.com</a></li>
+            <li><a href="tel:+918374276995">+91 83742 76995</a></li>
             <li><a href="index.html#contact">Inquiry Desk</a></li>
           </ul>
         </div>
@@ -336,8 +1152,8 @@
       <div class="footer-bottom">
         <p>&copy; 2026 HiddenWave.in. All rights reserved.</p>
         <div class="footer-legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
         </div>
       </div>
     </div>
@@ -370,17 +1186,29 @@
         <h3 id="profileName" style="margin-bottom: 5px; font-family: var(--font-header);">Client Name</h3>
         <p id="profileEmail" style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-muted);">client@example.com</p>
         
-        <div class="profile-details-grid">
+        <div class="profile-details-grid" style="text-align: left; margin-bottom: 20px; max-height: 250px; overflow-y: auto;">
           <div class="profile-detail-item">
             <strong>Verified ID</strong>
-            <span id="profileUid">-</span>
+            <span id="profileUid" style="font-family: monospace; font-size: 0.85rem;">-</span>
           </div>
-          <div class="profile-detail-item" style="margin-top: 12px;">
-            <strong>Service Track</strong>
-            <span>Active Strategic Client</span>
+          
+          <div style="margin-top: 15px;">
+            <label style="display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 5px;">Display Name</label>
+            <input type="text" id="editProfileName" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-light); font-size: 0.9rem; background: var(--bg-secondary); color: var(--text-primary);">
+          </div>
+          
+          <div style="margin-top: 12px;">
+            <label style="display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 5px;">Phone Number</label>
+            <input type="text" id="editProfilePhone" placeholder="Enter phone number" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-light); font-size: 0.9rem; background: var(--bg-secondary); color: var(--text-primary);">
+          </div>
+          
+          <div style="margin-top: 12px;">
+            <label style="display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 5px;">Company Name</label>
+            <input type="text" id="editProfileCompany" placeholder="Enter company name" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-light); font-size: 0.9rem; background: var(--bg-secondary); color: var(--text-primary);">
           </div>
         </div>
         
+        <button onclick="handleSaveProfileChanges()" class="btn btn-primary" style="width: 100%; padding: 12px 0; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; margin-bottom: 10px;">Save Profile Changes</button>
         <button onclick="handleSignOut()" class="btn btn-secondary" style="width: 100%; border: 2px solid #ef4444; color: #ef4444; background: transparent; padding: 12px 0; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; transition: all 0.25s ease;">Sign Out</button>
       </div>
     </div>

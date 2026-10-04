@@ -1,0 +1,28 @@
+# Binaries & Executables
+firebase.exe
+*.exe
+
+# Archive / Large Media files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Large project archives
+Projects/Vaishnavi enterprises/
+Projects/WhatsApp*
+
+# Dependencies
+node_modules/
+
+# Firebase Cache & Logs
+.firebase/
+firestore-debug.log
+firebase-debug.log
+
+# Environment & OS files
+.env
+.env.local
+*.log
+.DS_Store
+Thumbs.db

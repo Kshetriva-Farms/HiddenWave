@@ -1,0 +1,20 @@
+{
+  "name": "Kaizen — Continuous Improvement Planner",
+  "short_name": "Kaizen",
+  "description": "Continuous 1% improvement every day. Minimalist daily, weekly, and monthly task & exam planner with offline persistence and cloud sync.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#171310",
+  "theme_color": "#e08d86",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"]
+}

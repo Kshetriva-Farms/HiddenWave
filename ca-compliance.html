@@ -6,6 +6,26 @@
   <meta name="description" content="HiddenWave.in - Corporate Finance and Chartered Accountant Compliance. Explore GST optimization and startup restructuring case studies.">
   <title>CA Compliance & Corporate Finance | HiddenWave</title>
   <link rel="stylesheet" href="styles.css">
+  
+  <!-- Structured SEO Schema Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "CA Compliance & Corporate Finance",
+    "provider": {
+      "@type": "ProfessionalService",
+      "name": "HiddenWave",
+      "url": "https://hiddenwave.in"
+    },
+    "description": "Corporate accounting compliance, tax filing, GST audit advisory, startup registration, and fractional CFO checkups led by certified professionals.",
+    "areaServed": "IN",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "INR"
+    }
+  }
+  </script>
   <style>
     /* Service Sub-Page Specific Clean Adjustments */
     .service-hero {
@@ -16,6 +36,7 @@
       text-align: center;
       position: relative;
       border-bottom: 1px solid var(--border-light);
+      overflow: hidden;
     }
     .service-hero::before {
       content: '';
@@ -141,8 +162,54 @@
   <header id="header">
     <div class="container nav-container">
       <a href="index.html" class="logo">
-        <svg viewBox="0 0 100 100">
-          <path d="M15,65 Q30,35 45,55 T75,45 T85,30" stroke="url(#logo-grad)" stroke-width="2.5" fill="none" stroke-linecap="round" />
+        <svg viewBox="0 0 100 100" class="logo-svg" style="width: 32px; height: 32px; flex-shrink: 0; overflow: visible; margin-right: 10px;">
+          <defs>
+            <linearGradient id="logo-blue-sub" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#0052d4" />
+              <stop offset="100%" stop-color="#00b4d8" />
+            </linearGradient>
+            <linearGradient id="logo-teal-sub" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00b4d8" />
+              <stop offset="100%" stop-color="#00a896" />
+            </linearGradient>
+            <linearGradient id="logo-purple-sub" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#7928ca" />
+              <stop offset="100%" stop-color="#6f42c1" />
+            </linearGradient>
+            <clipPath id="circle-clip-sub">
+              <circle cx="50" cy="50" r="45" />
+            </clipPath>
+          </defs>
+          <g clip-path="url(#circle-clip-sub)">
+            <!-- Top Wave (Blue) -->
+            <path d="M -10,-10 L 110,-10 L 110,38 C 85,50 65,32 50,32 C 35,32 15,48 -10,42 Z" fill="url(#logo-blue-sub)" />
+            <!-- Middle Wave (Teal) -->
+            <path d="M -10,48 C 15,54 35,38 50,38 C 65,38 85,56 110,44 L 110,60 C 85,72 65,54 50,54 C 35,54 15,70 -10,64 Z" fill="url(#logo-teal-sub)" />
+            <!-- Bottom Wave (Purple) -->
+            <path d="M -10,70 C 15,76 35,60 50,60 C 65,60 85,78 110,66 L 110,110 L -10,110 Z" fill="url(#logo-purple-sub)" />
+            <!-- Globe Icon -->
+            <g transform="translate(30, 8) scale(0.65)" stroke="#ffffff" stroke-width="1.8" fill="none">
+              <circle cx="10" cy="10" r="8" />
+              <path d="M 2,10 H 18 M 10,2 V 18" />
+              <ellipse cx="10" cy="10" rx="3.5" ry="8" />
+            </g>
+            <!-- Growth Chart Icon -->
+            <g transform="translate(56, 40) scale(0.6)" fill="#ffffff">
+              <rect x="2" y="11" width="3" height="7" rx="0.5" />
+              <rect x="7" y="7" width="3" height="11" rx="0.5" />
+              <rect x="12" y="3" width="3" height="15" rx="0.5" />
+              <path d="M 1,14 Q 6,9 11,4" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" />
+              <path d="M 8,4 H 11 V 7" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" />
+            </g>
+            <!-- Checklist Document Icon -->
+            <g transform="translate(34, 68) scale(0.65)" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round">
+              <rect x="2" y="2" width="12" height="15" rx="1.5" />
+              <line x1="5" y1="6" x2="11" y2="6" />
+              <line x1="5" y1="10" x2="11" y2="10" />
+              <path d="M 5,14 L 7,16 L 11,12" stroke="#ffffff" stroke-width="1.5" fill="none" />
+            </g>
+          </g>
+          <circle cx="50" cy="50" r="45" fill="none" stroke="url(#logo-blue-sub)" stroke-width="1.5" opacity="0.4" />
         </svg>
         HiddenWave
       </a>
@@ -154,10 +221,17 @@
       <nav id="nav-menu">
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#services">Services</a></li>
+          <li class="nav-dropdown-wrapper">
+            <a href="#" class="nav-dropdown-toggle">Services <span style="font-size: 0.6rem; vertical-align: middle; margin-left: 2px;">▼</span></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="web-operations.html">Web Operations</a></li>
+              <li><a href="growth-marketing.html">Growth Marketing</a></li>
+              <li><a href="ca-compliance.html">CA Compliance</a></li>
+            </ul>
+          </li>
           <li><a href="index.html#synergy">Our Synergy</a></li>
-          <li><a href="index.html#mixer">Plan Mixer</a></li>
           <li><a href="index.html#team">The Team</a></li>
+          <li><a href="blog.html">Blog</a></li>
           <li>
             <button id="accountBtn" onclick="openAuthModal()" title="My Account" style="display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; color: var(--text-secondary); width: 38px; height: 38px; border-radius: 50%; transition: all 0.25s ease; border: 1.5px solid var(--border-light); margin-right: 5px;">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -176,9 +250,9 @@
     <!-- Service Hero -->
     <section class="service-hero">
       <div class="container">
-        <div class="hero-tag">Core Specialization</div>
-        <h1>CA Compliance & Finance</h1>
-        <p style="max-width: 600px; margin: 0 auto; color: var(--text-secondary);">Statutory ROC filing structuring, GST optimization checks, startup tax preparation, and certified fractional CFO advisory.</p>
+        <div class="hero-tag">Our Service</div>
+        <h1>Business Taxes & Bookkeeping</h1>
+        <p style="max-width: 600px; margin: 0 auto; color: var(--text-secondary);">We handle your monthly tax filings, GST registrations, company accounts bookkeeping, and official government audits.</p>
       </div>
     </section>
 
@@ -186,41 +260,41 @@
     <section class="section">
       <div class="container">
         <div class="section-header">
-          <h2>Our Compliance Capabilities</h2>
-          <p>We secure corporate ledgers and structural filings so your business scales with clean records.</p>
+          <h2>What We Do for You</h2>
+          <p>We manage your company records and tax files so you can run your business safely.</p>
         </div>
 
         <div class="sub-grid">
           <div class="sub-service-card">
             <h4>
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-              Corporate Tax Filing & GST
+              GST & Income Tax Filings
             </h4>
-            <p>Periodic computation of corporate income liabilities, state-by-state GST reconciliations, filing of GSTR-1 & 3B logs, and setup of localized tax deductions structures.</p>
+            <p>We calculate your monthly taxes, file your GSTR-1 and GSTR-3B tax returns, and make sure you receive all eligible government tax deductions.</p>
           </div>
 
           <div class="sub-service-card">
             <h4>
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              Statutory Audits & Assurance
+              Official Audits & Records
             </h4>
-            <p>Evaluation of corporate accounting books, internal check systems audits, financial reporting standards adjustments, and signing audit checks compliant with local regulations.</p>
+            <p>We review your business account books, verify invoice entries, and sign official audit reports compliant with corporate regulations.</p>
           </div>
 
           <div class="sub-service-card">
             <h4>
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-              Startup Advisory & Restructuring
+              Company Registration
             </h4>
-            <p>Cap-table layout advisory, share distribution structuring, and structuring of equity classes to optimize future valuation tax positions during fundraising rounds.</p>
+            <p>We set up Private Limited companies, Partnership firms, handle share distributions, and register your business with ROC government portals.</p>
           </div>
 
           <div class="sub-service-card">
             <h4>
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-              Fractional CFO & Bookkeeping
+              Bookkeeping & CFO Guides
             </h4>
-            <p>Monitoring monthly ledger records, cash flow calculations, capital allocation checks, and board reporting structures designed to assist executive decisions.</p>
+            <p>We update your daily cash registers, calculate profit & loss reports, and advise you on how to manage company cash flows wisely.</p>
           </div>
         </div>
       </div>
@@ -277,11 +351,7 @@
       <div class="container">
         <div class="specialist-box">
           <div class="spec-img">
-            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-              <path d="M12 2v2M12 14v8" />
-            </svg>
+            <img src="images/neha_headshot.png" alt="Neha Gupta, CA" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
           </div>
           <div>
             <h3 style="margin-bottom: 5px;">Neha Gupta, CA</h3>
@@ -300,18 +370,51 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="logo" style="margin-bottom: 20px;">
+            <svg viewBox="0 0 100 100" class="logo-svg" style="width: 28px; height: 28px; flex-shrink: 0; overflow: visible; margin-right: 10px;">
+              <g clip-path="url(#circle-clip-sub)">
+                <!-- Top Wave (Blue) -->
+                <path d="M -10,-10 L 110,-10 L 110,38 C 85,50 65,32 50,32 C 35,32 15,48 -10,42 Z" fill="url(#logo-blue-sub)" />
+                <!-- Middle Wave (Teal) -->
+                <path d="M -10,48 C 15,54 35,38 50,38 C 65,38 85,56 110,44 L 110,60 C 85,72 65,54 50,54 C 35,54 15,70 -10,64 Z" fill="url(#logo-teal-sub)" />
+                <!-- Bottom Wave (Purple) -->
+                <path d="M -10,70 C 15,76 35,60 50,60 C 65,60 85,78 110,66 L 110,110 L -10,110 Z" fill="url(#logo-purple-sub)" />
+                <!-- Globe Icon -->
+                <g transform="translate(30, 8) scale(0.65)" stroke="#ffffff" stroke-width="1.8" fill="none">
+                  <circle cx="10" cy="10" r="8" />
+                  <path d="M 2,10 H 18 M 10,2 V 18" />
+                  <ellipse cx="10" cy="10" rx="3.5" ry="8" />
+                </g>
+                <!-- Growth Chart Icon -->
+                <g transform="translate(56, 40) scale(0.6)" fill="#ffffff">
+                  <rect x="2" y="11" width="3" height="7" rx="0.5" />
+                  <rect x="7" y="7" width="3" height="11" rx="0.5" />
+                  <rect x="12" y="3" width="3" height="15" rx="0.5" />
+                  <path d="M 1,14 Q 6,9 11,4" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" />
+                  <path d="M 8,4 H 11 V 7" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" />
+                </g>
+                <!-- Checklist Document Icon -->
+                <g transform="translate(34, 68) scale(0.65)" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round">
+                  <rect x="2" y="2" width="12" height="15" rx="1.5" />
+                  <line x1="5" y1="6" x2="11" y2="6" />
+                  <line x1="5" y1="10" x2="11" y2="10" />
+                  <path d="M 5,14 L 7,16 L 11,12" stroke="#ffffff" stroke-width="1.5" fill="none" />
+                </g>
+              </g>
+              <circle cx="50" cy="50" r="45" fill="none" stroke="url(#logo-blue-sub)" stroke-width="1.5" opacity="0.4" />
+            </svg>
             HiddenWave
           </a>
           <p>Consolidated technology engineering, market acquisition campaigns, and corporate CA compliance solutions under a single execution model.</p>
         </div>
         
         <div class="footer-col">
-          <h4>Pillars</h4>
-          <ul>
-            <li><a href="web-operations.html">Web Operations</a></li>
-            <li><a href="growth-marketing.html">Growth Marketing</a></li>
-            <li><a href="ca-compliance.html">CA Compliance</a></li>
-          </ul>
+          <h4>Services</h4>
+          <select onchange="if(this.value) window.location.href=this.value;" style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-light); background: var(--bg-secondary); color: var(--text-primary); cursor: pointer; font-size: 0.9rem; width: 100%; max-width: 200px; font-weight: 500; font-family: var(--font-body); transition: all 0.25s ease;">
+            <option value="" disabled selected>Explore Services</option>
+            <option value="web-operations.html">Web Operations</option>
+            <option value="growth-marketing.html">Growth Marketing</option>
+            <option value="ca-compliance.html">CA Compliance</option>
+          </select>
         </div>
         
         <div class="footer-col">
@@ -319,15 +422,15 @@
           <ul>
             <li><a href="index.html#team">The Partners</a></li>
             <li><a href="index.html#synergy">Combined Synergy</a></li>
-            <li><a href="index.html#mixer">Plan Calculator</a></li>
+            <li><a href="blog.html">Business Blog</a></li>
           </ul>
         </div>
         
         <div class="footer-col">
           <h4>Contact</h4>
           <ul>
-            <li><a href="mailto:hello@hiddenwave.in">hello@hiddenwave.in</a></li>
-            <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+            <li><a href="mailto:hiddenwave.info@gmail.com">hiddenwave.info@gmail.com</a></li>
+            <li><a href="tel:+918374276995">+91 83742 76995</a></li>
             <li><a href="index.html#contact">Inquiry Desk</a></li>
           </ul>
         </div>
@@ -336,8 +439,8 @@
       <div class="footer-bottom">
         <p>&copy; 2026 HiddenWave.in. All rights reserved.</p>
         <div class="footer-legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
         </div>
       </div>
     </div>
@@ -370,17 +473,29 @@
         <h3 id="profileName" style="margin-bottom: 5px; font-family: var(--font-header);">Client Name</h3>
         <p id="profileEmail" style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-muted);">client@example.com</p>
         
-        <div class="profile-details-grid">
+        <div class="profile-details-grid" style="text-align: left; margin-bottom: 20px; max-height: 250px; overflow-y: auto;">
           <div class="profile-detail-item">
             <strong>Verified ID</strong>
-            <span id="profileUid">-</span>
+            <span id="profileUid" style="font-family: monospace; font-size: 0.85rem;">-</span>
           </div>
-          <div class="profile-detail-item" style="margin-top: 12px;">
-            <strong>Service Track</strong>
-            <span>Active Strategic Client</span>
+          
+          <div style="margin-top: 15px;">
+            <label style="display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 5px;">Display Name</label>
+            <input type="text" id="editProfileName" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-light); font-size: 0.9rem; background: var(--bg-secondary); color: var(--text-primary);">
+          </div>
+          
+          <div style="margin-top: 12px;">
+            <label style="display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 5px;">Phone Number</label>
+            <input type="text" id="editProfilePhone" placeholder="Enter phone number" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-light); font-size: 0.9rem; background: var(--bg-secondary); color: var(--text-primary);">
+          </div>
+          
+          <div style="margin-top: 12px;">
+            <label style="display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 5px;">Company Name</label>
+            <input type="text" id="editProfileCompany" placeholder="Enter company name" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-light); font-size: 0.9rem; background: var(--bg-secondary); color: var(--text-primary);">
           </div>
         </div>
         
+        <button onclick="handleSaveProfileChanges()" class="btn btn-primary" style="width: 100%; padding: 12px 0; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; margin-bottom: 10px;">Save Profile Changes</button>
         <button onclick="handleSignOut()" class="btn btn-secondary" style="width: 100%; border: 2px solid #ef4444; color: #ef4444; background: transparent; padding: 12px 0; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; transition: all 0.25s ease;">Sign Out</button>
       </div>
     </div>

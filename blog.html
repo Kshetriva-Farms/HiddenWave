@@ -3,156 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="HiddenWave.in - Growth Marketing and Campaign Retainers. Explore our SEO audits and paid search ROAS case studies.">
-  <title>Growth Marketing & Campaigns | HiddenWave</title>
+  <meta name="description" content="HiddenWave Business Blog. Expert insights on custom Next.js e-commerce engineering, Google search campaign optimization, and GST taxation policies.">
+  <title>Insights & Business Blog | HiddenWave</title>
   <link rel="stylesheet" href="styles.css">
-  
-  <!-- Structured SEO Schema Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "serviceType": "Growth Marketing & Campaigns",
-    "provider": {
-      "@type": "ProfessionalService",
-      "name": "HiddenWave",
-      "url": "https://hiddenwave.in"
-    },
-    "description": "Conversion-focused optimization, search visibility scaling, and high-impact paid marketing campaigns configured for ROI stability.",
-    "areaServed": "IN",
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": "INR"
-    }
-  }
-  </script>
   <style>
-    /* Service Sub-Page Specific Clean Adjustments */
-    .service-hero {
+    .blog-hero {
       background-color: var(--bg-secondary);
       background-image: radial-gradient(var(--border-light) 1.5px, transparent 1.5px);
       background-size: 28px 28px;
-      padding: 140px 0 80px;
+      padding: 150px 0 80px;
       text-align: center;
       position: relative;
       border-bottom: 1px solid var(--border-light);
-      overflow: hidden;
     }
-    .service-hero::before {
+    .blog-hero::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.04), transparent 60%);
+      background: radial-gradient(circle at 50% 50%, rgba(0, 82, 212, 0.03), transparent 60%);
       pointer-events: none;
     }
-    .service-hero h1 {
+    .blog-hero h1 {
       font-size: 3.2rem;
       margin-bottom: 16px;
-    }
-    .sub-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
-      margin-top: 50px;
-    }
-    .sub-service-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 30px;
-      box-shadow: var(--shadow-sm);
-    }
-    .sub-service-card h4 {
-      font-size: 1.25rem;
-      margin-bottom: 10px;
-      color: var(--accent-mktg);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .case-studies {
-      background: var(--bg-primary);
-      padding: 90px 0;
-    }
-    .case-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 40px;
-      margin-bottom: 30px;
-      box-shadow: var(--shadow-sm);
-    }
-    .case-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 15px;
-      border-bottom: 1.5px solid var(--border-light);
-      padding-bottom: 10px;
-    }
-    .case-metrics {
-      display: flex;
-      gap: 30px;
-      margin: 20px 0;
-      background: var(--bg-tertiary);
-      padding: 20px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-light);
-    }
-    .metric-item {
-      text-align: center;
-    }
-    .metric-value {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--accent-mktg);
       font-family: var(--font-header);
-    }
-    .metric-label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-    .specialist-callout {
-      background: var(--bg-secondary);
-      padding: 90px 0;
-    }
-    .specialist-box {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 60px;
-      align-items: center;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 50px;
-      box-shadow: var(--shadow-lg);
-    }
-    .spec-img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: 2px solid var(--accent-mktg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg-secondary);
-      margin: 0 auto;
-    }
-    .spec-img svg {
-      width: 80px;
-      height: 80px;
-      stroke: var(--accent-mktg);
-      stroke-width: 1.5;
-    }
-    @media (max-width: 768px) {
-      .sub-grid, .specialist-box {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        padding: 30px 20px;
-      }
     }
   </style>
 </head>
@@ -181,19 +58,14 @@
             </clipPath>
           </defs>
           <g clip-path="url(#circle-clip-sub)">
-            <!-- Top Wave (Blue) -->
             <path d="M -10,-10 L 110,-10 L 110,38 C 85,50 65,32 50,32 C 35,32 15,48 -10,42 Z" fill="url(#logo-blue-sub)" />
-            <!-- Middle Wave (Teal) -->
             <path d="M -10,48 C 15,54 35,38 50,38 C 65,38 85,56 110,44 L 110,60 C 85,72 65,54 50,54 C 35,54 15,70 -10,64 Z" fill="url(#logo-teal-sub)" />
-            <!-- Bottom Wave (Purple) -->
             <path d="M -10,70 C 15,76 35,60 50,60 C 65,60 85,78 110,66 L 110,110 L -10,110 Z" fill="url(#logo-purple-sub)" />
-            <!-- Globe Icon -->
             <g transform="translate(30, 8) scale(0.65)" stroke="#ffffff" stroke-width="1.8" fill="none">
               <circle cx="10" cy="10" r="8" />
               <path d="M 2,10 H 18 M 10,2 V 18" />
               <ellipse cx="10" cy="10" rx="3.5" ry="8" />
             </g>
-            <!-- Growth Chart Icon -->
             <g transform="translate(56, 40) scale(0.6)" fill="#ffffff">
               <rect x="2" y="11" width="3" height="7" rx="0.5" />
               <rect x="7" y="7" width="3" height="11" rx="0.5" />
@@ -201,7 +73,6 @@
               <path d="M 1,14 Q 6,9 11,4" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" />
               <path d="M 8,4 H 11 V 7" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" />
             </g>
-            <!-- Checklist Document Icon -->
             <g transform="translate(34, 68) scale(0.65)" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round">
               <rect x="2" y="2" width="12" height="15" rx="1.5" />
               <line x1="5" y1="6" x2="11" y2="6" />
@@ -231,7 +102,7 @@
           </li>
           <li><a href="index.html#synergy">Our Synergy</a></li>
           <li><a href="index.html#team">The Team</a></li>
-          <li><a href="blog.html">Blog</a></li>
+          <li><a href="blog.html" class="active">Blog</a></li>
           <li>
             <button id="accountBtn" onclick="openAuthModal()" title="My Account" style="display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; color: var(--text-secondary); width: 38px; height: 38px; border-radius: 50%; transition: all 0.25s ease; border: 1.5px solid var(--border-light); margin-right: 5px;">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -247,118 +118,79 @@
   </header>
 
   <main>
-    <!-- Service Hero -->
-    <section class="service-hero">
+    <!-- Blog Hero -->
+    <section class="blog-hero">
       <div class="container">
-        <div class="hero-tag">Our Service</div>
-        <h1>Getting Customers (Marketing)</h1>
-        <p style="max-width: 600px; margin: 0 auto; color: var(--text-secondary);">We help you rank higher on Google searches, set up and manage Facebook & Google Ads, and convert website clicks into regular inquiries.</p>
+        <div class="hero-tag">Insights Hub</div>
+        <h1>The HiddenWave Business Blog</h1>
+        <p style="max-width: 600px; margin: 0 auto; color: var(--text-secondary);">Useful guides, business advice, and tax tips to help your company grow and stay safe.</p>
       </div>
     </section>
 
-    <!-- Detailed Sub-Services -->
+    <!-- Articles Grid Section -->
     <section class="section">
       <div class="container">
-        <div class="section-header">
-          <h2>What We Do for You</h2>
-          <p>We build steady customer inquiry flows and help you build a strong local brand reputation.</p>
-        </div>
-
-        <div class="sub-grid">
-          <div class="sub-service-card">
-            <h4>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              Google Search Ranking (SEO)
-            </h4>
-            <p>We find the words buyers search for and optimize your website so it shows up high on Google. We also ensure your site is built to load instantly for better search ranks.</p>
-          </div>
-
-          <div class="sub-service-card">
-            <h4>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-              Online Ads Setup (Google & Facebook)
-            </h4>
-            <p>We deploy budget-friendly advertising campaigns on Google Search, Facebook, Instagram, and LinkedIn. We write the ad text, select targeting, and monitor your budget.</p>
-          </div>
-
-          <div class="sub-service-card">
-            <h4>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
-              Website Lead Optimization
-            </h4>
-            <p>We refine your website layout, write easy-to-read text, and simplify contact forms so website visitors can contact you easily with fewer clicks.</p>
-          </div>
-
-          <div class="sub-service-card">
-            <h4>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              Email & Chat Newsletters
-            </h4>
-            <p>We set up automated email greetings, customer follow-up updates, and retargeting ads to keep your previous customers coming back to buy again.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Case Studies / Achievements -->
-    <section class="case-studies">
-      <div class="container">
-        <div class="section-header">
-          <h2>Marketing Showcase & Achievements</h2>
-          <p>Real-world studies of how our growth strategies accelerated target customer acquisitions.</p>
-        </div>
-
-        <div class="case-card">
-          <h3>PPC Efficiency Optimization (B2B Fintech Brand)</h3>
-          <p>A corporate billing software company was facing high cost-per-lead (CPL) and low quality lead metrics through their Google Search channels.</p>
-          <div class="case-metrics">
-            <div class="metric-item">
-              <div class="metric-value">-35%</div>
-              <div class="metric-label">Cost-Per-Lead (CPL)</div>
+        <div class="blog-grid">
+          
+          <!-- Article 1: Web Tech -->
+          <div class="blog-card reveal">
+            <div class="blog-card-img" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
             </div>
-            <div class="metric-item">
-              <div class="metric-value">+42%</div>
-              <div class="metric-label">Inbound Volume</div>
-            </div>
-            <div class="metric-item">
-              <div class="metric-value">4.2x</div>
-              <div class="metric-label">ROAS (Return on Ad Spend)</div>
+            <div class="blog-card-content">
+              <span class="blog-tag">Web Engineering</span>
+              <h3><a href="blog-nextjs-ecommerce.html">Why Next.js & Custom APIs Outperform Traditional E-Commerce Frameworks in Conversions</a></h3>
+              <p>An in-depth technical analysis comparing Next.js speed performance, React UI responsiveness, and headless API structures with typical platforms.</p>
+              <div class="blog-meta">
+                <span>By K. Vishnu Vardhan</span>
+                <span>July 31, 2026</span>
+              </div>
             </div>
           </div>
-          <p style="font-size: 0.95rem; color: var(--text-secondary);">We audited negative search terms, structured landing pages matching specific search queries, and built unified pixel tracking metrics across platforms.</p>
-        </div>
 
-        <div class="case-card">
-          <h3>Organic Search Growth Blueprint (B2B SaaS Portal)</h3>
-          <p>A project management platform relied too heavily on short-term paid Facebook ads and required a long-term organic user acquisition engine.</p>
-          <div class="case-metrics">
-            <div class="metric-item">
-              <div class="metric-value">+180%</div>
-              <div class="metric-label">Organic Site Traffic</div>
+          <!-- Article 2: Marketing -->
+          <div class="blog-card marketing reveal">
+            <div class="blog-card-img" style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 7a2 2 0 0 0-2.45-1.45L11 8.75V3c0-1.1-.9-2-2-2S7 1.9 7 3v5.75L2.45 10.2A2 2 0 0 0 1 12.1v2.8a2 2 0 0 0 1.45 1.95L7 18.25V21c0 1.1.9 2 2 2s2-.9 2-2v-2.75l10.55 3.3A2 2 0 0 0 23 19.9v-2.8a2 2 0 0 0-1.45-1.95L11 11.75v-2.5L20.55 6A2 2 0 0 0 23 7z" />
+                <circle cx="9" cy="12" r="3" />
+              </svg>
             </div>
-            <div class="metric-item">
-              <div class="metric-value">9 Months</div>
-              <div class="metric-label">Growth Period</div>
+            <div class="blog-card-content">
+              <span class="blog-tag">Growth Marketing</span>
+              <h3><a href="blog-organic-scaling.html">5 Zero-Ad-Budget Growth Tactics for Organic Customer Acquisition</a></h3>
+              <p>Discover actionable SEO frameworks, high-intent keyword strategies, content silos, and referral structures to scale your inbound conversions without paid ad spend.</p>
+              <div class="blog-meta">
+                <span>By Rohit Sharma</span>
+                <span>July 28, 2026</span>
+              </div>
             </div>
           </div>
-          <p style="font-size: 0.95rem; color: var(--text-secondary);">By mapping content layouts to high-intent keywords, designing comparative templates, and fixing search indexing glitches, we scaled monthly organic signups safely.</p>
-        </div>
-      </div>
-    </section>
 
-    <!-- Lead Specialist Callout -->
-    <section class="specialist-callout">
-      <div class="container">
-        <div class="specialist-box">
-          <div class="spec-img">
-            <img src="images/rohit_headshot.png" alt="Rohit Sharma" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+          <!-- Article 3: Compliance -->
+          <div class="blog-card compliance reveal">
+            <div class="blog-card-img" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <line x1="9" y1="9" x2="15" y2="15" />
+                <line x1="15" y1="9" x2="9" y2="15" />
+              </svg>
+            </div>
+            <div class="blog-card-content">
+              <span class="blog-tag">Corporate Finance</span>
+              <h3><a href="blog-gst-compliance.html">B2B GST Compliance & Tax Advisory in India: A Startup Playbook</a></h3>
+              <p>A comprehensive guide outlining GST registration requirements, statutory filing dates, tax brackets checkups, and corporate bookkeeping tips for Indian startups.</p>
+              <div class="blog-meta">
+                <span>By Neha Gupta, CA</span>
+                <span>July 25, 2026</span>
+              </div>
+            </div>
           </div>
-          <div>
-            <h3 style="margin-bottom: 5px;">Rohit Sharma</h3>
-            <div class="founder-role" style="color: var(--accent-mktg); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 15px;">Lead Marketing Strategist</div>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px;">Rohit manages Google/Meta ad spend strategies, search engine presence, content optimization blueprints, and retention metrics. He targets high-intent keywords to build conversion volumes.</p>
-            <a href="index.html#contact" class="btn btn-primary" style="font-size: 0.9rem; padding: 10px 22px;">Discuss Marketing Scope</a>
-          </div>
+
         </div>
       </div>
     </section>
@@ -372,19 +204,14 @@
           <a href="index.html" class="logo" style="margin-bottom: 20px;">
             <svg viewBox="0 0 100 100" class="logo-svg" style="width: 28px; height: 28px; flex-shrink: 0; overflow: visible; margin-right: 10px;">
               <g clip-path="url(#circle-clip-sub)">
-                <!-- Top Wave (Blue) -->
                 <path d="M -10,-10 L 110,-10 L 110,38 C 85,50 65,32 50,32 C 35,32 15,48 -10,42 Z" fill="url(#logo-blue-sub)" />
-                <!-- Middle Wave (Teal) -->
                 <path d="M -10,48 C 15,54 35,38 50,38 C 65,38 85,56 110,44 L 110,60 C 85,72 65,54 50,54 C 35,54 15,70 -10,64 Z" fill="url(#logo-teal-sub)" />
-                <!-- Bottom Wave (Purple) -->
                 <path d="M -10,70 C 15,76 35,60 50,60 C 65,60 85,78 110,66 L 110,110 L -10,110 Z" fill="url(#logo-purple-sub)" />
-                <!-- Globe Icon -->
                 <g transform="translate(30, 8) scale(0.65)" stroke="#ffffff" stroke-width="1.8" fill="none">
                   <circle cx="10" cy="10" r="8" />
                   <path d="M 2,10 H 18 M 10,2 V 18" />
                   <ellipse cx="10" cy="10" rx="3.5" ry="8" />
                 </g>
-                <!-- Growth Chart Icon -->
                 <g transform="translate(56, 40) scale(0.6)" fill="#ffffff">
                   <rect x="2" y="11" width="3" height="7" rx="0.5" />
                   <rect x="7" y="7" width="3" height="11" rx="0.5" />
@@ -392,7 +219,6 @@
                   <path d="M 1,14 Q 6,9 11,4" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" />
                   <path d="M 8,4 H 11 V 7" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" />
                 </g>
-                <!-- Checklist Document Icon -->
                 <g transform="translate(34, 68) scale(0.65)" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round">
                   <rect x="2" y="2" width="12" height="15" rx="1.5" />
                   <line x1="5" y1="6" x2="11" y2="6" />

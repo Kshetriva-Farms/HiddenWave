@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kaizen — Official User Guide & Manual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --card-bg: #f9fafb;
+      --border: #e5e7eb;
+      --ink: #111827;
+      --ink-secondary: #4b5563;
+      --mut: #6b7280;
+      --acc: #c45d55;
+      --acc-subtle: #fdf2f2;
+      --success: #059669;
+      --warning: #d97706;
+      --code-bg: #f3f4f6;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Figtree', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      font-size: 15px;
+      padding: 40px 20px;
+    }
+
+    .manual-container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* Cover / Header */
+    .manual-header {
+      border-bottom: 3px solid var(--ink);
+      padding-bottom: 24px;
+      margin-bottom: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .brand-title {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+    }
+
+    .manual-subtitle {
+      font-size: 16px;
+      color: var(--mut);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    .manual-badge {
+      background: var(--acc-subtle);
+      border: 1px solid var(--acc);
+      color: var(--acc);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .print-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      background: var(--ink);
+      color: #ffffff;
+      border: 0;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .action-btn:hover { opacity: 0.9; }
+
+    /* Sections */
+    section {
+      margin-bottom: 40px;
+      page-break-inside: avoid;
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      border-bottom: 1.5px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h3 {
+      font-size: 16.5px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 18px 0 8px;
+    }
+
+    p, li {
+      color: var(--ink-secondary);
+      font-size: 14.5px;
+      margin-bottom: 10px;
+    }
+
+    ul, ol {
+      padding-left: 24px;
+      margin-bottom: 14px;
+    }
+
+    /* Cards & Grids */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--ink);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .callout {
+      background: var(--acc-subtle);
+      border-left: 4px solid var(--acc);
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 18px 0;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      color: var(--acc);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 13.5px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--card-bg);
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    kbd {
+      background: var(--code-bg);
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--acc);
+    }
+
+    pre {
+      background: #1e1e24;
+      color: #f3f4f6;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 12px 0 20px;
+    }
+
+    .footer-note {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--mut);
+      margin-top: 50px;
+    }
+
+    /* Print Stylesheet for Instant Clean PDF */
+    @media print {
+      body {
+        padding: 0;
+        background: #ffffff;
+        color: #000000;
+      }
+      .manual-container { max-width: 100%; }
+      .print-actions { display: none !important; }
+      @page {
+        margin: 15mm 15mm 15mm 15mm;
+        size: auto;
+      }
+      h2 { page-break-after: avoid; }
+      .card, table, pre, .callout { page-break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="manual-container">
+    
+    <!-- Header Cover -->
+    <header class="manual-header">
+      <div>
+        <div class="brand-title">
+          <img src="icon.svg" class="brand-icon-logo" alt="Kaizen Logo">
+          <span>Kaizen (改善)</span>
+        </div>
+        <div class="manual-subtitle">Continuous 1% Improvement • Task & Exam Preparation Suite</div>
+        <span class="manual-badge">Official User Guide & Reference Manual</span>
+      </div>
+      <div class="print-actions">
+        <button class="action-btn" onclick="window.print()">🖨️ Save as PDF / Print</button>
+      </div>
+    </header>
+
+    <!-- Section 1: Philosophy -->
+    <section>
+      <h2>⛩️ 1. The Kaizen Philosophy</h2>
+      <p>
+        <strong>Kaizen (改善)</strong> is the Japanese philosophy of <em>continuous, incremental improvement</em>. Instead of trying to radically transform everything overnight, Kaizen is built around getting <strong>1% better every single day</strong> through disciplined, focused execution.
+      </p>
+      <div class="callout">
+        <div class="callout-title">💡 The 1% Rule of Compounding Consistency</div>
+        <p style="margin: 0; color: var(--ink-secondary);">
+          If you improve by just 1% every day for a year: <code>(1.01)³⁶⁵ = 37.78x</code>. You become nearly <strong>38 times better</strong> by the time your target exam or major life goal arrives.
+        </p>
+      </div>
+      <p>
+        Kaizen combines long-term strategic roadmaps with high-focus daily task execution across three temporal dimensions: <strong>Day (Deep Focus)</strong>, <strong>Week (Priority Sprints)</strong>, and <strong>Month (High-Level Targets)</strong>.
+      </p>
+    </section>
+
+    <!-- Section 2: Core Feature Manual -->
+    <section>
+      <h2>🚀 2. Comprehensive Feature Walkthrough</h2>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">📈 90-Day Study Heatmap & Streaks</div>
+          <p>Visual contribution grid showing 90 days of study momentum. Tracks your active streak, all-time best streak, and total focus hours logged. Click any square to jump directly to that date.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">🍅 Customizable Pomodoro Timer</div>
+          <p>Configurable deep work timer (5–90m focus, short/long breaks). Includes zero-dependency synthesizer bell chime and dynamic tab countdown title <code>(24:45) Kaizen</code>.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">⏰ Due Times & Push Reminders</div>
+          <p>Type <code>@10:30am</code> or <code>@15:00</code> in any task to create an automatic time reminder. Background scanner fires native browser notifications when tasks are due.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">🧠 Spaced Repetition Scheduler</div>
+          <p>Click "Spaced Revision" on any subject or chapter to automatically schedule revision milestones on <strong>Day +1, Day +3, and Day +7</strong>.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">🏷️ Subject Hashtags & Color Filtering</div>
+          <p>Type hashtags like <code>#Physics</code>, <code>#Math</code>, <code>#Revision</code> to auto-badge tasks with pastel tags. Click any tag to instantly filter your agenda.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">📋 Master Explorer & Archive</div>
+          <p>Search across days, weeks, months, or years. Live multi-field search scans task titles, subtask checklists, and full study notes with 0ms latency.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Task Notes & Descriptions -->
+    <section>
+      <h2>📝 3. Task Descriptions, Notes & Checklists</h2>
+      <p>Click the expand arrow (▼) on any task to unlock its full depth:</p>
+      <ul>
+        <li><strong>Study Notes & Formulas</strong>: Add multi-line notes, formulas, reference URLs, or chapter summaries. Notes auto-save continuously to local storage.</li>
+        <li><strong>Subtask / Checklist Items</strong>: Break complex topics into discrete checklist items (e.g. <em>"Review Chapter 4"</em> $\rightarrow$ <em>"Read theory"</em>, <em>"Solve 15 numericals"</em>).</li>
+        <li><strong>1-Click Task Pomodoro</strong>: Tap <code>🍅 Focus</code> inside any task to dedicate a Pomodoro focus block directly to that specific topic.</li>
+      </ul>
+    </section>
+
+    <!-- Section 4: Mobile Gestures & Hardware -->
+    <section>
+      <h2>📱 4. Mobile Gestures & PWA Installation</h2>
+      
+      <h3>👆 Touch Swipe Gestures</h3>
+      <p>Swipe left or right anywhere on your phone screen to seamlessly flip dates:</p>
+      <ul>
+        <li><strong>Swipe Left (👈)</strong>: Moves forward to Tomorrow / Next Week / Next Month.</li>
+        <li><strong>Swipe Right (👉)</strong>: Moves backward to Yesterday / Previous Week / Previous Month.</li>
+      </ul>
+
+      <h3>📳 Haptic Tactile Feedback</h3>
+      <p>Provides subtle physical vibration clicks (<code>navigator.vibrate</code>) on Android and mobile devices whenever you complete tasks, check subtasks, or finish timers.</p>
+
+      <h3>🎙️ Voice-to-Task Input</h3>
+      <p>Tap the microphone button $\rightarrow$ speak your task $\rightarrow$ Kaizen automatically transcribes and adds the task hands-free using the Web Speech API.</p>
+
+      <h3>📲 Installing the Standalone PWA (100% Offline)</h3>
+      <ol>
+        <li><strong>iPhone / iPad (iOS)</strong>: Open in Safari $\rightarrow$ Tap <strong>Share</strong> $\rightarrow$ Tap <strong>Add to Home Screen</strong>.</li>
+        <li><strong>Android</strong>: Open in Chrome $\rightarrow$ Tap the <strong>three dots (⋮)</strong> $\rightarrow$ Tap <strong>Install App</strong> or <strong>Add to Home Screen</strong>.</li>
+        <li><strong>Desktop (Chrome / Edge)</strong>: Click the <strong>Install</strong> icon in the address bar.</li>
+      </ol>
+    </section>
+
+    <!-- Section 5: Bulletproof 5-Tier Data Persistence -->
+    <section>
+      <h2>🛡️ 5. Bulletproof 5-Tier Data Persistence</h2>
+      <p>Kaizen is engineered so that you <strong>never lose tasks or study plans</strong>, even if you clear browser cookies or lose internet connection:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>Storage Mechanism</th>
+            <th>Protection Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tier 1</strong></td>
+            <td><code>localStorage</code> + <code>sessionStorage</code> (Dual-Key)</td>
+            <td>Instant synchronous client-side caching.</td>
+          </tr>
+          <tr>
+            <td><strong>Tier 2</strong></td>
+            <td><code>IndexedDB</code> (<code>TaskPlannerDB</code>)</td>
+            <td>Binary resilient storage immune to standard cookie wipes.</td>
+          </tr>
+          <tr>
+            <td><strong>Tier 3</strong></td>
+            <td><code>navigator.storage.persist()</code></td>
+            <td>Requests OS-level browser disk protection against eviction.</td>
+          </tr>
+          <tr>
+            <td><strong>Tier 4</strong></td>
+            <td><strong>Firebase Firestore Cloud Sync</strong></td>
+            <td>2-way real-time multi-device sync via Google Auth or Secret Sync Passcode.</td>
+          </tr>
+          <tr>
+            <td><strong>Tier 5</strong></td>
+            <td>Pre-Unload Lifecycle Flush</td>
+            <td>Auto-commits active input fields before page close or tab refresh.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Section 6: Export & Document Printing -->
+    <section>
+      <h2>📥 6. Export, Formatted Text & PDF Generation</h2>
+      <p>Click <strong>"📥 Export & Download (TXT / PDF / JSON)"</strong> in the footer to access your download hub:</p>
+      
+      <ul>
+        <li><strong>📄 Formatted Text (.txt)</strong>: Downloads a clean, human-readable text document with checkmarks (<code>[✓]</code> / <code>[ ]</code>), study notes, and checklists. Works seamlessly on Windows Notepad, Mac TextEdit, and mobile note apps.</li>
+        <li><strong>🖨️ Print / Save as PDF</strong>: Generates a dedicated high-resolution document in an isolated background frame containing 100% of task titles, study notes, checklists, and metadata on clean white paper with zero UI clutter.</li>
+        <li><strong>💾 JSON Backup & Restore</strong>: Full state backup with safety confirmation safeguards.</li>
+      </ul>
+    </section>
+
+    <!-- Section 7: Keyboard Shortcuts -->
+    <section>
+      <h2>⌨️ 7. Keyboard Shortcuts Cheatsheet</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Shortcut</th>
+            <th>Function</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><kbd>N</kbd></td><td><strong>New Task</strong></td><td>Focuses the task input field immediately.</td></tr>
+          <tr><td><kbd>T</kbd></td><td><strong>Jump to Today</strong></td><td>Resets view directly to today's date.</td></tr>
+          <tr><td><kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd></td><td><strong>Day / Week / Month</strong></td><td>Toggles between Daily, Weekly, and Monthly planning views.</td></tr>
+          <tr><td><kbd>J</kbd> / <kbd>←</kbd></td><td><strong>Previous Date</strong></td><td>Shifts back 1 day/week/month (or Swipe 👉).</td></tr>
+          <tr><td><kbd>K</kbd> / <kbd>→</kbd></td><td><strong>Next Date</strong></td><td>Shifts forward 1 day/week/month (or Swipe 👈).</td></tr>
+          <tr><td><kbd>P</kbd></td><td><strong>Pomodoro Focus</strong></td><td>Starts or pauses the deep work timer.</td></tr>
+          <tr><td><kbd>E</kbd> or <kbd>/</kbd></td><td><strong>Master Explorer</strong></td><td>Opens All-Tasks archive and multi-temporal search.</td></tr>
+          <tr><td><kbd>H</kbd></td><td><strong>Heatmap & Stats</strong></td><td>Opens 90-day study heatmap and streak dashboard.</td></tr>
+          <tr><td><kbd>S</kbd></td><td><strong>Share Plan</strong></td><td>Generates direct shareable snapshot link.</td></tr>
+          <tr><td><kbd>?</kbd></td><td><strong>Shortcuts</strong></td><td>Opens keyboard cheatsheet modal.</td></tr>
+          <tr><td><kbd>Enter</kbd></td><td><strong>Save / Add</strong></td><td>Adds task, subtask, or commits inline title edit.</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td><strong>Cancel / Close</strong></td><td>Closes open dialog modals or cancels active edit.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Section 8: Online Deployment with Firebase -->
+    <section>
+      <h2>🚀 8. Online Publishing & Database Deployment</h2>
+      <p>To publish Kaizen online live to your custom domain with full Firebase Firestore Cloud Database integration:</p>
+
+      <h3>Step 1: Navigate to Project Directory</h3>
+      <pre><code>cd D:\Kshetriva_farms\HiddenWave</code></pre>
+
+      <h3>Step 2: Deploy Hosting & Firestore Security Rules</h3>
+      <pre><code>firebase deploy</code></pre>
+
+      <p>Or to deploy only hosting assets:</p>
+      <pre><code>firebase deploy --only hosting</code></pre>
+
+      <p>Once deployed, your app is live worldwide with full SSL, global CDN edge caching, and real-time cloud sync at:</p>
+      <div class="callout">
+        <p style="margin: 0; font-weight: 700; color: var(--ink);">
+          🔗 Live Production URL: <a href="https://hiddenwave.in/kaizen" target="_blank" style="color: var(--acc);">https://hiddenwave.in/kaizen</a> (or <code>/planner</code>)
+        </p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-note">
+      Kaizen (改善) • Crafted with focus & clarity by <a href="https://hiddenwave.in" target="_blank" style="color: var(--ink); font-weight: 600;">HiddenWave.in</a>
+    </footer>
+
+  </div>
+</body>
+</html>

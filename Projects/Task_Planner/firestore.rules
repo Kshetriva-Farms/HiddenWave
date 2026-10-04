@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User-specific task documents (authenticated via Google Auth)
+    match /planner_users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Shared sync code documents (passcode-based device syncing)
+    match /planner_sync_codes/{syncCode} {
+      allow read, write: if syncCode.size() >= 3 && syncCode.size() <= 60;
+    }
+
+    // General fallback
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5">
+  <title>Kaizen — Continuous Improvement Task Planner</title>
+  
+  <!-- SEO & Social Meta Tags -->
+  <meta name="description" content="Kaizen — A high-focus daily, weekly, and monthly goal and task planner with 1% daily improvement, study heatmaps, Pomodoro timer, touch swipes, and bulletproof offline cloud sync.">
+  <meta name="keywords" content="kaizen, task planner, continuous improvement, minimalist todo list, day week month planner, study heatmap, pomodoro focus, exam preparation, hiddenwave">
+  <meta name="author" content="HiddenWave">
+  
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="Kaizen — Continuous Improvement Task Planner">
+  <meta property="og:description" content="Master your Day, Week, and Month with continuous 1% daily improvement, study heatmaps, Pomodoro focus, and offline persistence.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="icon.svg">
+  
+  <!-- PWA & Mobile Web App Meta -->
+  <meta name="theme-color" content="#16120e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kaizen">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+  
+  <!-- Typography (Figtree & Caveat) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Firebase Compat SDKs (Deferred for instant FCP) -->
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <!-- Firebase Hosting Auto-init (Automatic configuration for kaizen-0) -->
+  <script defer src="/__/firebase/init.js"></script>
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Main Application Container -->
+  <main id="app-container" role="main"></main>
+
+  <!-- Universal Modal / Dialog Wrapper -->
+  <dialog id="modal-dialog" aria-labelledby="dialog-title" aria-modal="true">
+    <div id="modal-dialog-body"></div>
+  </dialog>
+
+  <!-- Floating Toast Notifications -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Core Application Engine (Deferred) -->
+  <script defer src="app.js"></script>
+</body>
+</html>
