@@ -4,8 +4,14 @@ Safely fetches and summarizes public web text with stripped ads and trackers.
 """
 
 import requests
-from bs4 import BeautifulSoup
+import re
 from typing import Optional
+
+try:
+    from bs4 import BeautifulSoup
+    HAS_BS4 = True
+except ImportError:
+    HAS_BS4 = False
 
 def fetch_web_page(url: str, max_chars: int = 4000) -> str:
     """Fetches a web page and extracts its primary readable text content."""
@@ -20,13 +26,20 @@ def fetch_web_page(url: str, max_chars: int = 4000) -> str:
         resp = requests.get(url, headers=headers, timeout=8)
         resp.raise_for_status()
 
-        soup = BeautifulSoup(resp.text, "html.parser")
+        if HAS_BS4:
+            soup = BeautifulSoup(resp.text, "html.parser")
 
-        # Strip scripts, styles, and navigational junk
-        for tag in soup(["script", "style", "nav", "footer", "header", "aside", "noscript"]):
-            tag.decompose()
+            # Strip scripts, styles, and navigational junk
+            for tag in soup(["script", "style", "nav", "footer", "header", "aside", "noscript"]):
+                tag.decompose()
 
-        text = soup.get_text(separator="\n")
+            text = soup.get_text(separator="\n")
+        else:
+            # Fallback regex-based HTML text extractor if bs4 is unavailable
+            cleaned = re.sub(r"<(script|style|nav|footer|header|aside|noscript)[^>]*>.*?</\1>", "", resp.text, flags=re.DOTALL | re.IGNORECASE)
+            cleaned = re.sub(r"<[^>]+>", " ", cleaned)
+            text = cleaned
+
         lines = [line.strip() for line in text.splitlines() if line.strip()]
         clean_text = "\n".join(lines)
 
