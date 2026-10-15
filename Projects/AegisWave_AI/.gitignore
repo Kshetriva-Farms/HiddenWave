@@ -1,0 +1,24 @@
+# Environment and Secrets
+.env
+*.env.local
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Large local weights (Do NOT push 2GB GGUF to Git)
+data/models/*.gguf
+data/models/*.bin
+
+# Local SQLite databases
+data/*.db
+data/*.db-wal
+data/*.db-shm
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

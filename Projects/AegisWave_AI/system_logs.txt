@@ -1,0 +1,4 @@
+2026-10-11 12:00 [ERROR] Connection timeout
+2026-10-11 12:01 [ERROR] Authentication failed
+2026-10-11 12:05 [INFO] Healthcheck OK
+2026-10-11 12:08 [ERROR] Disk I/O spike
