@@ -84,7 +84,20 @@ class RuleEngineProvider(BaseModelProvider):
             except Exception:
                 pass
 
-        # 4b. Standard arithmetic pattern
+        # 4b. Percentage pattern: "15% of 200" or "calculate 20% of 500"
+        pct_expr_match = re.search(r"(?:calculate|compute|what is|how much is|solve)?\s*([0-9\.]+)\s*%\s*(?:of|\*)\s*([0-9\.]+)", p_lower)
+        if pct_expr_match:
+            pct_val = pct_expr_match.group(1)
+            target_val = pct_expr_match.group(2)
+            expr = f"({pct_val} / 100.0) * {target_val}"
+            tool_calls.append(ToolCallRequest(tool_name="calculate", arguments={"expression": expr}))
+            return ModelResponse(
+                text=f"Calculating {pct_val}% of {target_val}...",
+                tool_calls=tool_calls,
+                raw_provider="conversational_core"
+            )
+
+        # 4c. Standard arithmetic pattern
         math_pattern = r"(?:calculate|compute|what is|how much is|solve)\s+([0-9\.\+\-\*\/\^\(\)\s\*\*\^\%]+)"
         match_math = re.search(math_pattern, prompt, re.IGNORECASE)
         if match_math:

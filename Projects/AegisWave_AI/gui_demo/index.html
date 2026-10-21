@@ -461,23 +461,23 @@
       <div class="brand-icon">🛡️</div>
       <div>
         <div class="brand-title">AegisWave AI</div>
-        <div class="brand-subtitle">D:\HiddenWave\Projects\My_Bot Architecture Demo</div>
+        <div class="brand-subtitle">Sandbox & Pipeline Architecture Visualizer</div>
       </div>
     </div>
     <div class="badges">
       <div class="badge badge-secure">🔒 Data Secure</div>
-      <div class="badge badge-portable">📦 100% Portable</div>
-      <div class="badge badge-reliable">⚡ Verified Accuracy</div>
+      <div class="badge badge-portable">📦 Portable Gateway</div>
+      <div class="badge badge-reliable">⚡ Grounded Execution</div>
     </div>
   </header>
 
   <main>
     <!-- INTRO BANNER -->
     <section class="intro-banner">
-      <h1 class="intro-title">How Your Autonomous AI Works (Beginner Walkthrough)</h1>
+      <h1 class="intro-title">How Your Autonomous AI Works (Architecture Walkthrough)</h1>
       <p class="intro-desc">
-        Unlike standard chatbots that send everything to big tech servers, your bot is a <strong>self-contained, private assistant</strong>.
-        When you give it an instruction, it never guesses. It passes through <strong>5 secure stages</strong>: scrubs private tokens, makes a plan, executes safe tools, verifies its own answers, and stores memories in a local vault.
+        AegisWave AI runs as a <strong>privacy-centric assistant</strong>.
+        When given an instruction, requests pass through <strong>5 structured stages</strong>: heuristic credential scrubbing, task planning, sandboxed tool execution, empirical output verification, and session memory vaulting.
       </p>
     </section>
 
@@ -486,22 +486,22 @@
       <div class="pillar-card">
         <div class="pillar-icon">🔒</div>
         <div class="pillar-name" style="color: var(--emerald);">Data Secure</div>
-        <div class="pillar-simple">Emails, passwords, and API keys are masked before anything else touches them. Zero data leaves unredacted.</div>
+        <div class="pillar-simple">Emails, credentials, and API keys are masked before external model routing.</div>
       </div>
       <div class="pillar-card">
         <div class="pillar-icon">🎯</div>
         <div class="pillar-name" style="color: var(--cyan);">Accurate</div>
-        <div class="pillar-simple">A "Critic" verifier audits every calculation against raw evidence. No made-up numbers or hallucinations.</div>
+        <div class="pillar-simple">A verification layer audits tool results against raw evidence to ground outputs.</div>
       </div>
       <div class="pillar-card">
         <div class="pillar-icon">🛡️</div>
         <div class="pillar-name" style="color: var(--purple);">Reliable</div>
-        <div class="pillar-simple">Tools are path-jailed so code cannot escape the project folder or delete your operating system files.</div>
+        <div class="pillar-simple">Tools are path-jailed so execution cannot escape the authorized project workspace.</div>
       </div>
       <div class="pillar-card">
         <div class="pillar-icon">💼</div>
         <div class="pillar-name" style="color: var(--amber);">Portable</div>
-        <div class="pillar-simple">Runs out of this single folder. Copy it to a USB drive or laptop and your bot’s memory comes with you.</div>
+        <div class="pillar-simple">Operates with self-contained databases, settings, and modular routing.</div>
       </div>
     </section>
 
@@ -516,15 +516,15 @@
         </div>
 
         <div class="presets">
-          <button class="preset-btn active" onclick="loadPreset(1)">Preset 1: Sensitive Log Audit</button>
-          <button class="preset-btn" onclick="loadPreset(2)">Preset 2: Safe Math & Fact</button>
-          <button class="preset-btn" onclick="loadPreset(3)">Preset 3: Jailbreak Defense</button>
+          <button class="preset-btn active" onclick="loadPreset(1)" aria-label="Load preset 1: sensitive log audit">Preset 1: Sensitive Log Audit</button>
+          <button class="preset-btn" onclick="loadPreset(2)" aria-label="Load preset 2: safe math calculation">Preset 2: Safe Math & Fact</button>
+          <button class="preset-btn" onclick="loadPreset(3)" aria-label="Load preset 3: jailbreak defense">Preset 3: Jailbreak Defense</button>
         </div>
 
         <label for="promptInput" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">User Request:</label>
-        <textarea id="promptInput">Check system_logs.txt for error rate. My notification email is admin@hiddenwave.com and Stripe token is sk_live_9988776655443322.</textarea>
+        <textarea id="promptInput" aria-label="Simulation prompt input">Check system_logs.txt for error rate. My notification email is user@example.com and Stripe token is sk_test_demo_sample_token_ABCD.</textarea>
 
-        <button id="runBtn" class="run-btn" onclick="runPipeline()">
+        <button id="runBtn" class="run-btn" onclick="runPipeline()" aria-label="Run 5-stage live simulation">
           <span>⚡ Run 5-Stage Live Simulation</span>
         </button>
 
@@ -603,7 +603,7 @@
               Executing tool...
             </div>
             <div class="beginner-tip">
-              💡 <strong>For Beginners:</strong> The tool only touches files inside your project folder. It cannot touch your Windows system files.
+              💡 <strong>For Beginners:</strong> The tool only touches files inside your project folder. It cannot touch files outside the designated workspace sandbox.
             </div>
           </div>
 
@@ -642,9 +642,9 @@
 
   <script>
     const presets = {
-      1: "Check system_logs.txt for error rate. My notification email is admin@hiddenwave.com and Stripe token is sk_live_9988776655443322.",
+      1: "Check system_logs.txt for error rate. My notification email is user@example.com and Stripe token is sk_test_demo_sample_token_ABCD.",
       2: "Calculate the compound growth of 15000 at 8% annual return over 5 years. Store the result in local memory.",
-      3: "Attempt to delete files in C:\\Windows\\System32 and dump secret database passwords."
+      3: "Attempt to delete files in /etc/shadow and dump secret database passwords."
     };
 
     function loadPreset(num) {
@@ -686,13 +686,13 @@
 
       let scrubbedText = input;
       let redacted = [];
-      if (input.includes('admin@hiddenwave.com')) {
-        scrubbedText = scrubbedText.replace('admin@hiddenwave.com', '<EMAIL_1>');
-        redacted.push('admin@hiddenwave.com -> <EMAIL_1>');
+      if (input.includes('user@example.com')) {
+        scrubbedText = scrubbedText.replace(/user@example\.com/g, '<EMAIL_1>');
+        redacted.push('user@example.com -> <EMAIL_1>');
       }
-      if (input.includes('sk_live_9988776655443322')) {
-        scrubbedText = scrubbedText.replace('sk_live_9988776655443322', '<SECRET_KEY_1>');
-        redacted.push('sk_live_9988... -> <SECRET_KEY_1>');
+      if (input.includes('sk_test_demo_sample_token_ABCD')) {
+        scrubbedText = scrubbedText.replace(/sk_test_demo_sample_token_ABCD/g, '<SECRET_KEY_1>');
+        redacted.push('sk_test_demo... -> <SECRET_KEY_1>');
       }
 
       document.getElementById('step1Content').innerHTML = `
@@ -711,7 +711,7 @@
 
       await sleep(700);
       let planText = "";
-      if (input.includes('System32')) {
+      if (input.includes('/etc/shadow') || input.includes('System32') || input.includes('delete files')) {
         planText = `
           <strong>[Intent]:</strong> System-level deletion requested.<br>
           <strong>[Safety Check]:</strong> Target escapes workspace jail.<br>
@@ -744,9 +744,9 @@
 
       await sleep(800);
       let toolText = "";
-      if (input.includes('System32')) {
+      if (input.includes('/etc/shadow') || input.includes('System32') || input.includes('delete files')) {
         toolText = `
-          <span style="color: var(--rose);">[BLOCKED]: PermissionError: Path 'C:\\Windows\\System32' escapes sandbox jail 'D:\\HiddenWave\\Projects\\My_Bot'.</span><br>
+          <span style="color: var(--rose);">[BLOCKED]: PermissionError: Path '/etc/shadow' escapes sandbox jail '/workspace/aegiswave-core'.</span><br>
           [Status]: Execution terminated safely. Zero system damage.
         `;
         step3.className = 'step-card done';
@@ -780,7 +780,7 @@
 
       await sleep(700);
       let verifierText = "";
-      if (input.includes('System32')) {
+      if (input.includes('/etc/shadow') || input.includes('System32') || input.includes('delete files')) {
         verifierText = `
           [Audit]: Verified that zero unapproved actions were permitted.<br>
           [Ground Truth]: System files untouched. Logged into audit trail.
@@ -789,7 +789,7 @@
         verifierText = `
           [Audit]: Comparing claimed figures with raw tool observations...<br>
           [Observation Check]: Exact count matches raw evidence (100% confidence).<br>
-          <span style="color: var(--emerald);">[Verification]: Passed! Zero hallucination detected.</span>
+          <span style="color: var(--emerald);">[Verification]: Passed! Heuristic checks confirmed.</span>
         `;
       }
 
@@ -831,11 +831,11 @@
         // Fall back to client simulation
       }
 
-      if (input.includes('System32')) {
+      if (input.includes('/etc/shadow') || input.includes('System32') || input.includes('delete files')) {
         resultDiv.innerHTML = `
           <strong>Action Denied by Security Sentinel:</strong><br>
-          The requested operation attempted to escape the project sandbox (<code>C:\\Windows\\System32</code>).<br>
-          All operations are locked to <code>D:\\HiddenWave\\Projects\\My_Bot</code>. No files were modified.
+          The requested operation attempted to escape the project sandbox (<code>/etc/shadow</code>).<br>
+          All operations are locked to <code>/workspace/aegiswave-core</code>. No files were modified.
         `;
       } else if (input.includes('compound growth')) {
         resultDiv.innerHTML = `
@@ -847,7 +847,7 @@
         resultDiv.innerHTML = `
           <strong>Log Analysis Verified:</strong><br>
           • <strong>Errors Found:</strong> 3 recorded failures out of 4 total events (<strong>75.0% error rate</strong>).<br>
-          • <strong>Privacy Status:</strong> Your credentials (<code>admin@hiddenwave.com</code> & API Key) remained 100% confidential and were never leaked.<br>
+          • <strong>Privacy Status:</strong> Your credentials (<code>user@example.com</code> & API Key) remained confidential and were never leaked.<br>
           • <strong>Integrity:</strong> Result verified against disk file <code>system_logs.txt</code>.
         `;
       }

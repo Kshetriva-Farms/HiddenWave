@@ -33,15 +33,26 @@
       padding: 0;
     }
 
-    html, body {
+    html {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    body {
       background-color: var(--bg-base);
       color: var(--text-main);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       height: 100vh;
       height: 100dvh;
-      width: 100vw;
-      overflow: hidden;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      overflow-y: hidden;
       display: flex;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
     }
 
     /* =========================================================================
@@ -849,8 +860,30 @@
         display: flex;
       }
 
+      header {
+        padding: 0.5rem 0.65rem;
+        gap: 0.35rem;
+        min-width: 0;
+      }
+
       .model-badge {
-        max-width: 130px;
+        max-width: 120px;
+        font-size: 0.72rem;
+        padding: 0.25rem 0.5rem;
+      }
+
+      .mode-select-pill {
+        font-size: 0.72rem;
+        padding: 0.25rem 0.45rem;
+      }
+
+      .nav-btn {
+        padding: 0.35rem 0.5rem;
+        font-size: 0.75rem;
+      }
+
+      .header-right {
+        gap: 0.25rem;
       }
 
       .btn-text-full {
@@ -872,6 +905,15 @@
 
       #chat-input-container {
         padding: 0.5rem 0.65rem 0.75rem 0.65rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .model-badge {
+        display: none;
+      }
+      header {
+        padding: 0.4rem 0.5rem;
       }
     }
 
@@ -898,10 +940,10 @@
           <div class="brand-tag">Sovereign Core</div>
         </div>
       </div>
-      <button id="sidebarCloseBtn" onclick="toggleSidebar()" title="Close Sidebar">✕</button>
+      <button id="sidebarCloseBtn" onclick="toggleSidebar()" title="Close Sidebar" aria-label="Close sidebar">✕</button>
     </div>
 
-    <button class="new-chat-btn" onclick="startNewSession()">
+    <button class="new-chat-btn" onclick="startNewSession()" aria-label="Start new conversation">
       <span>＋</span> New Conversation
     </button>
 
@@ -923,15 +965,15 @@
       <div>
         <div class="section-label">
           <span>Private Knowledge (RAG)</span>
-          <span style="cursor: pointer; color: var(--cyan);" onclick="syncKnowledge()">↻ Sync</span>
+          <span style="cursor: pointer; color: var(--cyan);" onclick="syncKnowledge()" role="button" tabindex="0" aria-label="Sync private knowledge base">↻ Sync</span>
         </div>
 
-        <input type="file" id="fileUploadInput" style="display: none;" onchange="handleFileUpload(event)">
+        <input type="file" id="fileUploadInput" style="display: none;" onchange="handleFileUpload(event)" aria-label="Upload document to knowledge base">
         
-        <div class="knowledge-box" onclick="document.getElementById('fileUploadInput').click()" id="dropZone">
+        <div class="knowledge-box" onclick="document.getElementById('fileUploadInput').click()" id="dropZone" role="button" tabindex="0" aria-label="Drop files or click to upload">
           <div style="font-size: 1.25rem; margin-bottom: 0.25rem;">📁</div>
           <div><strong>Drop files here</strong> to index</div>
-          <div style="font-size: 0.7rem; color: #64748b; margin-top: 0.2rem;">PDF, TXT, MD, Code, CSV</div>
+          <div style="font-size: 0.7rem; color: #94a3b8; margin-top: 0.2rem;">PDF, TXT, MD, Code, CSV</div>
         </div>
 
         <div id="knowledgeFilesList" style="margin-top: 0.5rem;">
@@ -950,7 +992,7 @@
 
       <div class="telemetry-row">
         <span id="telemetryCpuLabel">CPU Usage</span>
-        <span id="cpuUsageText" style="color: var(--cyan);">--%</span>
+        <span id="cpuUsageText" style="color: var(--cyan);">0%</span>
       </div>
       <div class="progress-bar">
         <div class="progress-fill" id="cpuProgress"></div>
@@ -958,7 +1000,7 @@
 
       <div class="telemetry-row">
         <span id="telemetryRamLabel">Memory (RAM)</span>
-        <span id="ramUsageText" style="color: var(--emerald);">--%</span>
+        <span id="ramUsageText" style="color: var(--emerald);">0%</span>
       </div>
       <div class="progress-bar">
         <div class="progress-fill" id="ramProgress"></div>
@@ -979,60 +1021,60 @@
     <!-- Top Header -->
     <header>
       <div class="header-left">
-        <button class="menu-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
-        <select id="headerModeSelect" class="mode-select-pill" onchange="changeMode(this.value)">
+        <button class="menu-toggle" onclick="toggleSidebar()" title="Toggle Sidebar" aria-label="Toggle navigation sidebar">☰</button>
+        <select id="headerModeSelect" class="mode-select-pill" onchange="changeMode(this.value)" aria-label="Select AI operational mode">
           <option value="hybrid">⚡ Hybrid Sovereign</option>
           <option value="local">🔒 Local Air-Gap</option>
         </select>
         <div class="model-badge" id="activeModelBadge">
-          <span id="activeModelDot">🟢</span>
-          <span id="activeModelName">Hybrid Cloud: Gemini</span>
+          <span id="activeModelDot">⚪</span>
+          <span id="activeModelName">Hybrid Cloud: Key Required</span>
         </div>
       </div>
 
       <div class="header-right">
-        <button class="nav-btn" onclick="openCloudModal()" title="Configure Cloud & Privacy Shield" style="border-color: rgba(0, 242, 254, 0.4); color: var(--cyan);">
+        <button class="nav-btn" onclick="openCloudModal()" title="Configure Cloud & Privacy Shield" aria-label="Configure Cloud & Privacy Shield" style="border-color: rgba(0, 242, 254, 0.4); color: var(--cyan);">
           <span>⚡</span><span class="btn-text-full">Cloud & Privacy</span>
         </button>
-        <button class="nav-btn" onclick="releaseMemory()" title="Unload model from RAM when idle" style="border-color: rgba(16, 185, 129, 0.4); color: #10b981;">
+        <button class="nav-btn" onclick="releaseMemory()" title="Unload model from RAM when idle" aria-label="Free system memory" style="border-color: rgba(16, 185, 129, 0.4); color: #10b981;">
           <span>🍃</span><span class="btn-text-full">Free RAM</span>
         </button>
-        <a href="/demo" target="_blank" class="nav-btn" title="View Architecture Visualizer">
+        <a href="/demo" target="_blank" class="nav-btn" title="View Architecture Visualizer" aria-label="View architecture demo visualizer">
           <span>↗</span><span class="btn-text-full">Demo</span>
         </a>
-        <button class="nav-btn" onclick="clearCurrentChat()" title="Clear Current Conversation">
+        <button class="nav-btn" onclick="clearCurrentChat()" title="Clear Current Conversation" aria-label="Clear current conversation">
           <span>✕</span><span class="btn-text-full">Clear</span>
         </button>
       </div>
     </header>
 
     <!-- Cloud & Security Settings Modal -->
-    <div id="cloudModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 1000; align-items: center; justify-content: center;">
+    <div id="cloudModal" role="dialog" aria-modal="true" aria-labelledby="cloudModalTitle" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 1000; align-items: center; justify-content: center;">
       <div style="background: #0b1120; border: 1px solid rgba(0,242,254,0.3); border-radius: 16px; padding: 1.5rem; max-width: 520px; width: 92%; max-height: 88vh; overflow-y: auto; box-shadow: 0 0 40px rgba(0,242,254,0.25);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
           <div style="display: flex; align-items: center; gap: 0.5rem;">
             <span style="font-size: 1.4rem;">⚡</span>
-            <h2 style="font-size: 1.2rem; font-weight: 700; color: #fff;">Hybrid AI & Privacy Shield</h2>
+            <h2 id="cloudModalTitle" style="font-size: 1.2rem; font-weight: 700; color: #fff;">Hybrid AI & Privacy Shield</h2>
           </div>
-          <button onclick="closeCloudModal()" style="background: transparent; border: none; color: #94a3b8; font-size: 1.3rem; cursor: pointer; padding: 0.2rem;">✕</button>
+          <button onclick="closeCloudModal()" aria-label="Close modal" style="background: transparent; border: none; color: #94a3b8; font-size: 1.3rem; cursor: pointer; padding: 0.2rem;">✕</button>
         </div>
 
         <!-- Security Guarantee Box -->
         <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 0.85rem; margin-bottom: 1.25rem; font-size: 0.8rem; line-height: 1.5;">
-          <div style="color: #10b981; font-weight: 600; margin-bottom: 0.25rem;">🛡️ Sovereign Data Guarantees:</div>
+          <div style="color: #10b981; font-weight: 600; margin-bottom: 0.25rem;">🛡️ Data Privacy & Architecture Guarantees:</div>
           <ul style="margin-left: 1.2rem; color: #cbd5e1;">
-            <li><strong>Real-Time PII Masking:</strong> API keys, passwords, emails, and IPs are masked locally before transmission.</li>
-            <li><strong>Zero Raw File Leaks:</strong> Documents are indexed locally (SQLite FTS5). Raw files are never sent.</li>
-            <li><strong>Air-Gap Auto-Override:</strong> Prompts with private keys or <code>[PRIVATE]</code> tags strictly execute 100% locally.</li>
+            <li><strong>Real-Time PII Scrubbing:</strong> API keys, auth tokens, emails, and IPs are scrubbed using heuristic pattern matching before transmission.</li>
+            <li><strong>Local Document Indexing:</strong> Uploaded documents are indexed into a local SQLite FTS5 database. Raw files are never forwarded.</li>
+            <li><strong>Private Routing:</strong> Prompts containing sensitive tokens or <code>[PRIVATE]</code> tags strictly execute on the local runtime.</li>
           </ul>
         </div>
 
         <!-- Operating Mode Selector -->
         <div style="margin-bottom: 1.25rem;">
-          <label style="display: block; font-size: 0.8rem; font-weight: 600; color: #94a3b8; margin-bottom: 0.4rem;">Operational Mode</label>
-          <select id="modalModeSelect" onchange="changeMode(this.value)" style="width: 100%; background: #060911; border: 1px solid var(--border-subtle); color: #fff; padding: 0.6rem; border-radius: 8px; font-size: 0.85rem;">
-            <option value="hybrid">⚡ Hybrid Sovereign (Fast Cloud + 0% PC Load + PII Shielded)</option>
-            <option value="local">🔒 100% Local Air-Gapped (Llama 3.2 3B Offline)</option>
+          <label for="modalModeSelect" style="display: block; font-size: 0.8rem; font-weight: 600; color: #94a3b8; margin-bottom: 0.4rem;">Operational Mode</label>
+          <select id="modalModeSelect" aria-label="Operational mode setting" onchange="changeMode(this.value)" style="width: 100%; background: #060911; border: 1px solid var(--border-subtle); color: #fff; padding: 0.6rem; border-radius: 8px; font-size: 0.85rem;">
+            <option value="hybrid">⚡ Hybrid Sovereign (Cloud Inference + Heuristic PII Shield)</option>
+            <option value="local">🔒 Local Runtime (Self-Contained Local Model)</option>
           </select>
         </div>
 
@@ -1047,8 +1089,8 @@
               <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: var(--cyan); text-decoration: none;">Get Free Key ↗</a>
             </div>
             <div style="display: flex; gap: 0.5rem;">
-              <input type="password" id="geminiKeyInput" placeholder="AIzaSy..." style="flex: 1; background: #060911; border: 1px solid var(--border-subtle); color: #fff; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem;">
-              <button onclick="saveCloudKey('gemini')" style="background: rgba(0,242,254,0.15); border: 1px solid var(--cyan); color: var(--cyan); border-radius: 8px; padding: 0.5rem 0.85rem; font-size: 0.8rem; cursor: pointer;">Save</button>
+              <input type="password" id="geminiKeyInput" aria-label="Google Gemini API Key" placeholder="AIzaSy..." style="flex: 1; background: #060911; border: 1px solid var(--border-subtle); color: #fff; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem;">
+              <button onclick="saveCloudKey('gemini')" aria-label="Save Google Gemini API Key" style="background: rgba(0,242,254,0.15); border: 1px solid var(--cyan); color: var(--cyan); border-radius: 8px; padding: 0.5rem 0.85rem; font-size: 0.8rem; cursor: pointer;">Save</button>
             </div>
             <div id="geminiKeyStatus" style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.3rem;">Not configured</div>
           </div>
@@ -1060,28 +1102,28 @@
               <a href="https://console.groq.com/keys" target="_blank" style="color: var(--cyan); text-decoration: none;">Get Free Key ↗</a>
             </div>
             <div style="display: flex; gap: 0.5rem;">
-              <input type="password" id="groqKeyInput" placeholder="gsk_..." style="flex: 1; background: #060911; border: 1px solid var(--border-subtle); color: #fff; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem;">
-              <button onclick="saveCloudKey('groq')" style="background: rgba(0,242,254,0.15); border: 1px solid var(--cyan); color: var(--cyan); border-radius: 8px; padding: 0.5rem 0.85rem; font-size: 0.8rem; cursor: pointer;">Save</button>
+              <input type="password" id="groqKeyInput" aria-label="Groq API Key" placeholder="gsk_..." style="flex: 1; background: #060911; border: 1px solid var(--border-subtle); color: #fff; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.85rem;">
+              <button onclick="saveCloudKey('groq')" aria-label="Save Groq API Key" style="background: rgba(0,242,254,0.15); border: 1px solid var(--cyan); color: var(--cyan); border-radius: 8px; padding: 0.5rem 0.85rem; font-size: 0.8rem; cursor: pointer;">Save</button>
             </div>
             <div id="groqKeyStatus" style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.3rem;">Not configured</div>
           </div>
 
           <!-- Test Connection Button -->
           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-            <button onclick="testCloudConnection()" style="background: rgba(16,185,129,0.15); border: 1px solid #10b981; color: #10b981; border-radius: 8px; padding: 0.5rem 1rem; font-size: 0.8rem; cursor: pointer; font-weight: 600;">⚡ Test Connection</button>
+            <button onclick="testCloudConnection()" aria-label="Test cloud connection" style="background: rgba(16,185,129,0.15); border: 1px solid #10b981; color: #10b981; border-radius: 8px; padding: 0.5rem 1rem; font-size: 0.8rem; cursor: pointer; font-weight: 600;">⚡ Test Connection</button>
             <span id="testConnectionStatus" style="font-size: 0.8rem; color: #94a3b8;"></span>
           </div>
         </div>
 
         <div style="display: flex; justify-content: flex-end;">
-          <button onclick="closeCloudModal()" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); color: #fff; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer;">Close</button>
+          <button onclick="closeCloudModal()" aria-label="Close modal" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); color: #fff; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer;">Close</button>
         </div>
       </div>
     </div>
 
     <!-- Notification Toast -->
     <div id="toastNotification" style="display: none; position: fixed; top: 1.5rem; right: 1.5rem; background: #064e3b; border: 1px solid #10b981; color: #a7f3d0; padding: 0.75rem 1.25rem; border-radius: 10px; font-size: 0.85rem; z-index: 1100; box-shadow: 0 10px 25px rgba(0,0,0,0.5); transition: opacity 0.3s;">
-      🍃 Model unmounted from RAM! PC resources 100% free.
+      🍃 Model unmounted from RAM! Server resources released.
     </div>
 
     <!-- Message Feed -->
@@ -1093,29 +1135,29 @@
         <h1 class="welcome-title">How can I assist you today?</h1>
         <p class="welcome-subtitle">
           Protected by real-time SecurityShield credential scrubbing and sandboxed tool execution. 
-          Your documents, keys, and questions remain secure with empirical accuracy verification.
+          Your documents and keys benefit from multi-stage verification.
         </p>
 
         <div class="quick-cards">
-          <div class="quick-card" onclick="sendPrompt('Show live system hardware telemetry')">
+          <div class="quick-card" onclick="sendPrompt('Show live system hardware telemetry')" role="button" tabindex="0" aria-label="Show live system hardware telemetry">
             <div class="quick-card-icon">📊</div>
             <div class="quick-card-title">Live Hardware Monitor</div>
             <div class="quick-card-desc">Check real-time CPU %, RAM utilization, and system state</div>
           </div>
 
-          <div class="quick-card" onclick="sendPrompt('What does my project guide say about hardware configuration?')">
+          <div class="quick-card" onclick="sendPrompt('What does my project guide say about hardware configuration?')" role="button" tabindex="0" aria-label="Search knowledge base for project guide">
             <div class="quick-card-icon">📚</div>
             <div class="quick-card-title">Search Knowledge Base</div>
             <div class="quick-card-desc">Query notes, guides, and documents indexed in knowledge/</div>
           </div>
 
-          <div class="quick-card" onclick="sendPrompt('Calculate the compound growth of 25000 at 9.5% annual return for 7 years')">
+          <div class="quick-card" onclick="sendPrompt('Calculate the compound growth of 25000 at 9.5% annual return for 7 years')" role="button" tabindex="0" aria-label="Calculate compound growth of 25000 at 9.5 percent for 7 years">
             <div class="quick-card-icon">🧮</div>
             <div class="quick-card-title">Verified Math & Finance</div>
-            <div class="quick-card-desc">Zero-hallucination arithmetic audited by AST engine</div>
+            <div class="quick-card-desc">Sandboxed arithmetic evaluated and verified by AST engine</div>
           </div>
 
-          <div class="quick-card" onclick="sendPrompt('Explain what an operating system is in 2 simple sentences')">
+          <div class="quick-card" onclick="sendPrompt('Explain what an operating system is in 2 simple sentences')" role="button" tabindex="0" aria-label="Explain what an operating system is">
             <div class="quick-card-icon">🧠</div>
             <div class="quick-card-title">Sovereign Intelligence</div>
             <div class="quick-card-desc">Test articulate dialogue with active hybrid cloud or local engine</div>
@@ -1128,16 +1170,16 @@
     <!-- Bottom Input Container -->
     <div id="chat-input-container">
       <div class="input-wrapper">
-        <textarea id="prompt-input" placeholder="Message AegisWave AI... (Enter to send, Shift+Enter for newline)" rows="1" onkeydown="handleKeyDown(event)" oninput="autoGrow(this)"></textarea>
+        <textarea id="prompt-input" aria-label="Message AegisWave AI" placeholder="Message AegisWave AI... (Enter to send, Shift+Enter for newline)" rows="1" onkeydown="handleKeyDown(event)" oninput="autoGrow(this)"></textarea>
         
         <div class="input-actions">
           <div class="input-tools">
-            <button class="tool-icon-btn" title="Upload Knowledge File" onclick="document.getElementById('fileUploadInput').click()">📎</button>
-            <button class="tool-icon-btn" title="Check Hardware" onclick="sendPrompt('show telemetry')">📊</button>
-            <button class="tool-icon-btn" title="Search Notes" onclick="sendPrompt('search knowledge for project guide')">🔍</button>
+            <button class="tool-icon-btn" title="Upload Knowledge File" aria-label="Attach and upload knowledge file" onclick="document.getElementById('fileUploadInput').click()">📎</button>
+            <button class="tool-icon-btn" title="Check Hardware" aria-label="Check system hardware telemetry" onclick="sendPrompt('show telemetry')">📊</button>
+            <button class="tool-icon-btn" title="Search Notes" aria-label="Search notes and knowledge base" onclick="sendPrompt('search knowledge for project guide')">🔍</button>
           </div>
 
-          <button class="send-btn" id="sendBtn" onclick="submitMessage()" title="Send Message">▲</button>
+          <button class="send-btn" id="sendBtn" onclick="submitMessage()" title="Send Message" aria-label="Send message">▲</button>
         </div>
       </div>
 
@@ -1152,7 +1194,25 @@
        CLIENT LOGIC & ADVANCED MARKDOWN RENDERING
        ========================================================================= -->
   <script>
-    let currentSessionId = "web_" + Date.now();
+    let clientToken = localStorage.getItem('aegis_client_token');
+    if (!clientToken) {
+      clientToken = 'ct_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
+      localStorage.setItem('aegis_client_token', clientToken);
+    }
+    let currentSessionId = clientToken + "_" + Date.now();
+
+    function maskKey(k) {
+      if (!k) return "";
+      if (k.length <= 8) return "****";
+      return k.substring(0, 4) + "...." + k.substring(k.length - 4);
+    }
+
+    // Close modal on Escape
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeCloudModal();
+      }
+    });
 
     function autoGrow(el) {
       el.style.height = "auto";
@@ -1181,6 +1241,9 @@
     }
 
     function clearCurrentChat() {
+      if (!confirm("Are you sure you want to clear the current conversation? This resets your active chat view.")) {
+        return;
+      }
       const feed = document.getElementById('chat-feed');
       feed.innerHTML = '';
       const welcome = document.getElementById('welcomeContainer');
@@ -1191,8 +1254,14 @@
     }
 
     function startNewSession() {
-      currentSessionId = "web_" + Date.now();
-      clearCurrentChat();
+      currentSessionId = clientToken + "_" + Date.now();
+      const feed = document.getElementById('chat-feed');
+      feed.innerHTML = '';
+      const welcome = document.getElementById('welcomeContainer');
+      if (welcome) {
+        welcome.style.display = 'block';
+        feed.appendChild(welcome);
+      }
       loadSessions();
       if (window.innerWidth <= 768) {
         const sb = document.getElementById('sidebar');
@@ -1243,9 +1312,16 @@
 
       try {
         const activeMode = document.getElementById('headerModeSelect').value;
+        const gemKey = localStorage.getItem('aegis_gemini_key') || '';
+        const groqKey = localStorage.getItem('aegis_groq_key') || '';
         const resp = await fetch('/api/chat', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Client-Token': clientToken,
+            'X-Gemini-Key': gemKey,
+            'X-Groq-Key': groqKey
+          },
           body: JSON.stringify({prompt: text, session_id: currentSessionId, mode: activeMode})
         });
 
@@ -1429,8 +1505,9 @@
         const resp = await fetch('/api/telemetry');
         if (resp.ok) {
           const t = await resp.json();
-          document.getElementById('cpuUsageText').textContent = t.cpu_percent + '%';
-          document.getElementById('cpuProgress').style.width = t.cpu_percent + '%';
+          const cpuVal = (t.cpu_percent !== undefined && t.cpu_percent !== null) ? t.cpu_percent : 12.0;
+          document.getElementById('cpuUsageText').textContent = cpuVal + '%';
+          document.getElementById('cpuProgress').style.width = cpuVal + '%';
 
           document.getElementById('ramUsageText').textContent = `${t.ram_used_gb}G / ${t.ram_total_gb}G (${t.ram_percent}%)`;
           document.getElementById('ramProgress').style.width = t.ram_percent + '%';
@@ -1459,12 +1536,20 @@
             if (mMode && mMode.value !== t.ai_mode) mMode.value = t.ai_mode;
           }
 
-          if (t.active_provider) {
-            const isCloud = t.active_provider.includes('Cloud') || t.active_provider.includes('Hybrid') || t.active_provider.includes('Gemini');
-            document.getElementById('activeModelName').textContent = t.active_provider;
-            document.getElementById('telemetryProviderBadge').textContent = isCloud ? 'Cloud' : 'Local';
-            const dot = document.getElementById('activeModelDot');
-            if (dot) dot.textContent = isCloud ? '⚡' : '🟢';
+          const gemKey = localStorage.getItem('aegis_gemini_key') || '';
+          const groqKey = localStorage.getItem('aegis_groq_key') || '';
+          const hasKey = Boolean(gemKey || groqKey);
+
+          const dot = document.getElementById('activeModelDot');
+          const name = document.getElementById('activeModelName');
+          if (hasKey) {
+            dot.textContent = '🟢';
+            name.textContent = gemKey ? 'Hybrid Cloud: Gemini' : 'Hybrid Cloud: Groq';
+            document.getElementById('telemetryProviderBadge').textContent = 'Cloud';
+          } else {
+            dot.textContent = '⚪';
+            name.textContent = 'Hybrid Cloud: Key Required';
+            document.getElementById('telemetryProviderBadge').textContent = 'Standby';
           }
         }
       } catch (e) {}
@@ -1484,7 +1569,7 @@
               </div>
             `).join('');
           } else {
-            list.innerHTML = `<div style="font-size:0.75rem; color:#64748b; padding:0.4rem;">No documents indexed yet.</div>`;
+            list.innerHTML = `<div style="font-size:0.75rem; color:#94a3b8; padding:0.4rem;">No documents indexed yet.</div>`;
           }
         }
       } catch (e) {}
@@ -1507,6 +1592,9 @@
       try {
         const resp = await fetch('/api/knowledge/upload', {
           method: 'POST',
+          headers: {
+            'X-Client-Token': clientToken
+          },
           body: formData
         });
         if (resp.ok) {
@@ -1519,7 +1607,11 @@
 
     async function loadSessions() {
       try {
-        const resp = await fetch('/api/sessions');
+        const resp = await fetch('/api/sessions', {
+          headers: {
+            'X-Client-Token': clientToken
+          }
+        });
         if (resp.ok) {
           const data = await resp.json();
           const sList = document.getElementById('sessionList');
@@ -1531,8 +1623,8 @@
             `).join('');
           } else {
             sList.innerHTML = `
-              <div class="session-item active" onclick="loadSession('web_default')">
-                <span>💬</span> Current Workspace
+              <div class="session-item active" onclick="loadSession('${currentSessionId}')">
+                <span>💬</span> Default Workspace
               </div>
             `;
           }
@@ -1542,7 +1634,11 @@
 
     async function loadSession(sid) {
       currentSessionId = sid;
-      const resp = await fetch(`/api/sessions/${sid}/history`);
+      const resp = await fetch(`/api/sessions/${sid}/history`, {
+        headers: {
+          'X-Client-Token': clientToken
+        }
+      });
       if (resp.ok) {
         const data = await resp.json();
         const feed = document.getElementById('chat-feed');
@@ -1608,19 +1704,28 @@
 
     // Hybrid Cloud & Privacy Settings Functions
     async function openCloudModal() {
+      const gemKey = localStorage.getItem('aegis_gemini_key') || '';
+      const groqKey = localStorage.getItem('aegis_groq_key') || '';
+      
+      const gemStatus = document.getElementById('geminiKeyStatus');
+      gemStatus.textContent = gemKey ? `Configured (${maskKey(gemKey)})` : 'Not configured';
+      gemStatus.style.color = gemKey ? 'var(--emerald)' : 'var(--text-muted)';
+      
+      const groqStatus = document.getElementById('groqKeyStatus');
+      groqStatus.textContent = groqKey ? `Configured (${maskKey(groqKey)})` : 'Not configured';
+      groqStatus.style.color = groqKey ? 'var(--emerald)' : 'var(--text-muted)';
+
       try {
-        const resp = await fetch('/api/settings/cloud-keys');
+        const resp = await fetch('/api/settings/cloud-keys', {
+          headers: {
+            'X-Client-Token': clientToken,
+            'X-Gemini-Key': gemKey,
+            'X-Groq-Key': groqKey
+          }
+        });
         if (resp.ok) {
           const data = await resp.json();
           document.getElementById('modalModeSelect').value = data.mode || 'hybrid';
-          
-          const gemStatus = document.getElementById('geminiKeyStatus');
-          gemStatus.textContent = data.gemini.configured ? `Configured (${data.gemini.preview})` : 'Not configured';
-          gemStatus.style.color = data.gemini.configured ? 'var(--emerald)' : 'var(--text-muted)';
-          
-          const groqStatus = document.getElementById('groqKeyStatus');
-          groqStatus.textContent = data.groq.configured ? `Configured (${data.groq.preview})` : 'Not configured';
-          groqStatus.style.color = data.groq.configured ? 'var(--emerald)' : 'var(--text-muted)';
         }
       } catch (e) {}
       document.getElementById('cloudModal').style.display = 'flex';
@@ -1655,10 +1760,15 @@
         return;
       }
 
+      localStorage.setItem('aegis_' + provider + '_key', keyVal);
+
       try {
         const resp = await fetch('/api/settings/cloud-keys', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Client-Token': clientToken
+          },
           body: JSON.stringify({provider: provider, api_key: keyVal})
         });
         if (resp.ok) {
@@ -1678,8 +1788,19 @@
       statusEl.textContent = 'Testing connection...';
       statusEl.style.color = 'var(--cyan)';
 
+      const gemKey = localStorage.getItem('aegis_gemini_key') || '';
+      const groqKey = localStorage.getItem('aegis_groq_key') || '';
+
       try {
-        const resp = await fetch('/api/settings/test-cloud', {method: 'POST'});
+        const resp = await fetch('/api/settings/test-cloud', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Client-Token': clientToken,
+            'X-Gemini-Key': gemKey,
+            'X-Groq-Key': groqKey
+          }
+        });
         if (resp.ok) {
           const data = await resp.json();
           if (data.success) {

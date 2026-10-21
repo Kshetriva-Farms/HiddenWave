@@ -38,7 +38,12 @@ class AegisAgent:
         self.router = router or ModelRouter(preferred_model=DEFAULT_MODEL_NAME)
         self.verifier = AccuracyVerifier()
 
-    def run(self, user_prompt: str) -> AgentResult:
+    def run(
+        self,
+        user_prompt: str,
+        key_override: Optional[str] = None,
+        provider_override: Optional[str] = None
+    ) -> AgentResult:
         steps: List[AgentStep] = []
         start_time = time.time()
 
@@ -85,7 +90,9 @@ class AegisAgent:
             prompt=sanitized_prompt,
             available_tools=self.tools.get_descriptions(),
             is_confidential=is_confidential,
-            chat_history=history
+            chat_history=history,
+            key_override=key_override,
+            provider_override=provider_override
         )
 
         tool_observations = []
@@ -160,6 +167,10 @@ class AegisAgent:
             # Check if synthesis returned an articulate response
             if synth_resp.text and not synth_resp.text.strip().startswith("I hear you! You said:"):
                 answer = synth_resp.text.strip()
+                if any("calc" in s.details.lower() or "math" in s.details.lower() for s in steps):
+                    raw_val = str(tool_observations[0]).strip()
+                    if raw_val and raw_val not in answer:
+                        answer += f"\n\n*Verified Calculation Result:* **{raw_val}**"
                 steps.append(AgentStep(
                     stage="Answer Synthesis",
                     status="SUCCESS",

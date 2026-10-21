@@ -36,11 +36,26 @@ class CloudProvider(BaseModelProvider):
             return "OpenAI GPT-4o-mini (Hybrid Cloud)"
         return "None (No API Key Configured)"
 
+    def test_single_key(self, provider: str, key: str) -> Tuple[bool, str, float]:
+        """Tests a specific key transiently without saving it to disk or environment."""
+        if not key or not key.strip():
+            return False, "Empty API key provided", 0.0
+
+        key = key.strip()
+        start = time.time()
+        test_prompt = "Hello AegisWave, please respond with: 'Cloud connection verified.'"
+        resp = self.generate(test_prompt, key_override=key, provider_override=provider)
+        elapsed = round(time.time() - start, 2)
+
+        if resp.text:
+            return True, f"Connected to {provider.upper()}: '{resp.text[:60]}'", elapsed
+        return False, f"Could not verify {provider.upper()} key. Response was empty or rejected.", elapsed
+
     def test_connection(self) -> Tuple[bool, str, float]:
         """Tests active cloud connection and returns (success, message, latency_seconds)."""
         self.reload_keys()
         if not self.is_available():
-            return False, "No cloud API key configured in .env", 0.0
+            return False, "No cloud API key configured", 0.0
 
         start = time.time()
         test_prompt = "Hello AegisWave, please respond with: 'Cloud connection verified.'"
@@ -56,9 +71,15 @@ class CloudProvider(BaseModelProvider):
         prompt: str,
         system_prompt: Optional[str] = None,
         available_tools: Optional[List[Dict[str, Any]]] = None,
-        chat_history: Optional[List[Dict[str, str]]] = None
+        chat_history: Optional[List[Dict[str, str]]] = None,
+        key_override: Optional[str] = None,
+        provider_override: Optional[str] = None
     ) -> ModelResponse:
         self.reload_keys()
+
+        active_gemini_key = key_override if provider_override == "gemini" else (self.gemini_key if not provider_override else None)
+        active_groq_key = key_override if provider_override == "groq" else (self.groq_key if not provider_override else None)
+        active_openai_key = key_override if provider_override == "openai" else (self.openai_key if not provider_override else None)
 
         system = system_prompt or (
             "You are AegisWave, a sovereign, highly intelligent, precise, and helpful AI companion. "
@@ -77,7 +98,7 @@ class CloudProvider(BaseModelProvider):
         # -------------------------------------------------------------
         # 1. Google Gemini (Fast, Free, Sub-Second)
         # -------------------------------------------------------------
-        if self.gemini_key:
+        if active_gemini_key:
             # Build native multi-turn contents
             gemini_contents = []
             if chat_history:
@@ -102,7 +123,7 @@ class CloudProvider(BaseModelProvider):
                     candidate_models.append(m)
 
             for model_id in candidate_models:
-                url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_id}:generateContent?key={self.gemini_key}"
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_id}:generateContent?key={active_gemini_key}"
                 payload = {
                     "contents": gemini_contents
                 }
@@ -135,7 +156,7 @@ class CloudProvider(BaseModelProvider):
         # -------------------------------------------------------------
         # 2. Groq (Llama 3.3 70B / 3.1 8B - Lightning-Fast LPU)
         # -------------------------------------------------------------
-        if self.groq_key:
+        if active_groq_key:
             groq_messages = [{"role": "system", "content": system}]
             if chat_history:
                 for h in chat_history[-6:]:
@@ -147,7 +168,7 @@ class CloudProvider(BaseModelProvider):
 
             url = "https://api.groq.com/openai/v1/chat/completions"
             headers = {
-                "Authorization": f"Bearer {self.groq_key}",
+                "Authorization": f"Bearer {active_groq_key}",
                 "Content-Type": "application/json"
             }
             for groq_model in ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"]:
@@ -176,7 +197,7 @@ class CloudProvider(BaseModelProvider):
         # -------------------------------------------------------------
         # 3. OpenAI (GPT-4o-mini)
         # -------------------------------------------------------------
-        if self.openai_key:
+        if active_openai_key:
             openai_messages = [{"role": "system", "content": system}]
             if chat_history:
                 for h in chat_history[-6:]:
@@ -188,7 +209,7 @@ class CloudProvider(BaseModelProvider):
 
             url = "https://api.openai.com/v1/chat/completions"
             headers = {
-                "Authorization": f"Bearer {self.openai_key}",
+                "Authorization": f"Bearer {active_openai_key}",
                 "Content-Type": "application/json"
             }
             payload = {

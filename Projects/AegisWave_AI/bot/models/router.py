@@ -67,7 +67,9 @@ class ModelRouter(BaseModelProvider):
         system_prompt: Optional[str] = None,
         available_tools: Optional[List[Dict[str, Any]]] = None,
         is_confidential: bool = False,
-        chat_history: Optional[List[Dict[str, str]]] = None
+        chat_history: Optional[List[Dict[str, str]]] = None,
+        key_override: Optional[str] = None,
+        provider_override: Optional[str] = None
     ) -> ModelResponse:
         # If the prompt is marked as strictly confidential or contains private keys,
         # FORCE local offline execution to guarantee absolute air-gap sovereignty!
@@ -79,9 +81,16 @@ class ModelRouter(BaseModelProvider):
         # HYBRID MODE: Prioritize Fast Cloud, Fallback to Local
         # -------------------------------------------------------------
         if self.mode == "hybrid":
-            if self.cloud.is_available():
+            if key_override or self.cloud.is_available():
                 try:
-                    res = self.cloud.generate(prompt, system_prompt, available_tools, chat_history=chat_history)
+                    res = self.cloud.generate(
+                        prompt,
+                        system_prompt,
+                        available_tools,
+                        chat_history=chat_history,
+                        key_override=key_override,
+                        provider_override=provider_override
+                    )
                     if res.text:
                         return res
                 except Exception as e:
@@ -100,9 +109,16 @@ class ModelRouter(BaseModelProvider):
         # CLOUD MODE
         # -------------------------------------------------------------
         else:
-            if self.cloud.is_available():
+            if key_override or self.cloud.is_available():
                 try:
-                    res = self.cloud.generate(prompt, system_prompt, available_tools, chat_history=chat_history)
+                    res = self.cloud.generate(
+                        prompt,
+                        system_prompt,
+                        available_tools,
+                        chat_history=chat_history,
+                        key_override=key_override,
+                        provider_override=provider_override
+                    )
                     if res.text:
                         return res
                 except Exception:

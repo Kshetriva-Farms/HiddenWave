@@ -17,7 +17,9 @@ class SecuritySandbox:
         Resolves a path and verifies it strictly resides inside an allowed root.
         Raises PermissionError if path attempts directory traversal or OS escape.
         """
-        p = Path(target_path)
+        import urllib.parse
+        clean_target = urllib.parse.unquote(str(target_path))
+        p = Path(clean_target)
         if not p.is_absolute():
             # Treat relative to the primary root
             resolved = (self.allowed_roots[0] / p).resolve()

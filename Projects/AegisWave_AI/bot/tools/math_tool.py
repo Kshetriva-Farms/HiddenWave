@@ -54,12 +54,30 @@ def _eval_node(node):
     else:
         raise ValueError(f"Disallowed expression node: {type(node).__name__}")
 
+import re
+
 def calculate(expression: str) -> str:
-    """Safely calculates mathematical expressions (e.g., '(15000 * 1.08**5)')."""
+    """Safely calculates mathematical expressions (e.g., '(15000 * 1.08**5)', '15% of 200')."""
     try:
         expr_clean = expression.strip().replace("^", "**")
+        
+        # Support percentage syntax e.g. "15% of 200" or "15% * 200"
+        pct_match = re.search(r"([0-9\.]+)\s*%\s*(?:of|\*)\s*([0-9\.]+)", expr_clean, re.IGNORECASE)
+        if pct_match:
+            pct_val = float(pct_match.group(1))
+            target_val = float(pct_match.group(2))
+            expr_clean = f"({pct_val} / 100.0) * {target_val}"
+        
         parsed = ast.parse(expr_clean, mode="eval")
         result = _eval_node(parsed.body)
+
+        if isinstance(result, float):
+            result = round(result, 10)
+            if result.is_integer():
+                result = int(result)
+
         return str(result)
+    except ZeroDivisionError:
+        return "Calculation Error: Division by zero"
     except Exception as e:
         return f"Calculation Error: {e}"

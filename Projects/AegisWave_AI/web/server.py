@@ -78,6 +78,23 @@ def get_agent(session_id: str) -> AegisAgent:
         active_agents[session_id] = AegisAgent(session_id=session_id, router=shared_router)
     return active_agents[session_id]
 
+@app.after_request
+def add_security_headers(response):
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "img-src 'self' data: https:; "
+        "connect-src 'self'; "
+        "frame-ancestors 'none';"
+    )
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    return response
+
 # -----------------------------------------------------------------------------
 # Frontend Routes
 # -----------------------------------------------------------------------------
@@ -96,7 +113,11 @@ def demo_visualizer():
 def chat():
     data = request.get_json(force=True)
     prompt = data.get("prompt", "").strip()
+    client_token = request.headers.get("X-Client-Token") or data.get("client_token", "anon")
     session_id = data.get("session_id", "web_default").strip()
+    if client_token and not session_id.startswith(f"{client_token}_"):
+        session_id = f"{client_token}_{session_id}"
+
     mode = data.get("mode")
     if mode in ["hybrid", "local", "cloud"]:
         shared_router.set_mode(mode)
@@ -104,15 +125,26 @@ def chat():
     if not prompt:
         return jsonify({"error": "Prompt cannot be empty"}), 400
 
+    client_gemini = request.headers.get("X-Gemini-Key") or data.get("gemini_key")
+    client_groq = request.headers.get("X-Groq-Key") or data.get("groq_key")
+    key_override = client_gemini or client_groq
+    provider_override = "gemini" if client_gemini else ("groq" if client_groq else None)
+
     agent = get_agent(session_id)
-    result = agent.run(prompt)
+    result = agent.run(prompt, key_override=key_override, provider_override=provider_override)
+
+    active_provider = agent.router.get_active_provider_name()
+    if client_gemini:
+        active_provider = "Google Gemini Flash (Client Key)"
+    elif client_groq:
+        active_provider = "Groq Llama 3.3 70B (Client Key)"
 
     return jsonify({
         "response": result.final_text,
         "sanitized_prompt": result.sanitized_prompt,
         "redactions": result.redactions,
         "verification": result.verification_status,
-        "active_provider": agent.router.get_active_provider_name(),
+        "active_provider": active_provider,
         "ai_mode": shared_router.get_mode(),
         "steps": [
             {"stage": s.stage, "status": s.status, "details": s.details}
@@ -125,16 +157,20 @@ def chat():
 # -----------------------------------------------------------------------------
 @app.route("/api/sessions", methods=["GET"])
 def get_sessions():
+    client_token = request.headers.get("X-Client-Token") or request.args.get("client_token")
+    if not client_token:
+        return jsonify({"sessions": []})
+
     agent = get_agent("web_default")
     cur = agent.vault.conn.cursor()
     cur.execute("""
         SELECT session_id, content, MAX(created_at) as last_active, COUNT(id) as msg_count
         FROM conversation
-        WHERE role = 'user'
+        WHERE role = 'user' AND session_id LIKE ?
         GROUP BY session_id
         ORDER BY last_active DESC
         LIMIT 20
-    """)
+    """, (f"{client_token}_%",))
     sessions = []
     for sid, first_prompt, last_act, count in cur.fetchall():
         sessions.append({
@@ -147,6 +183,9 @@ def get_sessions():
 
 @app.route("/api/sessions/<session_id>/history", methods=["GET"])
 def get_session_history(session_id):
+    client_token = request.headers.get("X-Client-Token") or request.args.get("client_token")
+    if client_token and not session_id.startswith(f"{client_token}_"):
+        return jsonify({"session_id": session_id, "history": []})
     agent = get_agent(session_id)
     history = agent.vault.get_session_history(session_id, limit=50)
     return jsonify({"session_id": session_id, "history": history})
@@ -326,21 +365,11 @@ def settings_cloud_keys():
         provider = data.get("provider", "").lower().strip()
         api_key = data.get("api_key", "").strip()
 
-        key_map = {
-            "gemini": "GEMINI_API_KEY",
-            "groq": "GROQ_API_KEY",
-            "openai": "OPENAI_API_KEY"
-        }
-
-        if provider not in key_map:
+        if provider not in ["gemini", "groq", "openai"]:
             return jsonify({"error": "Invalid provider. Choose 'gemini', 'groq', or 'openai'."}), 400
 
-        env_var_name = key_map[provider]
-        update_env_variable(env_var_name, api_key)
-        shared_router.cloud.reload_keys()
-
-        # Test immediately
-        test_ok, test_msg, latency = shared_router.cloud.test_connection()
+        # Transient test connection for the provided key without overwriting global server environment
+        test_ok, test_msg, latency = shared_router.cloud.test_single_key(provider, api_key)
 
         return jsonify({
             "success": True,
@@ -348,11 +377,14 @@ def settings_cloud_keys():
             "connected": test_ok,
             "message": test_msg,
             "latency_s": latency,
-            "active_provider": shared_router.get_active_provider_name()
+            "active_provider": "Google Gemini" if provider == "gemini" else provider.capitalize()
         })
 
-    # GET status
-    shared_router.cloud.reload_keys()
+    # GET status - Scoped per client headers to guarantee multi-tenant privacy
+    client_gemini = request.headers.get("X-Gemini-Key", "").strip()
+    client_groq = request.headers.get("X-Groq-Key", "").strip()
+    client_openai = request.headers.get("X-OpenAI-Key", "").strip()
+
     def mask_key(k: str) -> str:
         if not k:
             return ""
@@ -362,24 +394,40 @@ def settings_cloud_keys():
 
     return jsonify({
         "gemini": {
-            "configured": bool(shared_router.cloud.gemini_key),
-            "preview": mask_key(shared_router.cloud.gemini_key)
+            "configured": bool(client_gemini),
+            "preview": mask_key(client_gemini)
         },
         "groq": {
-            "configured": bool(shared_router.cloud.groq_key),
-            "preview": mask_key(shared_router.cloud.groq_key)
+            "configured": bool(client_groq),
+            "preview": mask_key(client_groq)
         },
         "openai": {
-            "configured": bool(shared_router.cloud.openai_key),
-            "preview": mask_key(shared_router.cloud.openai_key)
+            "configured": bool(client_openai),
+            "preview": mask_key(client_openai)
         },
-        "active_service": shared_router.cloud.get_active_service_name(),
+        "active_service": "Google Gemini" if client_gemini else ("Groq" if client_groq else "Local Core"),
         "mode": shared_router.get_mode()
     })
 
 @app.route("/api/settings/test-cloud", methods=["POST"])
 def test_cloud():
-    test_ok, test_msg, latency = shared_router.cloud.test_connection()
+    client_gemini = request.headers.get("X-Gemini-Key", "").strip()
+    client_groq = request.headers.get("X-Groq-Key", "").strip()
+
+    if client_gemini:
+        test_ok, test_msg, latency = shared_router.cloud.test_single_key("gemini", client_gemini)
+    elif client_groq:
+        test_ok, test_msg, latency = shared_router.cloud.test_single_key("groq", client_groq)
+    else:
+        test_ok, test_msg, latency = shared_router.cloud.test_connection()
+        if not test_ok:
+            return jsonify({
+                "success": False,
+                "message": "No API key configured. Enter a Gemini or Groq key in Cloud & Privacy settings.",
+                "latency_s": 0.0,
+                "active_provider": shared_router.get_active_provider_name()
+            })
+
     return jsonify({
         "success": test_ok,
         "message": test_msg,
