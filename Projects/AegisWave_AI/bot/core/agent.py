@@ -79,17 +79,13 @@ class AegisAgent:
         ))
 
         # Retrieve recent session history for continuous conversational context
-        history = self.vault.get_session_history(self.session_id, limit=4)
-        if history:
-            context_prefix = "\n".join([f"{h['role'].capitalize()}: {h['content']}" for h in history])
-            context_prompt = f"Previous context:\n{context_prefix}\n\nUser: {sanitized_prompt}"
-        else:
-            context_prompt = sanitized_prompt
+        history = self.vault.get_session_history(self.session_id, limit=6)
 
         model_resp = self.router.generate(
-            prompt=context_prompt,
+            prompt=sanitized_prompt,
             available_tools=self.tools.get_descriptions(),
-            is_confidential=is_confidential
+            is_confidential=is_confidential,
+            chat_history=history
         )
 
         tool_observations = []
@@ -125,7 +121,7 @@ class AegisAgent:
                     self.vault.log_audit("TOOL_EXEC", "BLOCKED", f"{tc.tool_name}: {err_msg}")
 
         # -------------------------------------------------------------
-        # STAGE 4: Accuracy Verification
+        # STAGE 4: Accuracy Verification & Answer Synthesis
         # -------------------------------------------------------------
         if tool_observations:
             tools_ok, tool_msg = self.verifier.verify_tool_execution(tool_observations)
@@ -140,28 +136,68 @@ class AegisAgent:
                 details=verify_status
             ))
             
-            # Formulate grounded output
-            if any("read_file" in s.details for s in steps):
-                content = tool_observations[0]
-                lines = [l for l in content.splitlines() if l.strip()]
-                error_count = content.count("[ERROR]")
-                if error_count > 0:
-                    answer = f"Analyzed file ({len(lines)} lines). Found {error_count} error events."
-                else:
-                    answer = f"File Content Summary:\n{content[:500]}"
-            elif any("calculate" in s.details for s in steps):
-                answer = f"Calculation Result: {tool_observations[0]}"
-            elif any("system_telemetry" in s.details for s in steps):
-                answer = tool_observations[0]
-            elif any("list_directory" in s.details for s in steps):
-                answer = f"Directory Listing:\n{tool_observations[0]}"
-            elif any("fetch_web_page" in s.details for s in steps):
-                answer = f"Web Content:\n{tool_observations[0][:600]}"
+            # STAGE 5: Grounded Answer Synthesis
+            obs_joined = "\n\n".join(tool_observations)
+            synthesis_prompt = (
+                f"User Question: {sanitized_prompt}\n\n"
+                f"Real Tool Execution Results:\n{obs_joined}\n\n"
+                "Please provide a direct, intelligent, and helpful answer to the user's question, "
+                "synthesized accurately from the tool execution results above. "
+                "Include key details and context, but do not hallucinate facts outside the observations."
+            )
+            synthesis_system = (
+                "You are AegisWave AI, an intelligent, sovereign assistant. "
+                "Answer questions thoroughly and insightfully using the tool observations provided. "
+                "Never reply with raw JSON blocks. Format your response cleanly using markdown."
+            )
+
+            synth_resp = self.router.generate(
+                prompt=synthesis_prompt,
+                system_prompt=synthesis_system,
+                is_confidential=is_confidential
+            )
+
+            # Check if synthesis returned an articulate response
+            if synth_resp.text and not synth_resp.text.strip().startswith("I hear you! You said:"):
+                answer = synth_resp.text.strip()
+                steps.append(AgentStep(
+                    stage="Answer Synthesis",
+                    status="SUCCESS",
+                    details=f"Grounded response formulated by {self.router.get_active_provider_name()}."
+                ))
             else:
-                answer = "\n".join(tool_observations)
+                # Fallback to structured grounded output if synthesis wasn't available
+                if any("read_file" in s.details for s in steps):
+                    content = tool_observations[0]
+                    lines = [l for l in content.splitlines() if l.strip()]
+                    error_lines = [l for l in lines if "[ERROR]" in l or "error" in l.lower()]
+                    if error_lines:
+                        answer = (
+                            f"Analyzed file ({len(lines)} lines). Found {len(error_lines)} error event(s):\n\n"
+                            + "\n".join(f"- `{el}`" for el in error_lines[:15])
+                        )
+                    else:
+                        preview = "\n".join(lines[:20])
+                        answer = f"**File Content Overview** ({len(lines)} lines):\n\n```\n{preview}\n```"
+                elif any("calculate" in s.details for s in steps):
+                    answer = f"Calculation Result: **{tool_observations[0]}**\n\n*(Verified via mathematical AST evaluator)*"
+                elif any("system_telemetry" in s.details for s in steps):
+                    answer = tool_observations[0]
+                elif any("list_directory" in s.details for s in steps):
+                    answer = f"**Directory Listing:**\n\n{tool_observations[0]}"
+                elif any("search_knowledge" in s.details for s in steps):
+                    answer = f"**Knowledge Base Findings:**\n\n{tool_observations[0]}"
+                elif any("fetch_web_page" in s.details for s in steps):
+                    answer = f"**Web Page Extract:**\n\n{tool_observations[0]}"
+                else:
+                    answer = "\n\n".join(tool_observations)
         else:
             verify_status = "Direct conversational response."
-            answer = model_resp.text
+            answer = model_resp.text or "I processed your request, but received no content. Please try again."
+
+        # Clean up any residual raw tool json in direct responses
+        if answer.strip().startswith("```json") and "{" in answer and answer.strip().endswith("```"):
+            answer = "Action completed successfully. Let me know if you would like me to analyze anything further."
 
         # -------------------------------------------------------------
         # STAGE 5: Local Memory Commit & Token Restoration

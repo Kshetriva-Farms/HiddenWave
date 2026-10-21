@@ -13,6 +13,7 @@ from .base import BaseModelProvider, ModelResponse, ToolCallRequest
 
 class CloudProvider(BaseModelProvider):
     def __init__(self):
+        self.active_gemini_model = None
         self.reload_keys()
 
     def reload_keys(self):
@@ -27,7 +28,8 @@ class CloudProvider(BaseModelProvider):
     def get_active_service_name(self) -> str:
         self.reload_keys()
         if self.gemini_key:
-            return "Google Gemini Flash (Hybrid Cloud)"
+            model_info = f" ({self.active_gemini_model})" if self.active_gemini_model else ""
+            return f"Google Gemini Flash{model_info} (Hybrid Cloud)"
         if self.groq_key:
             return "Groq Llama 3.3 70B (Hybrid Cloud)"
         if self.openai_key:
@@ -41,7 +43,7 @@ class CloudProvider(BaseModelProvider):
             return False, "No cloud API key configured in .env", 0.0
 
         start = time.time()
-        test_prompt = "Hello AegisWave, confirm cloud connection in 5 words."
+        test_prompt = "Hello AegisWave, please respond with: 'Cloud connection verified.'"
         resp = self.generate(test_prompt)
         elapsed = round(time.time() - start, 2)
 
@@ -53,42 +55,57 @@ class CloudProvider(BaseModelProvider):
         self,
         prompt: str,
         system_prompt: Optional[str] = None,
-        available_tools: Optional[List[Dict[str, Any]]] = None
+        available_tools: Optional[List[Dict[str, Any]]] = None,
+        chat_history: Optional[List[Dict[str, str]]] = None
     ) -> ModelResponse:
         self.reload_keys()
 
         system = system_prompt or (
             "You are AegisWave, a sovereign, highly intelligent, precise, and helpful AI companion. "
-            "Engage in thoughtful dialogue, answer questions with precision, and provide clear assistance."
+            "Engage in thoughtful dialogue, answer questions with precision, and provide clear, well-structured assistance."
         )
 
         if available_tools:
             tools_json = json.dumps(available_tools, indent=2)
             system += (
-                f"\n\nYou have access to local tools:\n{tools_json}\n"
-                "To call a tool, respond with ONLY a JSON block in this format:\n"
+                f"\n\nYou have access to the following local tools:\n{tools_json}\n"
+                "If you need to execute a tool to answer the user's question, provide ONLY a single JSON code block like this:\n"
                 "```json\n{\"tool\": \"tool_name\", \"args\": {\"arg_name\": \"value\"}}\n```\n"
+                "If no tool is required, respond directly with your helpful conversational answer."
             )
 
         # -------------------------------------------------------------
-        # 1. Google Gemini (Free, Ultra-Fast, Sub-Second)
+        # 1. Google Gemini (Fast, Free, Sub-Second)
         # -------------------------------------------------------------
         if self.gemini_key:
-            # Active Gemini Flash models in priority order
-            candidate_models = [
-                "gemini-3-flash-preview",
+            # Build native multi-turn contents
+            gemini_contents = []
+            if chat_history:
+                for h in chat_history[-6:]:  # Keep recent history concise
+                    role = "user" if h.get("role") == "user" else "model"
+                    content_str = (h.get("content") or "").strip()
+                    if content_str:
+                        gemini_contents.append({"role": role, "parts": [{"text": content_str}]})
+            gemini_contents.append({"role": "user", "parts": [{"text": prompt}]})
+
+            candidate_models = []
+            if self.active_gemini_model:
+                candidate_models.append(self.active_gemini_model)
+            for m in [
                 "gemini-2.5-flash",
-                "gemini-flash-latest",
-                "gemini-3.8-flash",
                 "gemini-2.0-flash",
-                "gemini-1.5-flash"
-            ]
+                "gemini-1.5-flash",
+                "gemini-3-flash-preview",
+                "gemini-1.5-pro"
+            ]:
+                if m not in candidate_models:
+                    candidate_models.append(m)
+
             for model_id in candidate_models:
                 url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_id}:generateContent?key={self.gemini_key}"
                 payload = {
-                    "contents": [{"parts": [{"text": prompt}]}]
+                    "contents": gemini_contents
                 }
-                # Include system instruction if supported
                 if system:
                     payload["system_instruction"] = {"parts": [{"text": system}]}
 
@@ -101,7 +118,12 @@ class CloudProvider(BaseModelProvider):
                             parts = candidates[0]["content"].get("parts", [])
                             if parts and "text" in parts[0]:
                                 text = parts[0]["text"].strip()
+                                # Prevent simulated multi-turn loops
+                                for sep in ["\nUser:", "\nHuman:", "\n\nUser:", "\n\nHuman:"]:
+                                    if sep in text:
+                                        text = text.split(sep)[0].strip()
                                 tool_calls = self._extract_tool_calls(text)
+                                self.active_gemini_model = model_id
                                 return ModelResponse(
                                     text=text,
                                     tool_calls=tool_calls,
@@ -111,40 +133,59 @@ class CloudProvider(BaseModelProvider):
                     continue
 
         # -------------------------------------------------------------
-        # 2. Groq (Llama 3.3 70B - Lightning-Fast LPU)
+        # 2. Groq (Llama 3.3 70B / 3.1 8B - Lightning-Fast LPU)
         # -------------------------------------------------------------
         if self.groq_key:
+            groq_messages = [{"role": "system", "content": system}]
+            if chat_history:
+                for h in chat_history[-6:]:
+                    role = "user" if h.get("role") == "user" else "assistant"
+                    content_str = (h.get("content") or "").strip()
+                    if content_str:
+                        groq_messages.append({"role": role, "content": content_str})
+            groq_messages.append({"role": "user", "content": prompt})
+
             url = "https://api.groq.com/openai/v1/chat/completions"
             headers = {
                 "Authorization": f"Bearer {self.groq_key}",
                 "Content-Type": "application/json"
             }
-            payload = {
-                "model": "llama-3.3-70b-versatile",
-                "messages": [
-                    {"role": "system", "content": system},
-                    {"role": "user", "content": prompt}
-                ],
-                "temperature": 0.7,
-                "max_tokens": 1024
-            }
-            try:
-                r = requests.post(url, json=payload, headers=headers, timeout=15)
-                if r.status_code == 200:
-                    text = r.json()["choices"][0]["message"]["content"].strip()
-                    tool_calls = self._extract_tool_calls(text)
-                    return ModelResponse(
-                        text=text,
-                        tool_calls=tool_calls,
-                        raw_provider="groq_cloud (llama-3.3-70b)"
-                    )
-            except Exception:
-                pass
+            for groq_model in ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"]:
+                payload = {
+                    "model": groq_model,
+                    "messages": groq_messages,
+                    "temperature": 0.7,
+                    "max_tokens": 1200
+                }
+                try:
+                    r = requests.post(url, json=payload, headers=headers, timeout=15)
+                    if r.status_code == 200:
+                        text = r.json()["choices"][0]["message"]["content"].strip()
+                        for sep in ["\nUser:", "\nHuman:", "\n\nUser:", "\n\nHuman:"]:
+                            if sep in text:
+                                text = text.split(sep)[0].strip()
+                        tool_calls = self._extract_tool_calls(text)
+                        return ModelResponse(
+                            text=text,
+                            tool_calls=tool_calls,
+                            raw_provider=f"groq_cloud ({groq_model})"
+                        )
+                except Exception:
+                    continue
 
         # -------------------------------------------------------------
         # 3. OpenAI (GPT-4o-mini)
         # -------------------------------------------------------------
         if self.openai_key:
+            openai_messages = [{"role": "system", "content": system}]
+            if chat_history:
+                for h in chat_history[-6:]:
+                    role = "user" if h.get("role") == "user" else "assistant"
+                    content_str = (h.get("content") or "").strip()
+                    if content_str:
+                        openai_messages.append({"role": role, "content": content_str})
+            openai_messages.append({"role": "user", "content": prompt})
+
             url = "https://api.openai.com/v1/chat/completions"
             headers = {
                 "Authorization": f"Bearer {self.openai_key}",
@@ -152,17 +193,17 @@ class CloudProvider(BaseModelProvider):
             }
             payload = {
                 "model": "gpt-4o-mini",
-                "messages": [
-                    {"role": "system", "content": system},
-                    {"role": "user", "content": prompt}
-                ],
+                "messages": openai_messages,
                 "temperature": 0.7,
-                "max_tokens": 1024
+                "max_tokens": 1200
             }
             try:
                 r = requests.post(url, json=payload, headers=headers, timeout=15)
                 if r.status_code == 200:
                     text = r.json()["choices"][0]["message"]["content"].strip()
+                    for sep in ["\nUser:", "\nHuman:", "\n\nUser:", "\n\nHuman:"]:
+                        if sep in text:
+                            text = text.split(sep)[0].strip()
                     tool_calls = self._extract_tool_calls(text)
                     return ModelResponse(
                         text=text,
@@ -175,13 +216,38 @@ class CloudProvider(BaseModelProvider):
         return ModelResponse(text="", tool_calls=[], raw_provider="cloud_unavailable")
 
     def _extract_tool_calls(self, text: str) -> List[ToolCallRequest]:
+        import re
         tool_calls = []
-        if "```json" in text:
+
+        # 1. Look for ```json blocks
+        json_matches = re.findall(r"```(?:json)?\s*([\s\S]*?)\s*```", text, re.IGNORECASE)
+        for snippet in json_matches:
             try:
-                snippet = text.split("```json")[1].split("```")[0].strip()
-                parsed = json.loads(snippet)
-                if "tool" in parsed and "args" in parsed:
-                    tool_calls.append(ToolCallRequest(tool_name=parsed["tool"], arguments=parsed["args"]))
+                parsed = json.loads(snippet.strip())
+                if isinstance(parsed, dict):
+                    tool_name = parsed.get("tool") or parsed.get("name") or parsed.get("tool_name")
+                    args = parsed.get("args") or parsed.get("arguments") or parsed.get("parameters") or {}
+                    if tool_name:
+                        tool_calls.append(ToolCallRequest(tool_name=tool_name, arguments=args))
+                elif isinstance(parsed, list):
+                    for item in parsed:
+                        if isinstance(item, dict):
+                            tool_name = item.get("tool") or item.get("name")
+                            args = item.get("args") or item.get("arguments") or {}
+                            if tool_name:
+                                tool_calls.append(ToolCallRequest(tool_name=tool_name, arguments=args))
             except Exception:
                 pass
+
+        # 2. Look for raw JSON object if no block matched
+        if not tool_calls:
+            raw_match = re.search(r'\{\s*"(?:tool|name|tool_name)"\s*:\s*"([^"]+)"\s*,\s*"(?:args|arguments|parameters)"\s*:\s*(\{.*?\})\s*\}', text, re.DOTALL)
+            if raw_match:
+                try:
+                    tool_name = raw_match.group(1)
+                    args = json.loads(raw_match.group(2))
+                    tool_calls.append(ToolCallRequest(tool_name=tool_name, arguments=args))
+                except Exception:
+                    pass
+
         return tool_calls

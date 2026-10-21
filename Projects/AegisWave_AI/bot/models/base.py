@@ -24,7 +24,8 @@ class BaseModelProvider(ABC):
         self,
         prompt: str,
         system_prompt: Optional[str] = None,
-        available_tools: Optional[List[Dict[str, Any]]] = None
+        available_tools: Optional[List[Dict[str, Any]]] = None,
+        chat_history: Optional[List[Dict[str, str]]] = None
     ) -> ModelResponse:
         """Generates a response or initiates tool calls."""
         pass

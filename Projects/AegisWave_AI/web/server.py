@@ -20,7 +20,16 @@ import gc
 
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
+import werkzeug
 from werkzeug.utils import secure_filename
+
+# Compatibility patch for Werkzeug 3.x with Flask 2.x
+if not hasattr(werkzeug, "__version__"):
+    try:
+        import importlib.metadata
+        werkzeug.__version__ = importlib.metadata.version("werkzeug")
+    except Exception:
+        werkzeug.__version__ = "3.0.0"
 
 from bot.core.agent import AegisAgent
 from bot.models.router import ModelRouter
@@ -184,30 +193,53 @@ def upload_knowledge_file():
 @app.route("/api/telemetry", methods=["GET"])
 def telemetry():
     import psutil
+    import platform
     cpu_pct = psutil.cpu_percent(interval=0.1)
     ram = psutil.virtual_memory()
-    disk = psutil.disk_usage("/")
-    battery = psutil.sensors_battery()
 
+    # Safe disk usage across Windows & Linux cloud containers
+    try:
+        disk_root = PROJECT_ROOT.anchor or os.path.abspath(os.sep) or "/"
+        disk = psutil.disk_usage(disk_root)
+        disk_free = round(disk.free / (1024**3), 1)
+        disk_total = round(disk.total / (1024**3), 1)
+    except Exception:
+        disk_free = 0.0
+        disk_total = 0.0
+
+    battery = psutil.sensors_battery()
     battery_pct = round(battery.percent) if battery else None
     battery_charging = battery.power_plugged if battery else None
 
     agent = get_agent("web_default")
     active_provider = agent.router.get_active_provider_name()
 
+    os_system = platform.system()
+    os_release = platform.release()
+    processor = platform.processor() or "Multi-Core CPU"
+    is_cloud_env = bool(
+        os.environ.get("RENDER") or
+        os.environ.get("RAILWAY_ENVIRONMENT") or
+        os.environ.get("DYNO") or
+        os.environ.get("PORT") and not os.name == 'nt'
+    )
+
     return jsonify({
         "cpu_percent": cpu_pct,
         "ram_used_gb": round(ram.used / (1024**3), 2),
         "ram_total_gb": round(ram.total / (1024**3), 2),
         "ram_percent": ram.percent,
-        "disk_free_gb": round(disk.free / (1024**3), 1),
-        "disk_total_gb": round(disk.total / (1024**3), 1),
+        "disk_free_gb": disk_free,
+        "disk_total_gb": disk_total,
         "battery_percent": battery_pct,
         "battery_charging": battery_charging,
         "active_provider": active_provider,
         "ai_mode": shared_router.get_mode(),
         "is_cloud_available": shared_router.cloud.is_available(),
-        "cloud_service_name": shared_router.cloud.get_active_service_name()
+        "cloud_service_name": shared_router.cloud.get_active_service_name(),
+        "os_platform": f"{os_system} {os_release}",
+        "processor": processor,
+        "is_cloud_env": is_cloud_env
     })
 
 @app.route("/api/audit", methods=["GET"])
@@ -219,11 +251,12 @@ def audit():
 @app.route("/api/network/info", methods=["GET"])
 def network_info():
     ip = get_lan_ip()
+    port = int(os.environ.get("PORT", 5000))
     return jsonify({
-        "local_url": "http://127.0.0.1:5000",
+        "local_url": f"http://127.0.0.1:{port}",
         "lan_ip": ip,
-        "mobile_url": f"http://{ip}:5000",
-        "port": 5000
+        "mobile_url": f"http://{ip}:{port}",
+        "port": port
     })
 
 @app.route("/api/memory/release", methods=["POST"])
@@ -241,24 +274,27 @@ def release_memory():
 # -----------------------------------------------------------------------------
 def update_env_variable(key: str, value: str):
     env_file = PROJECT_ROOT / ".env"
-    lines = []
-    found = False
-    if env_file.exists():
-        with open(env_file, "r", encoding="utf-8") as f:
-            lines = f.readlines()
-    
-    new_lines = []
-    for line in lines:
-        if line.strip().startswith(f"{key}="):
+    try:
+        lines = []
+        found = False
+        if env_file.exists():
+            with open(env_file, "r", encoding="utf-8") as f:
+                lines = f.readlines()
+        
+        new_lines = []
+        for line in lines:
+            if line.strip().startswith(f"{key}="):
+                new_lines.append(f"{key}={value}\n")
+                found = True
+            else:
+                new_lines.append(line)
+        if not found:
             new_lines.append(f"{key}={value}\n")
-            found = True
-        else:
-            new_lines.append(line)
-    if not found:
-        new_lines.append(f"{key}={value}\n")
-    
-    with open(env_file, "w", encoding="utf-8") as f:
-        f.writelines(new_lines)
+        
+        with open(env_file, "w", encoding="utf-8") as f:
+            f.writelines(new_lines)
+    except Exception as e:
+        print(f"[AEGIS SERVER] Notice: .env file write skipped ({e}). Applied in memory.")
     os.environ[key] = value
 
 @app.route("/api/settings/mode", methods=["GET", "POST"])

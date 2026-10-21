@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>AegisWave AI — Sovereign Intelligent Companion</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>AegisWave AI — Sovereign Intelligent Gateway</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -11,8 +11,8 @@
     :root {
       --bg-base: #060911;
       --bg-sidebar: #0a0f1d;
-      --bg-card: rgba(16, 24, 42, 0.75);
-      --bg-card-hover: rgba(28, 41, 69, 0.85);
+      --bg-card: rgba(16, 24, 42, 0.78);
+      --bg-card-hover: rgba(28, 41, 69, 0.9);
       --bg-input: #080d1a;
       --border-subtle: rgba(255, 255, 255, 0.08);
       --border-glow: rgba(0, 242, 254, 0.25);
@@ -33,18 +33,36 @@
       padding: 0;
     }
 
-    body {
+    html, body {
       background-color: var(--bg-base);
       color: var(--text-main);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       height: 100vh;
+      height: 100dvh;
+      width: 100vw;
       overflow: hidden;
       display: flex;
     }
 
     /* =========================================================================
-       SIDEBAR STYLING
+       SIDEBAR & BACKDROP
        ========================================================================= */
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(5px);
+      z-index: 85;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .sidebar-backdrop.active {
+      display: block;
+      opacity: 1;
+    }
+
     #sidebar {
       width: var(--sidebar-width);
       background: var(--bg-sidebar);
@@ -52,16 +70,18 @@
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 100;
+      height: 100%;
     }
 
     .sidebar-header {
-      padding: 1.25rem 1rem;
+      padding: 1rem 1.15rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--border-subtle);
+      min-height: 60px;
     }
 
     .brand {
@@ -83,7 +103,7 @@
     }
 
     .brand-title {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       background: linear-gradient(to right, #fff, var(--cyan));
@@ -111,14 +131,28 @@
       box-shadow: 0 0 8px var(--emerald);
     }
 
+    #sidebarCloseBtn {
+      display: none;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
     .new-chat-btn {
-      margin: 1rem 1rem 0.5rem 1rem;
+      margin: 0.9rem 1rem 0.4rem 1rem;
       background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(37, 99, 235, 0.15));
       border: 1px solid rgba(0, 242, 254, 0.3);
       color: #fff;
-      padding: 0.75rem 1rem;
+      padding: 0.7rem 1rem;
       border-radius: 12px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -163,9 +197,9 @@
     }
 
     .session-item {
-      padding: 0.6rem 0.75rem;
+      padding: 0.55rem 0.75rem;
       border-radius: 8px;
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       color: #cbd5e1;
       cursor: pointer;
       display: flex;
@@ -187,7 +221,6 @@
       background: rgba(0, 242, 254, 0.08);
     }
 
-    /* Knowledge Box in Sidebar */
     .knowledge-box {
       background: rgba(13, 20, 36, 0.6);
       border: 1px dashed rgba(255, 255, 255, 0.15);
@@ -218,9 +251,8 @@
       margin-top: 0.3rem;
     }
 
-    /* Telemetry Widget in Sidebar */
     .telemetry-card {
-      margin: 0.75rem 1rem 1rem 1rem;
+      margin: 0.5rem 1rem 0.85rem 1rem;
       background: #090e1a;
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
@@ -256,112 +288,145 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      height: 100%;
+      min-width: 0;
       position: relative;
-      background: radial-gradient(circle at 50% 10%, #0d1527 0%, var(--bg-base) 60%);
+      background: radial-gradient(circle at 50% 10%, #0d1527 0%, var(--bg-base) 65%);
     }
 
-    /* Top App Bar */
     header {
-      padding: 0.85rem 1.5rem;
+      padding: 0.75rem 1.25rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--border-subtle);
-      background: rgba(6, 9, 17, 0.85);
+      background: rgba(6, 9, 17, 0.9);
       backdrop-filter: blur(16px);
       z-index: 50;
+      min-height: 60px;
+      gap: 0.5rem;
     }
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.65rem;
+      min-width: 0;
+      flex-shrink: 1;
     }
 
     .menu-toggle {
       background: transparent;
       border: 1px solid var(--border-subtle);
       color: #fff;
-      padding: 0.4rem 0.6rem;
+      width: 36px;
+      height: 36px;
       border-radius: 8px;
       cursor: pointer;
       display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .mode-select-pill {
+      background: rgba(16, 24, 42, 0.9);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      color: var(--cyan);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      outline: none;
+      cursor: pointer;
+      white-space: nowrap;
     }
 
     .model-badge {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.35rem 0.75rem;
+      gap: 0.35rem;
+      padding: 0.35rem 0.7rem;
       border-radius: 999px;
       background: rgba(16, 185, 129, 0.12);
       border: 1px solid rgba(16, 185, 129, 0.3);
       color: var(--emerald);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 320px;
     }
 
     .header-right {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
+      flex-shrink: 0;
     }
 
     .nav-btn {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-subtle);
       color: var(--text-muted);
-      padding: 0.35rem 0.75rem;
+      padding: 0.4rem 0.75rem;
       border-radius: 8px;
       font-size: 0.8rem;
       cursor: pointer;
       text-decoration: none;
       transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      white-space: nowrap;
     }
 
     .nav-btn:hover {
       color: #fff;
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     /* Message Feed Area */
     #chat-feed {
       flex: 1;
       overflow-y: auto;
-      padding: 1.5rem;
+      padding: 1.25rem 1rem;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.25rem;
+      scroll-behavior: smooth;
     }
 
-    /* Welcome Empty State */
     .welcome-container {
-      max-width: 750px;
+      max-width: 780px;
       margin: auto;
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 1.5rem 0.5rem;
+      animation: fadeIn 0.35s ease;
     }
 
     .welcome-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 0.3rem 0.8rem;
+      padding: 0.3rem 0.85rem;
       background: rgba(0, 242, 254, 0.1);
       border: 1px solid rgba(0, 242, 254, 0.25);
       border-radius: 999px;
       color: var(--cyan);
       font-size: 0.8rem;
       font-weight: 600;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
     }
 
     .welcome-title {
-      font-size: 2rem;
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
       font-weight: 700;
       letter-spacing: -0.03em;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
       background: linear-gradient(to right, #fff, #94a3b8);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -369,15 +434,18 @@
 
     .welcome-subtitle {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       line-height: 1.6;
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
+      max-width: 620px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .quick-cards {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.85rem;
       text-align: left;
     }
 
@@ -385,43 +453,44 @@
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 14px;
-      padding: 1.1rem;
+      padding: 1rem;
       cursor: pointer;
-      transition: all 0.25s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .quick-card:hover {
       background: var(--bg-card-hover);
       border-color: var(--cyan);
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     }
 
     .quick-card-icon {
       font-size: 1.3rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .quick-card-title {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
       margin-bottom: 0.25rem;
       color: #fff;
     }
 
     .quick-card-desc {
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       color: var(--text-muted);
+      line-height: 1.45;
     }
 
-    /* Message Bubbles */
+    /* Message Rows */
     .message-row {
       display: flex;
-      gap: 1rem;
-      max-width: 850px;
+      gap: 0.85rem;
+      max-width: 860px;
       width: 100%;
       margin: 0 auto;
-      animation: fadeIn 0.3s ease;
+      animation: fadeIn 0.25s ease;
     }
 
     .message-row.user {
@@ -437,6 +506,7 @@
       justify-content: center;
       font-size: 1.1rem;
       flex-shrink: 0;
+      margin-top: 2px;
     }
 
     .avatar-ai {
@@ -445,16 +515,17 @@
     }
 
     .message-bubble {
-      max-width: 85%;
-      padding: 1rem 1.25rem;
+      max-width: 86%;
+      padding: 0.95rem 1.2rem;
       border-radius: 16px;
-      font-size: 0.95rem;
+      font-size: 0.93rem;
       line-height: 1.6;
+      word-break: break-word;
     }
 
     .message-row.user .message-bubble {
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.4), rgba(0, 242, 254, 0.2));
-      border: 1px solid rgba(0, 242, 254, 0.3);
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.45), rgba(0, 242, 254, 0.22));
+      border: 1px solid rgba(0, 242, 254, 0.35);
       color: #fff;
       border-top-right-radius: 4px;
     }
@@ -463,42 +534,163 @@
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-top-left-radius: 4px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
 
-    .message-text pre {
-      background: #040711;
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 0.85rem;
-      margin: 0.75rem 0;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
-      overflow-x: auto;
+    /* Formatted Content Typography */
+    .message-text {
+      color: #f1f5f9;
     }
 
-    .message-text code {
+    .message-text p {
+      margin-bottom: 0.65rem;
+    }
+
+    .message-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .message-text h1, .message-text h2, .message-text h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 0.85rem 0 0.45rem 0;
+      letter-spacing: -0.015em;
+    }
+
+    .message-text h1 { font-size: 1.3rem; }
+    .message-text h2 { font-size: 1.15rem; }
+    .message-text h3 { font-size: 1.02rem; }
+
+    .message-text ul, .message-text ol {
+      margin: 0.4rem 0 0.65rem 1.25rem;
+    }
+
+    .message-text li {
+      margin-bottom: 0.3rem;
+    }
+
+    .message-text blockquote {
+      border-left: 3px solid var(--cyan);
+      background: rgba(0, 242, 254, 0.05);
+      padding: 0.5rem 0.85rem;
+      border-radius: 0 8px 8px 0;
+      margin: 0.65rem 0;
+      color: #cbd5e1;
+      font-style: italic;
+    }
+
+    .inline-code {
       font-family: 'JetBrains Mono', monospace;
       background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 0.15rem 0.35rem;
       border-radius: 4px;
-      font-size: 0.85rem;
+      font-size: 0.84em;
+      color: var(--cyan);
     }
 
-    /* Pipeline Step Badge below Assistant message */
+    /* Code Blocks with Copy Header */
+    .code-container {
+      background: #040712;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      margin: 0.75rem 0;
+      overflow: hidden;
+    }
+
+    .code-header {
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.35rem 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .copy-code-btn {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-code-btn:hover {
+      background: rgba(0, 242, 254, 0.1);
+      color: var(--cyan);
+      border-color: var(--cyan);
+    }
+
+    .code-container pre {
+      padding: 0.85rem 1rem;
+      margin: 0;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+      white-space: pre;
+    }
+
+    /* Styled Tables */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 0.75rem 0;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    table.rendered-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+      text-align: left;
+    }
+
+    table.rendered-table th {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-weight: 600;
+      padding: 0.55rem 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    table.rendered-table td {
+      padding: 0.5rem 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #cbd5e1;
+    }
+
+    table.rendered-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    table.rendered-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Pipeline Step Badge */
     .pipeline-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      margin-top: 0.6rem;
-      padding: 0.3rem 0.6rem;
+      margin-top: 0.65rem;
+      padding: 0.3rem 0.65rem;
       background: rgba(0, 0, 0, 0.4);
       border: 1px solid var(--border-subtle);
       border-radius: 8px;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
       cursor: pointer;
       font-family: 'JetBrains Mono', monospace;
+      transition: all 0.15s;
     }
 
     .pipeline-badge:hover {
@@ -513,7 +705,7 @@
       border: 1px solid var(--border-subtle);
       border-radius: 8px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       line-height: 1.5;
       display: none;
     }
@@ -522,22 +714,23 @@
        INPUT BAR AREA
        ========================================================================= */
     #chat-input-container {
-      padding: 1rem 1.5rem 1.25rem 1.5rem;
-      background: rgba(6, 9, 17, 0.9);
+      padding: 0.75rem 1rem 1rem 1rem;
+      background: rgba(6, 9, 17, 0.95);
       backdrop-filter: blur(16px);
       border-top: 1px solid var(--border-subtle);
+      flex-shrink: 0;
     }
 
     .input-wrapper {
-      max-width: 850px;
+      max-width: 860px;
       margin: 0 auto;
       background: var(--bg-input);
       border: 1px solid var(--border-subtle);
       border-radius: 16px;
-      padding: 0.75rem 1rem;
+      padding: 0.65rem 0.85rem;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.4rem;
       transition: all 0.2s;
     }
 
@@ -553,11 +746,11 @@
       outline: none;
       color: #fff;
       font-family: inherit;
-      font-size: 0.95rem;
-      line-height: 1.5;
+      font-size: 0.94rem;
+      line-height: 1.45;
       resize: none;
       min-height: 24px;
-      max-height: 160px;
+      max-height: 140px;
     }
 
     .input-actions {
@@ -568,7 +761,7 @@
 
     .input-tools {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .tool-icon-btn {
@@ -582,7 +775,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       transition: all 0.2s;
     }
 
@@ -609,27 +802,38 @@
       box-shadow: 0 0 12px var(--cyan-glow);
     }
 
-    .send-btn:hover {
+    .send-btn:hover:not(:disabled) {
       transform: scale(1.05);
       box-shadow: 0 0 18px var(--cyan-glow);
+    }
+
+    .send-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .privacy-notice {
       text-align: center;
       font-size: 0.72rem;
       color: var(--text-muted);
-      margin-top: 0.5rem;
+      margin-top: 0.4rem;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.35rem;
     }
 
-    /* Mobile Adaptations */
+    /* =========================================================================
+       RESPONSIVE ADAPTATIONS
+       ========================================================================= */
     @media (max-width: 768px) {
       #sidebar {
-        position: absolute;
-        height: 100vh;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        height: 100dvh;
         transform: translateX(-100%);
       }
 
@@ -637,12 +841,37 @@
         transform: translateX(0);
       }
 
+      #sidebarCloseBtn {
+        display: flex;
+      }
+
       .menu-toggle {
-        display: block;
+        display: flex;
+      }
+
+      .model-badge {
+        max-width: 130px;
+      }
+
+      .btn-text-full {
+        display: none;
+      }
+
+      .message-bubble {
+        max-width: 92%;
+        padding: 0.8rem 1rem;
       }
 
       .quick-cards {
         grid-template-columns: 1fr;
+      }
+
+      #chat-feed {
+        padding: 0.85rem 0.65rem;
+      }
+
+      #chat-input-container {
+        padding: 0.5rem 0.65rem 0.75rem 0.65rem;
       }
     }
 
@@ -653,6 +882,9 @@
   </style>
 </head>
 <body>
+
+  <!-- Backdrop overlay for mobile sidebar drawer -->
+  <div id="sidebarBackdrop" class="sidebar-backdrop" onclick="toggleSidebar()"></div>
 
   <!-- =========================================================================
        SIDEBAR
@@ -666,7 +898,7 @@
           <div class="brand-tag">Sovereign Core</div>
         </div>
       </div>
-      <button class="nav-btn" onclick="toggleSidebar()" style="display:none;" id="sidebarCloseBtn">✕</button>
+      <button id="sidebarCloseBtn" onclick="toggleSidebar()" title="Close Sidebar">✕</button>
     </div>
 
     <button class="new-chat-btn" onclick="startNewSession()">
@@ -709,15 +941,15 @@
 
     </div>
 
-    <!-- Live Hardware Telemetry Widget -->
+    <!-- Dynamic Hardware Telemetry Widget -->
     <div class="telemetry-card">
       <div class="section-label" style="margin-bottom: 0.5rem;">
-        <span>HP Victus Telemetry</span>
-        <span id="telemetryProviderBadge" style="color: var(--emerald); font-size: 0.7rem;">Offline</span>
+        <span id="telemetryHostTitle">Host Telemetry</span>
+        <span id="telemetryProviderBadge" style="color: var(--emerald); font-size: 0.7rem;">Live</span>
       </div>
 
       <div class="telemetry-row">
-        <span>AMD Ryzen CPU</span>
+        <span id="telemetryCpuLabel">CPU Usage</span>
         <span id="cpuUsageText" style="color: var(--cyan);">--%</span>
       </div>
       <div class="progress-bar">
@@ -725,7 +957,7 @@
       </div>
 
       <div class="telemetry-row">
-        <span>RAM (8GB DDR4)</span>
+        <span id="telemetryRamLabel">Memory (RAM)</span>
         <span id="ramUsageText" style="color: var(--emerald);">--%</span>
       </div>
       <div class="progress-bar">
@@ -733,8 +965,8 @@
       </div>
 
       <div class="telemetry-row" style="margin-bottom: 0;">
-        <span>Battery / Power</span>
-        <span id="batteryText" style="color: var(--amber);">--%</span>
+        <span id="telemetryAuxLabel">Storage / State</span>
+        <span id="batteryText" style="color: var(--amber);">--</span>
       </div>
     </div>
   </aside>
@@ -747,41 +979,49 @@
     <!-- Top Header -->
     <header>
       <div class="header-left">
-        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-        <select id="headerModeSelect" onchange="changeMode(this.value)" style="background: rgba(16,24,42,0.9); border: 1px solid rgba(0,242,254,0.3); color: var(--cyan); font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.65rem; border-radius: 999px; outline: none; cursor: pointer;">
+        <button class="menu-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
+        <select id="headerModeSelect" class="mode-select-pill" onchange="changeMode(this.value)">
           <option value="hybrid">⚡ Hybrid Sovereign</option>
           <option value="local">🔒 Local Air-Gap</option>
         </select>
         <div class="model-badge" id="activeModelBadge">
           <span id="activeModelDot">🟢</span>
-          <span id="activeModelName">Hybrid Cloud: Gemini (Shield Active)</span>
+          <span id="activeModelName">Hybrid Cloud: Gemini</span>
         </div>
       </div>
 
       <div class="header-right">
-        <button class="nav-btn" onclick="openCloudModal()" title="Configure Hybrid Cloud & Security Shield" style="border-color: rgba(0, 242, 254, 0.4); color: var(--cyan);">⚡ Cloud & Privacy</button>
-        <button class="nav-btn" onclick="releaseMemory()" title="Unload model from RAM when not in use" style="border-color: rgba(16, 185, 129, 0.4); color: #10b981;">🍃 Free RAM</button>
-        <a href="/demo" target="_blank" class="nav-btn">Architecture ↗</a>
-        <button class="nav-btn" onclick="clearCurrentChat()">Clear</button>
+        <button class="nav-btn" onclick="openCloudModal()" title="Configure Cloud & Privacy Shield" style="border-color: rgba(0, 242, 254, 0.4); color: var(--cyan);">
+          <span>⚡</span><span class="btn-text-full">Cloud & Privacy</span>
+        </button>
+        <button class="nav-btn" onclick="releaseMemory()" title="Unload model from RAM when idle" style="border-color: rgba(16, 185, 129, 0.4); color: #10b981;">
+          <span>🍃</span><span class="btn-text-full">Free RAM</span>
+        </button>
+        <a href="/demo" target="_blank" class="nav-btn" title="View Architecture Visualizer">
+          <span>↗</span><span class="btn-text-full">Demo</span>
+        </a>
+        <button class="nav-btn" onclick="clearCurrentChat()" title="Clear Current Conversation">
+          <span>✕</span><span class="btn-text-full">Clear</span>
+        </button>
       </div>
     </header>
 
     <!-- Cloud & Security Settings Modal -->
-    <div id="cloudModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 1000; align-items: center; justify-content: center;">
-      <div style="background: #0b1120; border: 1px solid rgba(0,242,254,0.3); border-radius: 16px; padding: 1.75rem; max-width: 520px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 40px rgba(0,242,254,0.25);">
+    <div id="cloudModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 1000; align-items: center; justify-content: center;">
+      <div style="background: #0b1120; border: 1px solid rgba(0,242,254,0.3); border-radius: 16px; padding: 1.5rem; max-width: 520px; width: 92%; max-height: 88vh; overflow-y: auto; box-shadow: 0 0 40px rgba(0,242,254,0.25);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
           <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <span style="font-size: 1.5rem;">⚡</span>
-            <h2 style="font-size: 1.25rem; font-weight: 700; color: #fff;">Hybrid AI & Privacy Shield</h2>
+            <span style="font-size: 1.4rem;">⚡</span>
+            <h2 style="font-size: 1.2rem; font-weight: 700; color: #fff;">Hybrid AI & Privacy Shield</h2>
           </div>
-          <button onclick="closeCloudModal()" style="background: transparent; border: none; color: #94a3b8; font-size: 1.25rem; cursor: pointer;">✕</button>
+          <button onclick="closeCloudModal()" style="background: transparent; border: none; color: #94a3b8; font-size: 1.3rem; cursor: pointer; padding: 0.2rem;">✕</button>
         </div>
 
         <!-- Security Guarantee Box -->
         <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 0.85rem; margin-bottom: 1.25rem; font-size: 0.8rem; line-height: 1.5;">
           <div style="color: #10b981; font-weight: 600; margin-bottom: 0.25rem;">🛡️ Sovereign Data Guarantees:</div>
           <ul style="margin-left: 1.2rem; color: #cbd5e1;">
-            <li><strong>Real-Time PII Masking:</strong> API keys, passwords, emails, and IPs are scrubbed before cloud transmission.</li>
+            <li><strong>Real-Time PII Masking:</strong> API keys, passwords, emails, and IPs are masked locally before transmission.</li>
             <li><strong>Zero Raw File Leaks:</strong> Documents are indexed locally (SQLite FTS5). Raw files are never sent.</li>
             <li><strong>Air-Gap Auto-Override:</strong> Prompts with private keys or <code>[PRIVATE]</code> tags strictly execute 100% locally.</li>
           </ul>
@@ -827,7 +1067,7 @@
           </div>
 
           <!-- Test Connection Button -->
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; flex-wrap: wrap; gap: 0.5rem;">
             <button onclick="testCloudConnection()" style="background: rgba(16,185,129,0.15); border: 1px solid #10b981; color: #10b981; border-radius: 8px; padding: 0.5rem 1rem; font-size: 0.8rem; cursor: pointer; font-weight: 600;">⚡ Test Connection</button>
             <span id="testConnectionStatus" style="font-size: 0.8rem; color: #94a3b8;"></span>
           </div>
@@ -838,8 +1078,6 @@
         </div>
       </div>
     </div>
-
-
 
     <!-- Notification Toast -->
     <div id="toastNotification" style="display: none; position: fixed; top: 1.5rem; right: 1.5rem; background: #064e3b; border: 1px solid #10b981; color: #a7f3d0; padding: 0.75rem 1.25rem; border-radius: 10px; font-size: 0.85rem; z-index: 1100; box-shadow: 0 10px 25px rgba(0,0,0,0.5); transition: opacity 0.3s;">
@@ -854,21 +1092,21 @@
         <div class="welcome-badge">🛡️ Sovereign Personal Intelligence</div>
         <h1 class="welcome-title">How can I assist you today?</h1>
         <p class="welcome-subtitle">
-          Running 100% locally on your HP Victus hardware with zero cloud telemetry. 
-          Your documents, keys, and questions never leave this laptop unredacted.
+          Protected by real-time SecurityShield credential scrubbing and sandboxed tool execution. 
+          Your documents, keys, and questions remain secure with empirical accuracy verification.
         </p>
 
         <div class="quick-cards">
           <div class="quick-card" onclick="sendPrompt('Show live system hardware telemetry')">
             <div class="quick-card-icon">📊</div>
             <div class="quick-card-title">Live Hardware Monitor</div>
-            <div class="quick-card-desc">Check Ryzen 5 CPU %, 8GB RAM, and battery state</div>
+            <div class="quick-card-desc">Check real-time CPU %, RAM utilization, and system state</div>
           </div>
 
           <div class="quick-card" onclick="sendPrompt('What does my project guide say about hardware configuration?')">
             <div class="quick-card-icon">📚</div>
             <div class="quick-card-title">Search Knowledge Base</div>
-            <div class="quick-card-desc">Query notes and documents dropped in knowledge/</div>
+            <div class="quick-card-desc">Query notes, guides, and documents indexed in knowledge/</div>
           </div>
 
           <div class="quick-card" onclick="sendPrompt('Calculate the compound growth of 25000 at 9.5% annual return for 7 years')">
@@ -879,8 +1117,8 @@
 
           <div class="quick-card" onclick="sendPrompt('Explain what an operating system is in 2 simple sentences')">
             <div class="quick-card-icon">🧠</div>
-            <div class="quick-card-title">Local Neural Reasoning</div>
-            <div class="quick-card-desc">Test fluid conversation on your Llama 3.2 3B model</div>
+            <div class="quick-card-title">Sovereign Intelligence</div>
+            <div class="quick-card-desc">Test articulate dialogue with active hybrid cloud or local engine</div>
           </div>
         </div>
       </div>
@@ -899,31 +1137,33 @@
             <button class="tool-icon-btn" title="Search Notes" onclick="sendPrompt('search knowledge for project guide')">🔍</button>
           </div>
 
-          <button class="send-btn" id="sendBtn" onclick="submitMessage()">▲</button>
+          <button class="send-btn" id="sendBtn" onclick="submitMessage()" title="Send Message">▲</button>
         </div>
       </div>
 
       <div class="privacy-notice">
-        <span>🔒</span> Protected by Real-Time SecurityShield: All private credentials masked in-memory.
+        <span>🔒</span> Protected by Real-Time SecurityShield: Private credentials sanitized before inference.
       </div>
     </div>
 
   </main>
 
   <!-- =========================================================================
-       CLIENT LOGIC
+       CLIENT LOGIC & ADVANCED MARKDOWN RENDERING
        ========================================================================= -->
   <script>
     let currentSessionId = "web_" + Date.now();
 
     function autoGrow(el) {
       el.style.height = "auto";
-      el.style.height = (el.scrollHeight) + "px";
+      el.style.height = Math.min(el.scrollHeight, 140) + "px";
     }
 
     function toggleSidebar() {
       const sb = document.getElementById('sidebar');
+      const bd = document.getElementById('sidebarBackdrop');
       sb.classList.toggle('open');
+      bd.classList.toggle('active');
     }
 
     function handleKeyDown(e) {
@@ -934,26 +1174,41 @@
     }
 
     function sendPrompt(text) {
-      document.getElementById('prompt-input').value = text;
+      const input = document.getElementById('prompt-input');
+      input.value = text;
+      autoGrow(input);
       submitMessage();
     }
 
     function clearCurrentChat() {
-      document.getElementById('chat-feed').innerHTML = '';
-      document.getElementById('welcomeContainer').style.display = 'block';
-      document.getElementById('chat-feed').appendChild(document.getElementById('welcomeContainer'));
+      const feed = document.getElementById('chat-feed');
+      feed.innerHTML = '';
+      const welcome = document.getElementById('welcomeContainer');
+      if (welcome) {
+        welcome.style.display = 'block';
+        feed.appendChild(welcome);
+      }
     }
 
     function startNewSession() {
       currentSessionId = "web_" + Date.now();
       clearCurrentChat();
       loadSessions();
+      if (window.innerWidth <= 768) {
+        const sb = document.getElementById('sidebar');
+        const bd = document.getElementById('sidebarBackdrop');
+        sb.classList.remove('open');
+        bd.classList.remove('active');
+      }
     }
 
     async function submitMessage() {
       const input = document.getElementById('prompt-input');
       const text = input.value.trim();
       if (!text) return;
+
+      const sendBtn = document.getElementById('sendBtn');
+      sendBtn.disabled = true;
 
       input.value = '';
       input.style.height = 'auto';
@@ -968,7 +1223,7 @@
       const userRow = document.createElement('div');
       userRow.className = 'message-row user';
       userRow.innerHTML = `
-        <div class="message-bubble">${escapeHtml(text)}</div>
+        <div class="message-bubble">${escapeHtml(text).replace(/\n/g, '<br/>')}</div>
       `;
       feed.appendChild(userRow);
 
@@ -978,7 +1233,9 @@
       aiRow.innerHTML = `
         <div class="message-avatar avatar-ai">🛡️</div>
         <div class="message-bubble">
-          <div class="message-text" style="color: var(--text-muted);">Reasoning and auditing...</div>
+          <div class="message-text" style="color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
+            <span style="display:inline-block; animation: pulse 1s infinite;">⚡</span> Auditing and synthesizing response...
+          </div>
         </div>
       `;
       feed.appendChild(aiRow);
@@ -997,18 +1254,19 @@
           renderAssistantResponse(aiRow, data);
           loadSessions();
         } else {
-          aiRow.querySelector('.message-text').innerHTML = `<span style="color: var(--rose);">Server Error: Could not get response.</span>`;
+          aiRow.querySelector('.message-text').innerHTML = `<span style="color: var(--rose);">Server Error: Could not get response (${resp.status}).</span>`;
         }
       } catch (err) {
         aiRow.querySelector('.message-text').innerHTML = `<span style="color: var(--rose);">Network Error: ${err.message}</span>`;
+      } finally {
+        sendBtn.disabled = false;
+        feed.scrollTop = feed.scrollHeight;
       }
-
-      feed.scrollTop = feed.scrollHeight;
     }
 
     function renderAssistantResponse(row, data) {
       const textDiv = row.querySelector('.message-text');
-      textDiv.style.color = '#fff';
+      textDiv.style.color = '#f1f5f9';
       textDiv.innerHTML = formatMarkdown(data.response);
 
       // Create expandable pipeline badge
@@ -1027,8 +1285,8 @@
         <div class="pipeline-drawer" id="${badgeId}">
           <div><strong>Engine:</strong> ${escapeHtml(data.active_provider || 'Local Neural')}</div>
           <div><strong>Verification:</strong> ${escapeHtml(data.verification || 'Passed')}</div>
-          ${data.sanitized_prompt ? `<div style="color: var(--text-muted); font-size: 0.7rem; margin-top: 0.2rem;"><strong>Sanitized Prompt Sent:</strong> ${escapeHtml(data.sanitized_prompt)}</div>` : ''}
-          <div style="margin-top: 0.3rem; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 0.3rem;">
+          ${data.sanitized_prompt ? `<div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 0.2rem;"><strong>Sanitized Ingestion:</strong> ${escapeHtml(data.sanitized_prompt)}</div>` : ''}
+          <div style="margin-top: 0.35rem; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 0.35rem;">
             ${(data.steps || []).map(s => `<div>[${s.stage} - ${s.status}]: ${escapeHtml(s.details)}</div>`).join('')}
           </div>
         </div>
@@ -1042,23 +1300,125 @@
       if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
     }
 
+    // =========================================================================
+    // ADVANCED MARKDOWN FORMATTER (Clean Code, Tables, Headers, Copy Button)
+    // =========================================================================
     function formatMarkdown(text) {
-      let escaped = escapeHtml(text);
-      // Code blocks
-      escaped = escaped.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
-      // Inline code
-      escaped = escaped.replace(/`([^`]+)`/g, '<code>$1</code>');
-      // Bold
-      escaped = escaped.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-      // Bullets
-      escaped = escaped.replace(/^\s*[\*\-]\s+(.+)$/gm, '• $1<br/>');
-      // Newlines
-      escaped = escaped.replace(/\n/g, '<br/>');
-      return escaped;
+      if (!text) return "";
+
+      const codeBlocks = [];
+
+      // 1. Extract and preserve fenced code blocks before modifying newlines
+      let processed = text.replace(/```([a-zA-Z0-9_\-\.\+]*)\n?([\s\S]*?)```/g, function(match, lang, code) {
+        const placeholder = `__CODE_BLOCK_${codeBlocks.length}__`;
+        codeBlocks.push({ lang: lang.trim() || 'text', code: code.trim() });
+        return placeholder;
+      });
+
+      // Escape general HTML
+      processed = escapeHtml(processed);
+
+      // 2. Parse Markdown Tables
+      processed = processed.replace(/(?:^|\n)(\|.+?\|(?:\n\|[-:\s|]+?\|)?(?:\n\|.+?\|)+)/g, function(match, tableText) {
+        const lines = tableText.trim().split('\n');
+        if (lines.length < 2) return match;
+
+        let tableHtml = '<div class="table-wrapper"><table class="rendered-table">';
+        let inBody = false;
+
+        for (let i = 0; i < lines.length; i++) {
+          const row = lines[i].trim();
+          if (row.match(/^\|[-:\s|]+\|$/)) {
+            // Separator line
+            inBody = true;
+            continue;
+          }
+
+          const cols = row.split('|').slice(1, -1);
+          if (cols.length === 0) continue;
+
+          if (!inBody && i === 0) {
+            tableHtml += '<thead><tr>' + cols.map(c => `<th>${c.trim()}</th>`).join('') + '</tr></thead><tbody>';
+          } else {
+            tableHtml += '<tr>' + cols.map(c => `<td>${c.trim()}</td>`).join('') + '</tr>';
+          }
+        }
+
+        if (inBody) tableHtml += '</tbody>';
+        tableHtml += '</table></div>';
+        return '\n' + tableHtml + '\n';
+      });
+
+      // 3. Headings (#, ##, ###)
+      processed = processed.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+      processed = processed.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+      processed = processed.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+      // 4. Blockquotes
+      processed = processed.replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>');
+
+      // 5. Bold & Italics
+      processed = processed.replace(/\*\*\*([^*]+)\*\*\*/g, '<strong><em>$1</em></strong>');
+      processed = processed.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      processed = processed.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+      // 6. Inline code
+      processed = processed.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
+
+      // 7. Bullets & Lists
+      processed = processed.replace(/^\s*[\*\-]\s+(.+)$/gm, '• $1<br/>');
+      processed = processed.replace(/^\s*(\d+)\.\s+(.+)$/gm, '$1. $2<br/>');
+
+      // 8. Linebreaks outside code blocks
+      processed = processed.replace(/\n\n+/g, '<br/><br/>');
+      processed = processed.replace(/\n/g, '<br/>');
+
+      // 9. Reinsert clean code blocks with copy button
+      for (let i = 0; i < codeBlocks.length; i++) {
+        const b = codeBlocks[i];
+        const rawCodeEscaped = escapeHtml(b.code);
+        const encodedCode = encodeURIComponent(b.code);
+        const langLabel = b.lang.toUpperCase();
+
+        const blockHtml = `
+          <div class="code-container">
+            <div class="code-header">
+              <span>${langLabel}</span>
+              <button class="copy-code-btn" onclick="copyCode(this, '${encodedCode}')">Copy</button>
+            </div>
+            <pre><code>${rawCodeEscaped}</code></pre>
+          </div>
+        `;
+        processed = processed.replace(`__CODE_BLOCK_${i}__`, blockHtml);
+      }
+
+      return processed;
+    }
+
+    function copyCode(btn, encodedStr) {
+      const code = decodeURIComponent(encodedStr);
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = "✓ Copied!";
+        btn.style.color = "var(--emerald)";
+        btn.style.borderColor = "var(--emerald)";
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = "";
+          btn.style.borderColor = "";
+        }, 2000);
+      }).catch(() => {
+        btn.textContent = "Error";
+      });
     }
 
     function escapeHtml(string) {
-      return String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      return String(string)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
     }
 
     // =========================================================================
@@ -1075,9 +1435,21 @@
           document.getElementById('ramUsageText').textContent = `${t.ram_used_gb}G / ${t.ram_total_gb}G (${t.ram_percent}%)`;
           document.getElementById('ramProgress').style.width = t.ram_percent + '%';
 
-          if (t.battery_percent !== null) {
-            const plug = t.battery_charging ? ' (⚡)' : '';
-            document.getElementById('batteryText').textContent = t.battery_percent + '%' + plug;
+          // Dynamic host info in sidebar
+          if (t.is_cloud_env) {
+            document.getElementById('telemetryHostTitle').textContent = 'Cloud Server';
+            document.getElementById('telemetryAuxLabel').textContent = 'Container Disk';
+            document.getElementById('batteryText').textContent = `${t.disk_free_gb}G free`;
+          } else {
+            document.getElementById('telemetryHostTitle').textContent = t.os_platform || 'System Telemetry';
+            if (t.battery_percent !== null) {
+              const plug = t.battery_charging ? ' (⚡)' : '';
+              document.getElementById('telemetryAuxLabel').textContent = 'Battery / Power';
+              document.getElementById('batteryText').textContent = t.battery_percent + '%' + plug;
+            } else {
+              document.getElementById('telemetryAuxLabel').textContent = 'Free Disk';
+              document.getElementById('batteryText').textContent = `${t.disk_free_gb}G free`;
+            }
           }
 
           if (t.ai_mode) {
@@ -1088,8 +1460,8 @@
           }
 
           if (t.active_provider) {
+            const isCloud = t.active_provider.includes('Cloud') || t.active_provider.includes('Hybrid') || t.active_provider.includes('Gemini');
             document.getElementById('activeModelName').textContent = t.active_provider;
-            const isCloud = t.active_provider.includes('Cloud') || t.active_provider.includes('Hybrid');
             document.getElementById('telemetryProviderBadge').textContent = isCloud ? 'Cloud' : 'Local';
             const dot = document.getElementById('activeModelDot');
             if (dot) dot.textContent = isCloud ? '⚡' : '🟢';
@@ -1157,6 +1529,12 @@
                 <span>💬</span> ${escapeHtml(s.preview || 'Conversation')}
               </div>
             `).join('');
+          } else {
+            sList.innerHTML = `
+              <div class="session-item active" onclick="loadSession('web_default')">
+                <span>💬</span> Current Workspace
+              </div>
+            `;
           }
         }
       } catch (e) {}
@@ -1175,7 +1553,7 @@
             const row = document.createElement('div');
             row.className = `message-row ${h.role === 'user' ? 'user' : 'assistant'}`;
             if (h.role === 'user') {
-              row.innerHTML = `<div class="message-bubble">${escapeHtml(h.content)}</div>`;
+              row.innerHTML = `<div class="message-bubble">${escapeHtml(h.content).replace(/\n/g, '<br/>')}</div>`;
             } else {
               row.innerHTML = `
                 <div class="message-avatar avatar-ai">🛡️</div>
@@ -1188,6 +1566,14 @@
           });
         }
         feed.scrollTop = feed.scrollHeight;
+        loadSessions();
+
+        if (window.innerWidth <= 768) {
+          const sb = document.getElementById('sidebar');
+          const bd = document.getElementById('sidebarBackdrop');
+          sb.classList.remove('open');
+          bd.classList.remove('active');
+        }
       }
     }
 
@@ -1205,8 +1591,6 @@
         handleFileUpload({target: {files: e.dataTransfer.files}});
       }
     });
-
-
 
     async function releaseMemory() {
       try {
@@ -1312,11 +1696,11 @@
       }
     }
 
-    // Initial triggers
+    // Initial load
     updateTelemetry();
     loadKnowledgeFiles();
     loadSessions();
-    setInterval(updateTelemetry, 4000);
+    setInterval(updateTelemetry, 5000);
   </script>
 </body>
 </html>
